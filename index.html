@@ -17,24 +17,36 @@
       --text:#111827;
       --sub:#374151;
       --active:#FF3B30; /* red active dot */
+      --header-h:64px;  /* fixed header height */
     }
     *{box-sizing:border-box}
     html,body{width:100%;height:auto;margin:0;padding:0}
-    body{font-family:Inter,system-ui,-apple-system,Arial,sans-serif;background:#F9FAFB;color:var(--text)}
+    body{
+      font-family:Inter,system-ui,-apple-system,Arial,sans-serif;
+      background:#F9FAFB;
+      color:var(--text);
+      padding-top: var(--header-h); /* ensure content not hidden behind fixed header */
+    }
 
-    /* Header (robust on desktop & mobile) */
+    /* Header (fixed for desktop & mobile) */
     .sar-header{
-      position:sticky;top:0;z-index:5;height:64px;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 12px;background:#fff;border-bottom:1px solid var(--border);
-      flex-wrap:nowrap;gap:12px;
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      height:var(--header-h);
+      display:flex; align-items:center; justify-content:flex-start;
+      padding:0 12px; background:#fff; border-bottom:1px solid var(--border);
+      gap:12px;
     }
     @media (min-width:768px){ .sar-header{padding:0 16px} }
-    .sar-logo{
-      font-size:18px;font-weight:600;letter-spacing:.2px;color:var(--text);
-      white-space:nowrap;flex:0 0 auto; /* don't shrink or wrap */
+
+    /* Group title + dots left, stacked */
+    .sar-logo-wrap{
+      display:flex; flex-direction:column; align-items:flex-start; gap:6px;
     }
-    .sar-dotbar{display:flex;gap:10px;align-items:center;flex:0 0 auto}
+    .sar-logo{
+      font-size:22px; font-weight:700; letter-spacing:.3px; color:var(--text);
+      white-space:nowrap; flex:0 0 auto;
+    }
+    .sar-dotbar{display:flex; gap:10px; align-items:center; justify-content:flex-start}
     .sar-dot{width:16px;height:16px;border-radius:50%;background:#E5E7EB;transition:background .3s ease}
     .sar-dot.active{background:var(--active)}
 
@@ -59,10 +71,11 @@
 
     /* Rows & buttons */
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
-    .sar-actions{display:flex;gap:8px;margin-top:16px}
+    .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-start} /* left-align buttons */
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
-      min-height:44px;padding:8px 12px;border-radius:8px;border:1px solid #D1D5DB;
+      min-height:44px;min-width:140px; /* wider buttons */
+      padding:8px 16px;border-radius:8px;border:1px solid #D1D5DB;
       background:#fff;color:var(--text);cursor:pointer;text-decoration:none;user-select:none;font-size:14px
     }
     .sar-btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
@@ -94,6 +107,9 @@
     .sar-scale-row{display:flex;align-items:center;gap:10px;margin:6px 0}
     .sar-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:600}
 
+    /* Extra space above start button on welcome */
+    .sar-page[data-step="welcome"] .sar-scale{margin-bottom:28px}
+
     /* Question list (dynamic) */
     .q-list{display:flex;flex-direction:column;gap:14px}
     .q-item{padding:12px 0;border-top:1px solid var(--border)}
@@ -121,8 +137,10 @@
 
   <!-- Header -->
   <header class="sar-header">
-    <div class="sar-logo">BED HOSPITALITY</div>
-    <div class="sar-dotbar" id="dotbar" aria-label="Progress"></div>
+    <div class="sar-logo-wrap">
+      <div class="sar-logo">BED HOSPITALITY 2.0</div>
+      <div class="sar-dotbar" id="dotbar" aria-label="Progress"></div>
+    </div>
   </header>
 
   <main class="sar-wrap">
@@ -132,7 +150,7 @@
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
           <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-          <div class="sar-sub" style="margin-bottom:16px">evaluate yourself and your peers</div>
+          <!-- subtext removed per issue #4 -->
         </div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
