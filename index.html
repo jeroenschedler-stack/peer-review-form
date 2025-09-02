@@ -58,6 +58,15 @@
     /* Card */
     .sar-card{ background:#fff;border:1px solid var(--border);border-radius:12px;
       padding:20px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04);min-height:auto }
+.finish-hero{ display:flex; justify-content:center; align-items:center; margin-top:8px; }
+.finish-hero i{ font-size:72px; line-height:1; color:var(--brand); }
+.finish-gap{ height:auto; line-height:1; text-align:left; }
+
+.peer-inline{ display:flex; gap:24px; align-items:flex-end; flex-wrap:nowrap; margin:8px 0 12px; }
+.peer-col{ display:flex; flex-direction:column; gap:6px; min-width:200px; }
+.peer-row{ display:flex; gap:16px; align-items:center; }
+.peer-row label{ display:inline-flex; align-items:center; gap:6px; }
+
     @media (max-width:430px){
       .sar-wrap{padding:0}
       .sar-card{border:none;box-shadow:none;border-radius:0;padding:16px}
@@ -172,8 +181,7 @@
       <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
-          <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-        </div>
+</div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
           <label class="sar-field">
@@ -213,8 +221,7 @@
 
       <!-- Part 1 — Dynamic questions -->
       <div class="sar-page" data-step="q1">
-        <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 1</div>
-        <!-- removed page-level thin progress bar (now in header) -->
+<!-- removed page-level thin progress bar (now in header) -->
         <div id="q1List" class="q-list" aria-live="polite"></div>
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
@@ -224,8 +231,7 @@
 
       <!-- Part 2 — Dynamic questions -->
       <div class="sar-page" data-step="q2">
-        <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 2</div>
-        <!-- removed page-level thin progress bar (now in header) -->
+<!-- removed page-level thin progress bar (now in header) -->
         <div id="q2List" class="q-list" aria-live="polite"></div>
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
@@ -235,8 +241,7 @@
 
       <!-- Placeholders -->
       <div class="sar-page" data-step="score">
-  <div class="sar-title">SELF-ASSESSMENT SCORE</div>
-  <div class="score-gap" aria-hidden="true"><br><br><br><br></div>
+<div class="score-gap" aria-hidden="true"><br><br><br><br></div>
   <div class="score-wrap">
     <div class="score-values">
       <div class="score-raw" id="scoreNumber">YOUR SCORE 0/100</div>
@@ -255,8 +260,7 @@
   </div>
 </div>
       <div class="sar-page" data-step="peer">
-  <div class="sar-title">PEER REVIEW</div>
-  <div class="sar-sub" style="margin-bottom:12px">
+<div class="sar-sub" style="margin-bottom:12px">
     You’re almost done! You have completed the self assessment report so now it is time to ask one of your peers to assess you. You can select anyone in your team who has been working in BED for at least two years
   </div>
   <div class="sar-row sar-row-fields" style="margin-bottom:12px">
@@ -268,7 +272,24 @@
       <span class="sar-label">peer email</span>
       <input id="peerEmail" type="email" class="sar-input" inputmode="email" autocomplete="email" />
     </label>
+  
+<div class="peer-inline">
+  <div class="peer-col">
+    <div class="sar-label">two years experience?</div>
+    <div class="peer-row">
+      <label><input type="checkbox" id="peerExpYes"> YES</label>
+      <label><input type="checkbox" id="peerExpNo"> NO</label>
+    </div>
   </div>
+  <div class="peer-col">
+    <div class="sar-label">send peer review form?</div>
+    <div class="peer-row">
+      <label><input type="checkbox" id="peerSendYes"> YES</label>
+      <label><input type="checkbox" id="peerSendNo"> NO</label>
+    </div>
+  </div>
+</div>
+</div>
   <div class="sar-row sar-hotels" role="group" aria-label="Choose peer's BED Hotel" style="margin-bottom:12px">
     <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
@@ -278,12 +299,25 @@
   </div>
   <div class="sar-actions">
     <button class="sar-btn" data-nav="back">Back</button>
-    <button id="peerShare" class="sar-btn">Share</button>
-    <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Next</button>
+    <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
   </div>
 </div>
-      <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
-      <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
+      <div class="sar-page" data-step="done">
+</div>
+      <div class="sar-page" data-step="finish">
+  <div class="sar-card">
+    <div class="finish-hero" aria-hidden="true"><i class="fa-solid fa-circle-check"></i></div>
+    <div class="finish-gap"><br></div>
+    <div class="finish-text" style="color:var(--text);font-size:16px;font-weight:400;">
+      You’re done and we appreciate your participation Your score is a good starting point. Use it for self-development or to help others.  You can download your complete Self-Assessment Report (SAR) below. Let us know if you have questions
+    </div>
+    <div class="finish-gap"><br></div>
+    <div class="sar-actions">
+      <button class="sar-btn" data-nav="back">Back</button>
+      <button class="sar-btn" id="finishShare" onclick="downloadSarResults()">Share</button>
+    </div>
+  </div>
+</div></div>
 
     </section>
   </main>
@@ -526,8 +560,16 @@ function ensurePeerBindings(){
     btn.classList.add('selected');
     sarState.peer = sarState.peer || {name:'',email:'',hotel:''};
     sarState.peer.hotel = btn.getAttribute('data-hotel') || "";
-    validatePeer();
-  });
+    const expYesEl = document.getElementById("peerExpYes");
+const expNoEl = document.getElementById("peerExpNo");
+const sendYesEl = document.getElementById("peerSendYes");
+const sendNoEl = document.getElementById("peerSendNo");
+if(expYesEl) expYesEl.addEventListener("change", validatePeer);
+if(expNoEl) expNoEl.addEventListener("change", validatePeer);
+if(sendYesEl) sendYesEl.addEventListener("change", ()=>{});
+if(sendNoEl) sendNoEl.addEventListener("change", ()=>{});
+validatePeer();
+});
   if(nameEl) nameEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.name = nameEl.value.trim(); validatePeer(); });
   if(emailEl) emailEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.email = emailEl.value.trim(); validatePeer(); });
   if(shareBtn){ shareBtn.addEventListener('click',(e)=>{ e.preventDefault(); downloadSarResults(); }); }
@@ -542,47 +584,23 @@ function validatePeer(){
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
-  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
+  const expYes = document.getElementById("peerExpYes"); const hasExpYes = !!(expYes && expYes.checked);
+if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && hasExpYes);
 }
 function updateHeaderTitle(){
   const slot = document.getElementById('sarPageTitle');
   if(!slot) return;
-  const activeTitle = document.querySelector('.sar-page.active .sar-title');
-  let text = '';
-  if(activeTitle){ text = activeTitle.textContent.trim(); }
   const step = sarState.step;
-  if(!text){
-    const map = {welcome:'WELCOME', q1:'STATEMENTS PART 1', q2:'STATEMENTS PART 2', score:'SELF-ASSESSMENT SCORE', peer:'PEER REVIEW', done:'YOU\'RE DONE', finish:'FINISH'};
-    text = map[step] || '';
-  }
-  slot.textContent = text;
-}
-function downloadSarResults(){
-  const qs = sarState.questions || [];
-  const rows = [];
-  rows.push(['Nickname', sarState.user?.nickname || '']);
-  rows.push(['Email', sarState.user?.email || '']);
-  rows.push(['Hotel', sarState.user?.hotel || '']);
-  rows.push(['Peer Name', sarState.peer?.name || '']);
-  rows.push(['Peer Email', sarState.peer?.email || '']);
-  rows.push(['Peer Hotel', sarState.peer?.hotel || '']);
-  rows.push([]);
-  rows.push(['Question ID','Statement','Your Rating']);
-  let sum = 0, total = qs.length * 5;
-  qs.forEach(q => { const v = sarState.answers[q.id] || 0; sum += v; rows.push([q.id, q.statement, v]); });
-  rows.push([]);
-  rows.push(['Total Score', sum + '/' + total]);
-  const csv = rows.map(r => r.map(x => ('"'+String(x).replace(/"/g,'""')+'"')).join(',')).join('\n');
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  const stamp = new Date().toISOString().slice(0,19).replace(/[:T]/g,'-');
-  a.download = `BED-SAR-Results-${stamp}.csv`;
-  document.body.appendChild(a);
-  a.click();
-  URL.revokeObjectURL(url);
-  a.remove();
+  const map = {
+    welcome:'WELCOME',
+    q1:'STATEMENTS PART 1',
+    q2:'STATEMENTS PART 2',
+    score:'YOUR SCORE',
+    peer:'PEER REVIEW',
+    done:"YOU'RE DONE",
+    finish:'SELF- ASSESSMENT COMPLETE'
+  };
+  slot.textContent = map[step] || '';
 }
 
   // Initialize first page on load
