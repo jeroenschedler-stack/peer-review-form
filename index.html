@@ -16,7 +16,7 @@
       --border:#E5E7EB;
       --text:#111827;
       --sub:#374151;
-      --active:#FF3B30; /* red active dot */
+      --active:#FF3B30;
     }
     *{box-sizing:border-box}
     html,body{width:100%;height:auto;margin:0;padding:0}
@@ -29,9 +29,7 @@
       padding:0 12px;background:#fff;border-bottom:1px solid var(--border)
     }
     @media (min-width:768px){ .sar-header{padding:0 16px} }
-    .sar-logo{font-weight:600;font-size:18px;letter-spacing:.2px}
-
-    /* Progress dots (bigger + red active) */
+    .sar-logo{font-size:18px;font-weight:600;letter-spacing:.2px}
     .sar-dotbar{display:flex;gap:10px;align-items:center}
     .sar-dot{width:16px;height:16px;border-radius:50%;background:#E5E7EB;transition:background .3s ease}
     .sar-dot.active{background:var(--active)}
@@ -45,14 +43,13 @@
       background:#fff;border:1px solid var(--border);border-radius:12px;
       padding:20px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04);min-height:auto
     }
-    /* Full-bleed feel on phones */
     @media (max-width:430px){
       .sar-wrap{padding:0}
       .sar-card{border:none;box-shadow:none;border-radius:0;padding:16px}
       body{padding-bottom:env(safe-area-inset-bottom,16px)}
     }
 
-    /* Typography */
+    /* Titles */
     .sar-title{font-size:18px;font-weight:600;margin:8px 0 12px}
     .sar-sub{color:var(--sub);margin-bottom:16px}
 
@@ -82,22 +79,33 @@
     .sar-input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(30,144,255,.15)}
     @media (max-width:420px){ .sar-row-fields{flex-direction:column} }
 
-    /* Five hotels in one row */
+    /* Hotels one row */
     .sar-hotels{display:flex;gap:6px;flex-wrap:nowrap;justify-content:space-between}
-    .sar-hotels .sar-hotel{
-      flex:1 1 18%;min-width:0;text-transform:uppercase;font-weight:600;padding:10px 0;font-size:14px
-    }
+    .sar-hotels .sar-hotel{flex:1 1 18%;min-width:0;text-transform:uppercase;font-weight:600;padding:10px 0;font-size:14px}
     .sar-hotel.selected{background:var(--brand);color:#fff;border-color:var(--brand)}
 
-    /* Intro & scale */
+    /* Intro & scale (welcome) */
     .sar-intro p,.sar-scale{font-size:14px;line-height:1.45}
     @media (max-width:360px){ .sar-intro p,.sar-scale{font-size:13px} }
-
-    /* Rating badges */
     .sar-scale-row{display:flex;align-items:center;gap:10px;margin:6px 0}
-    .sar-badge{
+    .sar-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:600}
+
+    /* Question list (dynamic) */
+    .q-list{display:flex;flex-direction:column;gap:14px}
+    .q-item{padding:12px 0;border-top:1px solid var(--border)}
+    .q-item:first-child{border-top:none}
+    .q-title{font-size:16px;font-weight:600;line-height:1.35;margin-bottom:2px} /* bold only */
+    .q-sub{font-size:16px;line-height:1.35;color:var(--sub);margin-bottom:8px}  /* same size */
+    .q-scale{display:flex;gap:8px}
+    .q-scale input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
+    .q-scale label{
+      width:36px;height:36px;border-radius:50%;
+      border:1px solid #D1D5DB;background:#fff;color:#111827;
       display:inline-flex;align-items:center;justify-content:center;
-      width:24px;height:24px;border-radius:50%;background:#1E90FF;color:#fff;font-size:13px;font-weight:600
+      font-size:14px;font-weight:600;cursor:pointer;user-select:none;
+    }
+    .q-scale input[type="radio"]:checked + label{
+      background:var(--brand);border-color:var(--brand);color:#fff;
     }
   </style>
 </head>
@@ -112,12 +120,12 @@
   <main class="sar-wrap">
     <section class="sar-card">
 
-      <!-- Page: Welcome -->
+      <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
-          <!-- BED HOSPITALITY removed from here per request -->
+          <div class="sar-title">BED HOSPITALITY</div>
           <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-          <div class="sar-sub" style="margin-bottom:16px;text-transform:none">evaluate yourself and your peers</div>
+          <div class="sar-sub" style="margin-bottom:16px">evaluate yourself and your peers</div>
         </div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
@@ -156,72 +164,43 @@
         </div>
       </div>
 
-      <!-- Placeholder pages (so all 7 dots appear) -->
-      <div class="sar-page" data-step="userinfo">
-        <div class="sar-title">Your Details</div>
-        <p class="sar-sub">Placeholder page.</p>
-        <div class="sar-actions">
-          <button class="sar-btn" data-nav="back">Back</button>
-          <button class="sar-btn primary" data-nav="next">Next</button>
-        </div>
-      </div>
-
+      <!-- Part 1 — Dynamic questions -->
       <div class="sar-page" data-step="q1">
-        <div class="sar-title">Questions — Part 1</div>
-        <p class="sar-sub">Placeholder page.</p>
+        <div class="sar-title">Self-Assessment · Part 1 of 2</div>
+        <div id="q1List" class="q-list" aria-live="polite"></div>
+
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
-          <button class="sar-btn primary" data-nav="next">Next</button>
+          <button id="q1Next" class="sar-btn primary" data-nav="next" disabled>Next</button>
         </div>
       </div>
 
+      <!-- Part 2 (placeholder for now) -->
       <div class="sar-page" data-step="q2">
-        <div class="sar-title">Questions — Part 2</div>
-        <p class="sar-sub">Placeholder page.</p>
+        <div class="sar-title">Self-Assessment · Part 2 of 2</div>
+        <p class="sar-sub">Coming next (we’ll load the next 10 here).</p>
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
-          <button class="sar-btn primary" data-nav="next">Next</button>
-        </div>
-      </div>
-
-      <div class="sar-page" data-step="score">
-        <div class="sar-title">Your Score</div>
-        <p class="sar-sub">Placeholder page.</p>
-        <div class="sar-actions">
-          <button class="sar-btn" data-nav="back">Back</button>
-          <button class="sar-btn primary" data-nav="next">Next</button>
-        </div>
-      </div>
-
-      <div class="sar-page" data-step="peer">
-        <div class="sar-title">Peer Review</div>
-        <p class="sar-sub">Placeholder page.</p>
-        <div class="sar-actions">
-          <button class="sar-btn" data-nav="back">Back</button>
-          <button class="sar-btn primary" data-nav="next">Next</button>
-        </div>
-      </div>
-
-      <div class="sar-page" data-step="done">
-        <div class="sar-title">Completed</div>
-        <p class="sar-sub">Completion page placeholder.</p>
-        <div class="sar-actions">
-          <button class="sar-btn" data-nav="restart">Restart</button>
         </div>
       </div>
 
     </section>
   </main>
 
-  <script>
-    // 7 steps so all dots are visible
-    const SAR_STEPS = ["welcome","userinfo","q1","q2","score","peer","done"];
+  <footer class="sar-footer" style="padding:12px 16px;color:#6B7280;font-size:12px;text-align:center">
+    BED HOSPITALITY · Self-Assessment (SAR)
+  </footer>
 
+  <script>
+    const SAR_STEPS = ["welcome","q1","q2"];
     const sarState = {
       step: "welcome",
-      user: { nickname: "", email: "", hotel: "" }
+      user: { nickname: "", email: "", hotel: "" },
+      answers: {},         // { qid: 1..5 }
+      questions: []        // loaded from questions.json
     };
 
+    // --- Navigation
     function goTo(step){
       if(!SAR_STEPS.includes(step)) return;
       sarState.step = step;
@@ -230,9 +209,9 @@
       });
       renderDots();
       if(step === "welcome") ensureWelcomeBindings();
+      if(step === "q1") renderQ1();
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
-
     function next(){
       const i = SAR_STEPS.indexOf(sarState.step);
       if(i < SAR_STEPS.length - 1) goTo(SAR_STEPS[i+1]);
@@ -241,23 +220,15 @@
       const i = SAR_STEPS.indexOf(sarState.step);
       if(i > 0) goTo(SAR_STEPS[i-1]);
     }
-    function restart(){ goTo(SAR_STEPS[0]); }
-
-    // Nav
     document.body.addEventListener('click', (e)=>{
       const btn = e.target.closest('[data-nav]');
       if(!btn) return;
       const act = btn.getAttribute('data-nav');
       if(act==='next') next();
       else if(act==='back') back();
-      else if(act==='restart') restart();
-      else if(act==='goto'){
-        const step = btn.getAttribute('data-step');
-        if(step) goTo(step);
-      }
+      else if(act==='goto'){ const step = btn.getAttribute('data-step'); if(step) goTo(step); }
     });
 
-    // Dots
     function renderDots(){
       const bar = document.getElementById('dotbar');
       bar.innerHTML = '';
@@ -268,12 +239,11 @@
       });
     }
 
-    // Welcome page validation
+    // --- Welcome bindings
     let welcomeBound = false;
     function ensureWelcomeBindings(){
       if(welcomeBound){ validateWelcome(); return; }
       welcomeBound = true;
-
       const card = document.querySelector('.sar-page[data-step="welcome"]');
       const nick = card.querySelector('#sarNick');
       const email = card.querySelector('#sarEmail');
@@ -287,35 +257,95 @@
         sarState.user.hotel = btn.getAttribute('data-hotel') || "";
         validateWelcome();
       });
-
-      nick.addEventListener('input', ()=>{
-        sarState.user.nickname = nick.value.trim();
-        validateWelcome();
-      });
-      email.addEventListener('input', ()=>{
-        sarState.user.email = email.value.trim();
-        validateWelcome();
-      });
-
-      startBtn.addEventListener('click',(e)=>{
-        if(startBtn.disabled){ e.preventDefault(); e.stopPropagation(); }
-      });
-
+      nick.addEventListener('input', ()=>{ sarState.user.nickname = nick.value.trim(); validateWelcome(); });
+      email.addEventListener('input', ()=>{ sarState.user.email = email.value.trim(); validateWelcome(); });
+      startBtn.addEventListener('click',(e)=>{ if(startBtn.disabled){ e.preventDefault(); e.stopPropagation(); } });
       validateWelcome();
     }
-
     function validateWelcome(){
       const card = document.querySelector('.sar-page[data-step="welcome"]');
       if(!card) return;
       const nick = card.querySelector('#sarNick');
       const email = card.querySelector('#sarEmail');
       const startBtn = card.querySelector('#sarStart');
-
       const hasNick = (nick.value || "").trim().length > 0;
       const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value || "").trim());
       const hasHotel = !!sarState.user.hotel;
-
       startBtn.disabled = !(hasNick && hasEmail && hasHotel);
+    }
+
+    // --- Load questions.json once
+    async function loadQuestions(){
+      if (sarState.questions.length) return sarState.questions;
+      const res = await fetch('./questions.json', {cache: 'no-store'});
+      const data = await res.json();
+      sarState.questions = Array.isArray(data) ? data : [];
+      return sarState.questions;
+    }
+
+    // --- Render Part 1 (first 10)
+    async function renderQ1(){
+      const qs = await loadQuestions();
+      const slice = qs.slice(0, 10);
+      const mount = document.getElementById('q1List');
+      mount.innerHTML = slice.map(q => renderQuestionHTML(q)).join('');
+      // Restore selections if any
+      slice.forEach(q => {
+        const v = sarState.answers[q.id];
+        if(v){
+          const el = document.getElementById(`${q.id}_${v}`);
+          if (el) el.checked = true;
+        }
+      });
+      // Delegate change events
+      mount.addEventListener('change', onRatingChanged);
+      validateQ1Completed(slice);
+    }
+
+    function renderQuestionHTML(q){
+      const name = `rate_${q.id}`;
+      let radios = '';
+      for(let v=1; v<=5; v++){
+        const id = `${q.id}_${v}`;
+        radios += `
+          <input type="radio" name="${name}" id="${id}" value="${v}" />
+          <label for="${id}" aria-label="${q.id} rate ${v}">${v}</label>
+        `;
+      }
+      return `
+        <div class="q-item" data-qid="${q.id}">
+          <div class="q-title">${escapeHTML(q.statement)}</div>
+          <div class="q-sub">${escapeHTML(q.subtext)}</div>
+          <div class="q-scale">${radios}</div>
+        </div>
+      `;
+    }
+
+    function onRatingChanged(e){
+      const input = e.target.closest('input[type="radio"]');
+      if(!input) return;
+      const wrap = input.closest('.q-item');
+      const qid = wrap?.getAttribute('data-qid');
+      const val = parseInt(input.value, 10);
+      if(qid && val >=1 && val <=5){
+        sarState.answers[qid] = val;
+        // Recheck completion
+        validateQ1Completed(document.querySelectorAll('#q1List .q-item'));
+      }
+    }
+
+    function validateQ1Completed(list){
+      const items = Array.from(list);
+      const allAnswered = items.every(el => {
+        const qid = el.getAttribute('data-qid');
+        return !!sarState.answers[qid];
+      });
+      document.getElementById('q1Next').disabled = !allAnswered;
+    }
+
+    // simple HTML escape
+    function escapeHTML(s){
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
 
     // Init
@@ -323,3 +353,5 @@
   </script>
 </body>
 </html>
+
+
