@@ -48,5 +48,16 @@
     "id": "q10",
     "statement": "I scan every guest every time",
     "subtext": "I don't scan groups but individuals"
-  }
+  },
+  ,
+  { "id":"q11","statement":"I confirm guest identity at check-in","subtext":"I check name and booking details" },
+  { "id":"q12","statement":"I offer options when rooms are not ready","subtext":"I propose waiting area or room swap" },
+  { "id":"q13","statement":"I follow up after solving a guest issue","subtext":"I ask if everything is okay now" },
+  { "id":"q14","statement":"I keep the front desk organized","subtext":"I prepare forms and supplies before rush hours" },
+  { "id":"q15","statement":"I communicate clearly with housekeeping","subtext":"I share ETA and special requests" },
+  { "id":"q16","statement":"I upsell when it fits the guest","subtext":"I match offers to guest needs" },
+  { "id":"q17","statement":"I record important notes in the system","subtext":"I write short and clear updates" },
+  { "id":"q18","statement":"I hand over well to the next shift","subtext":"I brief open tasks and VIPs" },
+  { "id":"q19","statement":"I support team decisions even when I disagree","subtext":"I discuss later, not in front of guests" },
+  { "id":"q20","statement":"I learn from mistakes quickly","subtext":"I change my actions next time" }
 ]
