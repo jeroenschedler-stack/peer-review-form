@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#1E90FF" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%231E90FF"/><text x="50%" y="56%" font-size="28" font-family="Arial,Helvetica,sans-serif" font-weight="700" text-anchor="middle" fill="white">BED</text></svg>'>
 
   <style>
@@ -16,7 +16,7 @@
       --border:#E5E7EB;
       --text:#111827;
       --sub:#374151;
-      --active:#FF3B30; /* red active dot */
+      --active:#FF3B30; /* red active/done dot */
       --header-h:64px;  /* fixed header height */
     }
     *{box-sizing:border-box}
@@ -42,13 +42,21 @@
     .sar-logo-wrap{
       display:flex; flex-direction:column; align-items:flex-start; gap:6px;
     }
+    /* 1) More prominent title */
     .sar-logo{
-      font-size:22px; font-weight:700; letter-spacing:.3px; color:var(--text);
+      font-size:28px;            /* increased from 22px */
+      font-weight:800;           /* bolder */
+      letter-spacing:.35px;
+      color:var(--text);
       white-space:nowrap; flex:0 0 auto;
     }
     .sar-dotbar{display:flex; gap:10px; align-items:center; justify-content:flex-start}
-    .sar-dot{width:16px;height:16px;border-radius:50%;background:#E5E7EB;transition:background .3s ease}
-    .sar-dot.active{background:var(--active)}
+    .sar-dot{
+      width:16px;height:16px;border-radius:50%;background:#E5E7EB;transition:background .3s ease
+    }
+    /* 5) Show completed/current steps in red */
+    .sar-dot.done{ background: var(--active); }
+    .sar-dot.current{ box-shadow:0 0 0 2px rgba(30,144,255,.25); } /* subtle ring for current (optional) */
 
     /* Layout */
     .sar-wrap{max-width:100%;width:100%;margin:0;padding:8px 12px 24px}
@@ -71,12 +79,15 @@
 
     /* Rows & buttons */
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
-    .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-start} /* left-align buttons */
+    /* 2a & 2c) Right-align action buttons on all pages */
+    .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
-      min-height:44px;min-width:140px; /* wider buttons */
-      padding:8px 16px;border-radius:8px;border:1px solid #D1D5DB;
-      background:#fff;color:var(--text);cursor:pointer;text-decoration:none;user-select:none;font-size:14px
+      min-height:44px;min-width:140px;
+      padding:10px 18px;border-radius:8px;border:1px solid #D1D5DB;
+      background:#fff;color:var(--text);cursor:pointer;text-decoration:none;user-select:none;
+      font-size:16px; /* 2b) bigger label text for all buttons */
+      font-weight:600;
     }
     .sar-btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
     .sar-btn:disabled{opacity:.6;cursor:not-allowed}
@@ -107,15 +118,15 @@
     .sar-scale-row{display:flex;align-items:center;gap:10px;margin:6px 0}
     .sar-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:600}
 
-    /* Extra space above start button on welcome */
-    .sar-page[data-step="welcome"] .sar-scale{margin-bottom:28px}
+    /* 3) Double the space above Start on welcome page */
+    .sar-page[data-step="welcome"] .sar-scale{margin-bottom:56px} /* previously 28px */
 
     /* Question list (dynamic) */
     .q-list{display:flex;flex-direction:column;gap:14px}
     .q-item{padding:12px 0;border-top:1px solid var(--border)}
     .q-item:first-child{border-top:none}
-    .q-title{font-size:15px;font-weight:600;line-height:1.35;margin-bottom:2px} /* bold only */
-    .q-sub{font-size:15px;line-height:1.35;color:var(--sub);margin-bottom:8px}  /* same size */
+    .q-title{font-size:15px;font-weight:600;line-height:1.35;margin-bottom:2px}
+    .q-sub{font-size:15px;line-height:1.35;color:var(--sub);margin-bottom:8px}
     .q-scale{display:flex;gap:8px}
     .q-scale input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
     .q-scale label{
@@ -150,7 +161,7 @@
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
           <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-          <!-- subtext removed per issue #4 -->
+          <!-- subtext removed -->
         </div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
@@ -191,7 +202,7 @@
 
       <!-- Part 1 — Dynamic questions -->
       <div class="sar-page" data-step="q1">
-        <div class="sar-title" style="margin-bottom:6px">Self-Assessment · Part 1 of 2</div>
+        <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 1</div>
         <div class="thin-progress" aria-hidden="true"><span id="q1Prog"></span></div>
 
         <div id="q1List" class="q-list" aria-live="polite"></div>
@@ -204,7 +215,7 @@
 
       <!-- Part 2 — Dynamic questions -->
       <div class="sar-page" data-step="q2">
-        <div class="sar-title" style="margin-bottom:6px">Self-Assessment · Part 2 of 2</div>
+        <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 2</div>
         <div class="thin-progress" aria-hidden="true"><span id="q2Prog"></span></div>
 
         <div id="q2List" class="q-list" aria-live="polite"></div>
@@ -265,12 +276,17 @@
       else if(act==='goto'){ const step = btn.getAttribute('data-step'); if(step) goTo(step); }
     });
 
+    // 5) Dots: show completed steps in red (1 red after page 1, 2 after page 2, etc.)
     function renderDots(){
       const bar = document.getElementById('dotbar');
       bar.innerHTML = '';
-      SAR_STEPS.forEach(step=>{
+      const currentIndex = SAR_STEPS.indexOf(sarState.step);
+      SAR_STEPS.forEach((step, idx)=>{
         const d = document.createElement('div');
-        d.className = 'sar-dot' + (sarState.step === step ? ' active' : '');
+        let cls = 'sar-dot';
+        if(idx <= currentIndex){ cls += ' done'; }
+        if(idx === currentIndex){ cls += ' current'; }
+        d.className = cls;
         bar.appendChild(d);
       });
     }
@@ -305,7 +321,7 @@
       const email = card.querySelector('#sarEmail');
       const startBtn = card.querySelector('#sarStart');
       const hasNick = (nick.value || "").trim().length > 0;
-      const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value || "").trim());
+      const hasEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test((email.value || "").trim());
       const hasHotel = !!sarState.user.hotel;
       startBtn.disabled = !(hasNick && hasEmail && hasHotel);
     }
@@ -426,7 +442,7 @@
 
     // simple HTML escape
     function escapeHTML(s){
-      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      return String(s).replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]));
     }
 
     // Init
