@@ -135,7 +135,7 @@
 .score-raw{font-size:16px;color:var(--sub);font-weight:600}
 
 .scorebar-wrap{width:100%;}
-.scorebar{position:relative;width:100%;height:24px; /* twice as thick as 12px */ 
+.scorebar{position:relative;width:100%;height:var(--scorebar-h); 
   background: linear-gradient(90deg,#22c55e 0%, #a3e635 35%, #facc15 60%, #f97316 80%, #ef4444 100%);
   border-radius:12px;overflow:hidden;border:1px solid #E5E7EB;
 }
@@ -144,6 +144,37 @@
 
 .score-band{font-size:18px; font-weight:700; text-align:center; line-height:1.35}
 /* === END SCORE PAGE STYLES === */
+
+
+/* === TITLES & SCORE PAGE REVISIONS === */
+:root{ --scorebar-h: 48px; } /* 100% thicker than prior 24px */
+
+.sar-title{ font-size:24px !important; font-weight:800 !important; }
+
+/* Score typography */
+.score-values{gap:6px}
+.score-pct{ display:none !important; } /* remove percentage display */
+.score-raw{ font-size:36px; font-weight:800; } /* show only raw score at big size */
+
+/* Band text larger but below score size */
+.score-band{ font-size:22px !important; font-weight:700 !important; }
+
+/* Hide 0 and 100 scale labels */
+.score-scale{ display:none !important; }
+
+/* Color bar thickness + marker */
+.scorebar{ height:var(--scorebar-h) !important; border-radius:24px !important; }
+.score-marker{
+  position:absolute; 
+  top:50%; transform:translateY(-50%);
+  width:4px; /* marker thickness +100% (2px -> 4px) */
+  height:calc(var(--scorebar-h) * 2); /* twice the bar height */
+  background:#9CA3AF; border-radius:2px;
+  left:0;
+}
+/* gap above buttons */
+.score-spacer{ line-height:1; }
+
 </style>
 </head>
 <body>
@@ -243,6 +274,7 @@
     </div>
 
     <div class="score-band" id="scoreBandText">—</div>
+  <div class="score-spacer"><br><br><br><br></div>
   </div>
 
   <div class="sar-actions">
@@ -470,7 +502,7 @@ function renderScore(){
   const pctEl = page.querySelector('#scorePct');
   const rawEl = page.querySelector('#scoreNumber');
   const bandEl = page.querySelector('#scoreBandText');
-  if(pctEl) pctEl.textContent = pct + "%";
+  /* pct hidden */
   if(rawEl) rawEl.textContent = sum + "/" + total;
   if(bandEl) bandEl.innerHTML = scoreBand(pct);
 
@@ -478,7 +510,7 @@ function renderScore(){
   const marker = page.querySelector('#scoreMarker');
   if(marker){
     const clamped = Math.max(0, Math.min(100, pct));
-    marker.style.left = `calc(${clamped}% - 1px)`; // center 2px line on position
+    marker.style.left = `calc(${clamped}% - 2px)`; // center 2px line on position
   }
 }
 </script>
