@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BED Self-Assessment — Page 1</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- @SAR:STYLES START -->
+  <style>
+    :root { --sticky-h: 64px; }
+    * { box-sizing: border-box; }
+
+    /* Full-width mobile layout (inside Google Sites iframe) */
+    html, body { width:100%; height:auto; margin:0; padding:0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, Arial, sans-serif;
+      background:#F9FAFB;
+      color:#111827;
+    }
+
+    /* Header */
+    .sar-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      height: var(--sticky-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      background: #fff;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    @media (min-width:768px){ .sar-header { padding: 0 16px; } }
+    .sar-logo { font-weight:600; letter-spacing:0.2px; }
+
+    /* Wrapper */
+    .sar-wrap { max-width:100%; width:100%; margin:0; padding:8px 12px 24px; }
+    @media (min-width:768px){
+      .sar-wrap { max-width:560px; margin:16px auto; padding:0 16px 24px; }
+    }
+
+    /* Card */
+    .sar-card {
+      background:#fff; border:1px solid #E5E7EB; border-radius:12px;
+      padding:20px 16px; box-shadow:0 1px 2px rgba(0,0,0,0.04);
+      min-height:auto;
+    }
+
+    /* Full-bleed look on small phones */
+    @media (max-width:430px){
+      .sar-wrap { padding:0; }
+      .sar-card {
+        border:none; box-shadow:none; border-radius:0; padding:16px;
+      }
+      body { padding-bottom: env(safe-area-inset-bottom, 16px); }
+    }
+
+    /* Typo */
+    .sar-title { font-size:22px; font-weight:600; margin:8px 0 12px; }
+    .sar-sub  { color:#374151; margin-bottom:16px; }
+
+    /* Buttons */
+    .sar-btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-height:44px; /* larger tap target */
+      padding:8px 12px; border-radius:8px; border:1px solid #D1D5DB;
+      background:#fff; color:#111827; cursor:pointer; text-decoration:none; user-select:none;
+      font-size:14px;
+    }
+    .sar-btn.primary { background:#1E90FF; color:#fff; border-color:#1E90FF; }
+    .sar-btn:disabled { opacity:.6; cursor:not-allowed; }
+    .sar-actions { display:flex; gap:8px; margin-top:16px; }
+
+    /* Dots */
+    .sar-dotbar { display:flex; gap:6px; align-items:center; }
+    .sar-dot { width:8px; height:8px; border-radius:50%; background:#E5E7EB; }
+    .sar-dot.active { background:#1E90FF; }
+
+    /* Page visibility */
+    .sar-page { display:none; }
+    .sar-page.active { display:block; }
+
+    /* Inputs */
+    .sar-row { display:flex; gap:8px; flex-wrap:wrap; }
+    .sar-row-fields { gap:12px; }
+    .sar-field { flex:1; min-width:0; display:flex; flex-direction:column; gap:6px; }
+    .sar-label { font-size:12px; color:#6B7280; }
+    .sar-input {
+      height:44px; /* bigger tap target */
+      padding:8px 10px; border:1px solid #D1D5DB; border-radius:8px;
+      background:#fff; color:#111827; outline:none;
+      font-size:16px; /* prevent iOS zoom */
+    }
+    .sar-input:focus { border-color:#1E90FF; box-shadow:0 0 0 3px rgba(30,144,255,0.15); }
+    @media (max-width:420px){ .sar-row-fields { flex-direction:column; } }
+
+    /* Five hotel buttons in one row (auto-resize) */
+    .sar-hotels {
+      display:flex;
+      gap:6px;
+      flex-wrap:nowrap;
+      justify-content:space-between;
+    }
+    .sar-hotels .sar-hotel {
+      flex:1 1 18%;
+      min-width:0;
+      text-transform:uppercase;
+      font-weight:600;
+      padding:10px 0;
+      font-size:14px;
+    }
+    .sar-hotel.selected { background:#1E90FF; color:#fff; border-color:#1E90FF; }
+
+    /* Intro + scale smaller (and extra-small tweak) */
+    .sar-intro p, .sar-scale { font-size:14px; line-height:1.45; }
+    @media (max-width:360px){ .sar-intro p, .sar-scale { font-size:13px; } }
+
+    /* Rating with round blue numbers */
+    .sar-scale-row { display:flex; align-items:center; gap:10px; margin:6px 0; }
+    .sar-badge {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:24px; height:24px; border-radius:50%;
+      background:#1E90FF; color:#fff; font-size:13px; font-weight:600;
+    }
+
+    /* Dev toolbar (keep for now) */
+    .sar-devbar { position:fixed; right:12px; bottom:12px; z-index:10; display:flex; gap:6px; }
+  </style>
+  <!-- @SAR:STYLES END -->
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="sar-header">
+    <div class="sar-logo">BED HOSPITALITY</div>
+    <div class="sar-dotbar" id="dotbar" aria-label="Progress"></div>
+  </header>
+
+  <main class="sar-wrap">
+    <section class="sar-card">
+
+      <!-- @SAR:PAGES START -->
+      <!-- Page 1 — Welcome & Hotel Select -->
+      <div class="sar-page" data-step="welcome">
+        <!-- Titles (left-aligned, max 75% width) -->
+        <div style="max-width:75%">
+          <div class="sar-title" style="font-weight:600; font-size:18px; margin-bottom:4px;">SELF-ASSESSMENT (SAR)</div>
+          <div class="sar-sub" style="margin-bottom:16px; text-transform:none;">evaluate yourself and your peers</div>
+        </div>
+
+        <!-- Two fields side by side -->
+        <div class="sar-row sar-row-fields" style="margin-bottom:12px;">
+          <label class="sar-field">
+            <span class="sar-label">your nickname</span>
+            <input id="sarNick" type="text" class="sar-input" inputmode="text" autocomplete="nickname" />
+          </label>
+          <label class="sar-field">
+            <span class="sar-label">your email</span>
+            <input id="sarEmail" type="email" class="sar-input" inputmode="email" autocomplete="email" />
+          </label>
+        </div>
+
+        <!-- Hotel buttons -->
+        <div class="sar-row sar-hotels" role="group" aria-label="Choose your BED Hotel" style="margin-bottom:12px;">
+          <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
+          <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
+          <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
+          <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
+          <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
+        </div>
+
+        <!-- Intro text -->
+        <div class="sar-intro" style="margin-bottom:8px;">
+          <p>Self-assessment helps your personal growth and development. Read each statement and think how you act in these situations. Then select the rating that best fits you. Be honest with yourself. The goal is to know your own strengths and opportunities.</p>
+        </div>
+
+        <!-- Rating scale -->
+        <div class="sar-scale" style="margin-bottom:8px;">
+          <div class="sar-scale-row"><span class="sar-badge">1</span><span>I'm not good at this</span></div>
+          <div class="sar-scale-row"><span class="sar-badge">2</span><span>I can do better in this</span></div>
+          <div class="sar-scale-row"><span class="sar-badge">3</span><span>I'm good at this</span></div>
+          <div class="sar-scale-row"><span class="sar-badge">4</span><span>I'm great at this</span></div>
+          <div class="sar-scale-row"><span class="sar-badge">5</span><span>I'm excellent at this</span></div>
+        </div>
+
+        <!-- Actions -->
+        <div class="sar-actions">
+          <button id="sarStart" class="sar-btn primary" data-nav="goto" data-step="q1" disabled>start</button>
+        </div>
+      </div>
+      <!-- @SAR:PAGES END -->
+
+    </section>
+  </main>
+
+  <!-- Dev toolbar (remove before release) -->
+  <div class="sar-devbar" id="devbar" aria-hidden="false"></div>
+
+  <!-- @SAR:SCRIPTS START -->
+  <script>
+    const SAR_STEPS = ["welcome","userinfo","q1","q2","score","peer","done"];
+
+    const sarState = {
+      step: "welcome",
+      user: { nickname: "", email: "", hotel: "" }
+    };
+
+    function goTo(step) {
+      if (!SAR_STEPS.includes(step)) return;
+      sarState.step = step;
+      document.querySelectorAll('.sar-page').forEach(p => {
+        p.classList.toggle('active', p.dataset.step === step);
+      });
+      renderDots();
+      renderDevbar();
+      if (step === "welcome") ensureWelcomeBindings();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function next() {
+      const i = SAR_STEPS.indexOf(sarState.step);
+      if (i < SAR_STEPS.length - 1) goTo(SAR_STEPS[i+1]);
+    }
+    function back() {
+      const i = SAR_STEPS.indexOf(sarState.step);
+      if (i > 0) goTo(SAR_STEPS[i-1]);
+    }
+    function restart() { goTo(SAR_STEPS[0]); }
+
+    function bindNav() {
+      document.body.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-nav]');
+        if (!btn) return;
+        const act = btn.getAttribute('data-nav');
+        if (act === 'next') next();
+        else if (act === 'back') back();
+        else if (act === 'restart') restart();
+        else if (act === 'goto') {
+          const step = btn.getAttribute('data-step');
+          if (step) goTo(step);
+        }
+      });
+    }
+
+    function renderDots() {
+      const bar = document.getElementById('dotbar');
+      bar.innerHTML = '';
+      SAR_STEPS.forEach(step => {
+        const d = document.createElement('div');
+        d.className = 'sar-dot' + (sarState.step === step ? ' active':'');
+        bar.appendChild(d);
+      });
+    }
+
+    function renderDevbar() {
+      const bar = document.getElementById('devbar');
+      bar.innerHTML = '';
+      SAR_STEPS.forEach(step => {
+        const b = document.createElement('button');
+        b.className = 'sar-btn';
+        b.textContent = step;
+        b.onclick = () => goTo(step);
+        bar.appendChild(b);
+      });
+    }
+
+    // Page 1 logic
+    let welcomeBound = false;
+    function ensureWelcomeBindings() {
+      if (welcomeBound) { validateWelcome(); return; }
+      welcomeBound = true;
+
+      const card = document.querySelector('.sar-page[data-step="welcome"]');
+      const nick = card.querySelector('#sarNick');
+      const email = card.querySelector('#sarEmail');
+      const startBtn = card.querySelector('#sarStart');
+
+      // Hotel selection
+      card.addEventListener('click', (e) => {
+        const btn = e.target.closest('.sar-hotel');
+        if (!btn) return;
+        card.querySelectorAll('.sar-hotel').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        sarState.user.hotel = btn.getAttribute('data-hotel') || "";
+        validateWelcome();
+      });
+
+      // Inputs update state + validate
+      nick.addEventListener('input', () => {
+        sarState.user.nickname = nick.value.trim();
+        validateWelcome();
+      });
+      email.addEventListener('input', () => {
+        sarState.user.email = email.value.trim();
+        validateWelcome();
+      });
+
+      // Guard start click
+      startBtn.addEventListener('click', (e) => {
+        if (startBtn.disabled) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      });
+
+      validateWelcome();
+    }
+
+    function validateWelcome() {
+      const card = document.querySelector('.sar-page[data-step="welcome"]');
+      if (!card) return;
+      const nick = card.querySelector('#sarNick');
+      const email = card.querySelector('#sarEmail');
+      const startBtn = card.querySelector('#sarStart');
+
+      const hasNick = (nick.value || "").trim().length > 0;
+      const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value || "").trim());
+      const hasHotel = !!sarState.user.hotel;
+
+      startBtn.disabled = !(hasNick && hasEmail && hasHotel);
+    }
+
+    // Init
+    bindNav();
+    goTo(sarState.step);
+  </script>
+  <!-- @SAR:SCRIPTS END -->
+</body>
+</html>
