@@ -22,15 +22,19 @@
     html,body{width:100%;height:auto;margin:0;padding:0}
     body{font-family:Inter,system-ui,-apple-system,Arial,sans-serif;background:#F9FAFB;color:var(--text)}
 
-    /* Header */
+    /* Header (robust on desktop & mobile) */
     .sar-header{
       position:sticky;top:0;z-index:5;height:64px;
       display:flex;align-items:center;justify-content:space-between;
-      padding:0 12px;background:#fff;border-bottom:1px solid var(--border)
+      padding:0 12px;background:#fff;border-bottom:1px solid var(--border);
+      flex-wrap:nowrap;gap:12px;
     }
     @media (min-width:768px){ .sar-header{padding:0 16px} }
-    .sar-logo{font-size:18px;font-weight:600;letter-spacing:.2px}
-    .sar-dotbar{display:flex;gap:10px;align-items:center}
+    .sar-logo{
+      font-size:18px;font-weight:600;letter-spacing:.2px;color:var(--text);
+      white-space:nowrap;flex:0 0 auto; /* don't shrink or wrap */
+    }
+    .sar-dotbar{display:flex;gap:10px;align-items:center;flex:0 0 auto}
     .sar-dot{width:16px;height:16px;border-radius:50%;background:#E5E7EB;transition:background .3s ease}
     .sar-dot.active{background:var(--active)}
 
@@ -291,7 +295,7 @@
     // --- Load questions.json once
     async function loadQuestions(){
       if (sarState.questions.length) return sarState.questions;
-      const res = await fetch('./questions.json', {cache: 'no-store'});
+      const res = await fetch('./questions.json?v=1', {cache: 'no-store'}); // cache-bust + no-store
       const data = await res.json();
       sarState.questions = Array.isArray(data) ? data : [];
       return sarState.questions;
@@ -412,5 +416,3 @@
   </script>
 </body>
 </html>
-
-
