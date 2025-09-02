@@ -16,7 +16,7 @@
       --border:#E5E7EB;
       --text:#111827;
       --sub:#374151;
-      --active:#bf0101; /* new red for completed/current dots */
+      --active:#ff0000; /* new red for completed/current dots */
       --header-h:64px;
     }
     *{box-sizing:border-box}
@@ -73,7 +73,7 @@
     .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
-      min-height:44px;min-width:140px;
+      min-height:44px;min-width:110px;
       padding:10px 18px;border-radius:8px;border:1px solid #D1D5DB;
       background:#fff;color:var(--text);cursor:pointer;text-decoration:none;user-select:none;
       font-size:16px;font-weight:600;
@@ -127,7 +127,45 @@
     .q-scale input[type="radio"]:checked + label{
       background:var(--brand);border-color:var(--brand);color:#fff;
     }
-  </style>
+  
+
+/* Buttons: 110px wide; white text when blue */
+.sar-btn.primary,
+.sar-btn.primary:focus,
+.sar-btn.primary:hover,
+.sar-btn.primary:active{ 
+  background: var(--brand); color:#fff !important; border-color: var(--brand);
+}
+.sar-btn:focus,.sar-btn:hover,.sar-btn:active{ outline:none; }
+
+
+.sar-page .sar-title{ display:none !important; }
+
+
+/* Header title line + stacked layout */
+:root{ --header-h: 100px; } /* taller header to fit 3 lines */
+.sar-logo-wrap{ display:flex; flex-direction:column; gap:4px; }
+.sar-page-title{ font-size:18px; font-weight:700; color:#434343; }
+
+
+.score-wrap{ align-items:stretch !important; } .score-band{ text-align:left !important; }
+
+.global-progress{ display:none !important; }
+
+/* === SCORE PAGE STYLES (re-add) === */
+.score-wrap{display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:flex-start}
+.score-values{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%}
+.score-raw{ font-size:36px; font-weight:800; color:#434343; }
+.scorebar-wrap{width:100%;}
+.scorebar{position:relative;width:100%;height:var(--scorebar-h,48px);
+  background: linear-gradient(90deg,#ef4444 0%, #f97316 20%, #facc15 40%, #a3e635 65%, #22c55e 100%);
+  border-radius:8px;overflow:visible;border:1px solid #E5E7EB;
+}
+.score-marker{position:absolute;top:50%;transform:translateY(-50%);
+  width:8px;height:68px;background:#434343;border-radius:8px;left:0}
+.score-band{font-size:22px;font-weight:700;color:#434343;text-align:left}
+/* === END SCORE PAGE STYLES === */
+</style>
 </head>
 <body>
 
@@ -135,6 +173,7 @@
   <header class="sar-header">
     <div class="sar-logo-wrap">
       <div class="sar-logo">BED HOSPITALITY 2.0</div>
+      <div class="sar-page-title" id="sarPageTitle" aria-live="polite"></div>
       <div class="sar-dotbar" id="dotbar" aria-label="Progress"></div>
       <!-- Global progress bar inside header -->
       <div class="global-progress" id="gprog" aria-hidden="true"><span id="gprogFill"></span></div>
@@ -209,35 +248,27 @@
       </div>
 
       <!-- Placeholders -->
-      <div class="sar-page" data-step="score"><div class="sar-title">Your Score</div></div>
-      <div class="sar-page" data-step="peer">
-  <div class="sar-title">PEER REVIEW</div>
-  <div class="sar-sub" style="margin-bottom:12px">
-    You’re almost done! You have completed the self assessment report (SAR) so now it is time to ask one of your peers to assess you. You can select anyone in your team who has been working in BED for at least two years
+      <div class="sar-page" data-step="score">
+  <div class="sar-title">SELF-ASSESSMENT SCORE</div>
+  <div class="score-gap" aria-hidden="true"><br><br><br><br></div>
+  <div class="score-wrap">
+    <div class="score-values">
+      <div class="score-raw" id="scoreNumber">0/100</div>
+    </div>
+    <div class="scorebar-wrap" aria-label="Score on color bar">
+      <div class="scorebar" id="scoreBar">
+        <span class="score-marker" id="scoreMarker" title="Your score"></span>
+      </div>
+    </div>
+    <div class="score-band" id="scoreBandText">—</div>
   </div>
-  <div class="sar-row sar-row-fields" style="margin-bottom:12px">
-    <label class="sar-field">
-      <span class="sar-label">peer name</span>
-      <input id="peerName" type="text" class="sar-input" inputmode="text" placeholder="nick name" />
-    </label>
-    <label class="sar-field">
-      <span class="sar-label">peer email</span>
-      <input id="peerEmail" type="email" class="sar-input" inputmode="email" autocomplete="email" />
-    </label>
-  </div>
-  <div class="sar-row sar-hotels" role="group" aria-label="Choose peer's BED Hotel" style="margin-bottom:12px">
-    <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
-    <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
-    <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
-    <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
-    <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
-  </div>
+  <div class="score-spacer"><br><br><br><br></div>
   <div class="sar-actions">
     <button class="sar-btn" data-nav="back">Back</button>
-    <button id="peerShare" class="sar-btn">Share</button>
-    <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="done" disabled>Next</button>
+    <button class="sar-btn primary" data-nav="next">Next</button>
   </div>
 </div>
+      <div class="sar-page" data-step="peer"><div class="sar-title">Peer Review</div></div>
       <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
       <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
 
@@ -250,7 +281,6 @@
     const sarState = {
       step: "welcome",
       user: { nickname: "", email: "", hotel: "" },
-      peer: { name: "", email: "", hotel: "" },
       answers: {},
       questions: []
     };
@@ -262,11 +292,12 @@
         p.classList.toggle('active', p.dataset.step === step);
       });
       renderDots();
+      updateHeaderTitle();
       updateGlobalProgress();
       if(step === "welcome") ensureWelcomeBindings();
       if(step === "q1") renderQ1();
       if(step === "q2") renderQ2();
-      if(step === "peer") ensurePeerBindings();
+      if(step === "score") renderScore();
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
     function next(){
@@ -440,68 +471,48 @@
 
     goTo(sarState.step);
   
-let peerBound = false;
-function ensurePeerBindings(){
-  if(peerBound){ validatePeer(); return; }
-  peerBound = true;
-  const card = document.querySelector('.sar-page[data-step="peer"]');
-  if(!card) return;
-  const nameEl = card.querySelector('#peerName');
-  const emailEl = card.querySelector('#peerEmail');
-  const nextBtn = card.querySelector('#peerNext');
-  const shareBtn = card.querySelector('#peerShare');
-  card.addEventListener('click',(e)=>{
-    const btn = e.target.closest('.sar-hotel');
-    if(!btn) return;
-    card.querySelectorAll('.sar-hotel').forEach(b=>b.classList.remove('selected'));
-    btn.classList.add('selected');
-    sarState.peer.hotel = btn.getAttribute('data-hotel') || "";
-    validatePeer();
-  });
-  if(nameEl) nameEl.addEventListener('input', ()=>{ sarState.peer.name = nameEl.value.trim(); validatePeer(); });
-  if(emailEl) emailEl.addEventListener('input', ()=>{ sarState.peer.email = emailEl.value.trim(); validatePeer(); });
-  if(shareBtn){ shareBtn.addEventListener('click', (e)=>{ e.preventDefault(); downloadSarResults(); }); }
-  validatePeer();
-}
-function validatePeer(){
-  const card = document.querySelector('.sar-page[data-step="peer"]');
-  if(!card) return;
-  const nameEl = card.querySelector('#peerName');
-  const emailEl = card.querySelector('#peerEmail');
-  const nextBtn = card.querySelector('#peerNext');
-  const hasName = (nameEl?.value || "").trim().length > 0;
-  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
-  const hasHotel = !!sarState.peer.hotel;
-  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
+function updateHeaderTitle(){
+  const slot = document.getElementById('sarPageTitle');
+  if(!slot) return;
+  const activeTitle = document.querySelector('.sar-page.active .sar-title');
+  let text = '';
+  if(activeTitle){ text = activeTitle.textContent.trim(); }
+  if(!text){
+    const step = sarState.step;
+    const map = {welcome:'WELCOME', q1:'STATEMENTS PART 1', q2:'STATEMENTS PART 2', score:'SELF-ASSESSMENT SCORE', peer:'PEER REVIEW', done:'YOU\'RE DONE', finish:'FINISH'};
+    text = map[step] || '';
+  }
+  slot.textContent = text;
 }
 
-function downloadSarResults(){
-  const qs = sarState.questions || [];
-  const rows = [];
-  rows.push(['Nickname', sarState.user.nickname]);
-  rows.push(['Email', sarState.user.email]);
-  rows.push(['Hotel', sarState.user.hotel]);
-  rows.push(['Peer Name', sarState.peer?.name || '']);
-  rows.push(['Peer Email', sarState.peer?.email || '']);
-  rows.push(['Peer Hotel', sarState.peer?.hotel || '']);
-  let sum = 0, total = qs.length * 5;
-  rows.push([]);
-  rows.push(['Question ID','Statement','Your Rating']);
-  qs.forEach(q => { const v = sarState.answers[q.id] || 0; sum += v; rows.push([q.id, q.statement, v]); });
-  rows.push([]);
-  rows.push(['Total Score', sum + '/' + total]);
-  const csv = rows.map(r => r.map(x => ('"'+String(x).replace(/"/g,'""')+'"')).join(',')).join('\n');
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  const stamp = new Date().toISOString().slice(0,19).replace(/[:T]/g,'-');
-  a.download = `BED-SAR-Results-${stamp}.csv`;
-  document.body.appendChild(a);
-  a.click();
-  URL.revokeObjectURL(url);
-  a.remove();
+
+function scoreBand(pct){
+  if (pct >= 80) return "Excellent! Inspire others.<br>Lead by example";
+  if (pct >= 60) return "Great hospitality!<br>Keep challenging yourself";
+  if (pct >= 40) return "Use self-development.<br>Practise makes you better";
+  return "You’re behind.<br>Ask your team for guidance";
 }
+
+
+function renderScore(){
+  const page = document.querySelector('.sar-page[data-step="score"]');
+  if(!page) return;
+  const qs = sarState.questions || [];
+  const total = qs.length * 5 || 100;
+  let sum = 0;
+  qs.forEach(q => { sum += (sarState.answers[q.id] || 0); });
+  const pct = total ? Math.round((sum / total) * 100) : 0;
+  const rawEl = page.querySelector('#scoreNumber');
+  const bandEl = page.querySelector('#scoreBandText');
+  if(rawEl) rawEl.textContent = sum + "/" + total;
+  if(bandEl) bandEl.innerHTML = scoreBand(pct);
+  const marker = page.querySelector('#scoreMarker');
+  if(marker){
+    const clamped = Math.max(0, Math.min(100, pct));
+    marker.style.left = `calc(${clamped}% - 4px)`; // center 8px marker
+  }
+}
+
 </script>
 </body>
 </html>
