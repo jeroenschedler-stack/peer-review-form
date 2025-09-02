@@ -16,7 +16,7 @@
       --border:#E5E7EB;
       --text:#111827;
       --sub:#374151;
-      --active:#FF3B30;
+      --active:#FF3B30; /* red active dot */
     }
     *{box-sizing:border-box}
     html,body{width:100%;height:auto;margin:0;padding:0}
@@ -94,8 +94,9 @@
     .q-list{display:flex;flex-direction:column;gap:14px}
     .q-item{padding:12px 0;border-top:1px solid var(--border)}
     .q-item:first-child{border-top:none}
-    .q-title{font-size:16px;font-weight:600;line-height:1.35;margin-bottom:2px} /* bold only */
-    .q-sub{font-size:16px;line-height:1.35;color:var(--sub);margin-bottom:8px}  /* same size */
+    .q-title{font-size:15px;font-weight:600;line-height:1.35;margin-bottom:2px} /* bold only */
+    .q-sub{font-size:15px;line-height:1.35;color:var(--sub);margin-bottom:8px}  /* same size */
+
     .q-scale{display:flex;gap:8px}
     .q-scale input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
     .q-scale label{
@@ -107,6 +108,10 @@
     .q-scale input[type="radio"]:checked + label{
       background:var(--brand);border-color:var(--brand);color:#fff;
     }
+
+    /* Thin progress bar (Part 1) */
+    .thin-progress{height:4px;background:#E5E7EB;border-radius:3px;overflow:hidden;margin:-4px 0 12px}
+    .thin-progress > span{display:block;height:100%;width:0;background:var(--brand);transition:width .25s ease}
   </style>
 </head>
 <body>
@@ -123,7 +128,6 @@
       <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
-          <div class="sar-title">BED HOSPITALITY</div>
           <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
           <div class="sar-sub" style="margin-bottom:16px">evaluate yourself and your peers</div>
         </div>
@@ -166,7 +170,9 @@
 
       <!-- Part 1 — Dynamic questions -->
       <div class="sar-page" data-step="q1">
-        <div class="sar-title">Self-Assessment · Part 1 of 2</div>
+        <div class="sar-title" style="margin-bottom:6px">Self-Assessment · Part 1 of 2</div>
+        <div class="thin-progress" aria-hidden="true"><span id="q1Prog"></span></div>
+
         <div id="q1List" class="q-list" aria-live="polite"></div>
 
         <div class="sar-actions">
@@ -178,11 +184,17 @@
       <!-- Part 2 (placeholder for now) -->
       <div class="sar-page" data-step="q2">
         <div class="sar-title">Self-Assessment · Part 2 of 2</div>
-        <p class="sar-sub">Coming next (we’ll load the next 10 here).</p>
+        <p class="sar-sub">Coming next.</p>
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
+          <button class="sar-btn primary" data-nav="next">Next</button>
         </div>
       </div>
+
+      <!-- Placeholders for full 7-dot flow -->
+      <div class="sar-page" data-step="score"><div class="sar-title">Your Score</div></div>
+      <div class="sar-page" data-step="peer"><div class="sar-title">Peer Review</div></div>
+      <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
 
     </section>
   </main>
@@ -192,7 +204,9 @@
   </footer>
 
   <script>
-    const SAR_STEPS = ["welcome","q1","q2"];
+    // 7 steps for the dot bar
+    const SAR_STEPS = ["welcome","q1","q2","score","peer","done","finish"];
+
     const sarState = {
       step: "welcome",
       user: { nickname: "", email: "", hotel: "" },
@@ -283,12 +297,13 @@
       return sarState.questions;
     }
 
-    // --- Render Part 1 (first 10)
+    // --- Render Part 1 (first 10) with thin progress bar
     async function renderQ1(){
       const qs = await loadQuestions();
       const slice = qs.slice(0, 10);
       const mount = document.getElementById('q1List');
       mount.innerHTML = slice.map(q => renderQuestionHTML(q)).join('');
+
       // Restore selections if any
       slice.forEach(q => {
         const v = sarState.answers[q.id];
@@ -297,8 +312,10 @@
           if (el) el.checked = true;
         }
       });
-      // Delegate change events
-      mount.addEventListener('change', onRatingChanged);
+
+      // Bind change once
+      mount.onchange = onRatingChanged;
+      updateQ1Progress(slice);
       validateQ1Completed(slice);
     }
 
@@ -329,7 +346,8 @@
       const val = parseInt(input.value, 10);
       if(qid && val >=1 && val <=5){
         sarState.answers[qid] = val;
-        // Recheck completion
+        const list = Array.from(document.querySelectorAll('#q1List .q-item')).map(el => ({ id: el.getAttribute('data-qid') }));
+        updateQ1Progress(list);
         validateQ1Completed(document.querySelectorAll('#q1List .q-item'));
       }
     }
@@ -337,10 +355,22 @@
     function validateQ1Completed(list){
       const items = Array.from(list);
       const allAnswered = items.every(el => {
-        const qid = el.getAttribute('data-qid');
+        const qid = el.getAttribute ? el.getAttribute('data-qid') : el.id;
         return !!sarState.answers[qid];
       });
       document.getElementById('q1Next').disabled = !allAnswered;
+    }
+
+    function updateQ1Progress(list){
+      const items = Array.from(list);
+      const total = items.length;
+      const answered = items.filter(el => {
+        const qid = el.getAttribute ? el.getAttribute('data-qid') : el.id;
+        return !!sarState.answers[qid];
+      }).length;
+      const pct = total ? Math.round((answered / total) * 100) : 0;
+      const bar = document.getElementById('q1Prog');
+      if(bar) bar.style.width = pct + '%';
     }
 
     // simple HTML escape
@@ -353,5 +383,3 @@
   </script>
 </body>
 </html>
-
-
