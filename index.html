@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BED Hospitality — Self-Assessment (SAR)</title>
+  <title>BED Hospitality — Self-Assessment </title>
   <meta name="theme-color" content="#1E90FF" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,7 @@
     :root{
       --brand:#1E90FF;
       --border:#E5E7EB;
-      --text:#111827;
+      --text:#434343;
       --sub:#374151;
       --active:#bf0101; /* new red for completed/current dots */
       --header-h:64px;
@@ -65,7 +65,7 @@
     }
 
     /* Titles */
-    .sar-title{font-size:18px;font-weight:600;margin:8px 0 12px}
+    .sar-title{ font-size:22px !important; font-weight:800 !important; margin:8px 0 12px }
     .sar-sub{color:var(--sub);margin-bottom:16px}
 
     /* Rows & buttons */
@@ -136,10 +136,10 @@
 
 .scorebar-wrap{width:100%;}
 .scorebar{position:relative;width:100%;height:var(--scorebar-h); 
-  background: linear-gradient(90deg,#22c55e 0%, #a3e635 35%, #facc15 60%, #f97316 80%, #ef4444 100%);
+  background: linear-gradient(90deg,#ef4444 0%, #f97316 20%, #facc15 40%, #a3e635 65%, #22c55e 100%);
   border-radius:12px;overflow:hidden;border:1px solid #E5E7EB;
 }
-.score-marker{position:absolute;top:-6px;bottom:-6px;width:2px;background:#9CA3AF;border-radius:1px;left:0}
+.score-marker{ position:absolute; top:50%; transform:translateY(-50%); width:8px; height:68px; background:#434343; border-radius:4px; left:0 }
 .score-scale{display:flex;justify-content:space-between;font-size:12px;color:#6B7280;margin-top:6px}
 
 .score-band{font-size:18px; font-weight:700; text-align:center; line-height:1.35}
@@ -149,7 +149,7 @@
 /* === TITLES & SCORE PAGE REVISIONS === */
 :root{ --scorebar-h: 48px; } /* 100% thicker than prior 24px */
 
-.sar-title{ font-size:24px !important; font-weight:800 !important; }
+.sar-title{ font-size:22px !important; font-weight:800 !important; margin:8px 0 12px }
 
 /* Score typography */
 .score-values{gap:6px}
@@ -164,16 +164,17 @@
 
 /* Color bar thickness + marker */
 .scorebar{ height:var(--scorebar-h) !important; border-radius:24px !important; }
-.score-marker{
-  position:absolute; 
-  top:50%; transform:translateY(-50%);
-  width:4px; /* marker thickness +100% (2px -> 4px) */
-  height:calc(var(--scorebar-h) * 2); /* twice the bar height */
-  background:#9CA3AF; border-radius:2px;
-  left:0;
-}
+.score-marker{ position:absolute; top:50%; transform:translateY(-50%); width:8px; height:68px; background:#434343; border-radius:4px; left:0 }
 /* gap above buttons */
 .score-spacer{ line-height:1; }
+
+
+
+/* === NEW STYLE OVERRIDES === */
+.score-raw{ color:#434343 !important; }
+.score-band{ color:#434343 !important; text-align:left !important; }
+body{ color:#434343 !important; } /* default text */
+.sar-btn{ color:#434343 !important; } /* button text default */
 
 </style>
 </head>
@@ -195,7 +196,7 @@
       <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
-          <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
+          <div class="sar-title">SELF-ASSESSMENT </div>
         </div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
@@ -510,7 +511,7 @@ function renderScore(){
   const marker = page.querySelector('#scoreMarker');
   if(marker){
     const clamped = Math.max(0, Math.min(100, pct));
-    marker.style.left = `calc(${clamped}% - 2px)`; // center 2px line on position
+    marker.style.left = `calc(${clamped}% - 4px)`; // center 2px line on position
   }
 }
 </script>
