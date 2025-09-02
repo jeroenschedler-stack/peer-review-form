@@ -58,6 +58,11 @@
     /* Card */
     .sar-card{ background:#fff;border:1px solid var(--border);border-radius:12px;
       padding:20px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04);min-height:auto }
+.peer-checks{ display:flex; gap:24px; align-items:flex-end; flex-wrap:nowrap; margin:8px 0 12px; }
+.peer-col{ display:flex; flex-direction:column; gap:6px; min-width:180px; }
+.peer-bools{ display:flex; gap:12px; align-items:center; }
+.peer-bools label{ display:inline-flex; align-items:center; gap:6px; font-size:14px; color:var(--text); }
+
 .finish-hero{ display:flex; justify-content:center; align-items:center; margin-top:8px; }
 .finish-hero i{ font-size:72px; line-height:1; color:var(--brand); }
 .finish-gap{ height:auto; line-height:1; text-align:left; }
@@ -284,6 +289,22 @@
       <input id="peerEmail" type="email" class="sar-input" inputmode="email" autocomplete="email" />
     </label>
   </div>
+  <div class="peer-checks" role="group" aria-label="Peer review confirmations">
+    <div class="peer-col">
+      <div class="sar-label">two years experience?</div>
+      <div class="peer-bools">
+        <label><input type="checkbox" id="peerExpYes" /> YES</label>
+        <label><input type="checkbox" id="peerExpNo" /> NO</label>
+      </div>
+    </div>
+    <div class="peer-col">
+      <div class="sar-label">send peer review form?</div>
+      <div class="peer-bools">
+        <label><input type="checkbox" id="peerSendYes" /> YES</label>
+        <label><input type="checkbox" id="peerSendNo" /> NO</label>
+      </div>
+    </div>
+  </div>
   <div class="sar-row sar-hotels" role="group" aria-label="Choose peer's BED Hotel" style="margin-bottom:12px">
     <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
@@ -302,9 +323,8 @@
   <div class="sar-card">
     <div class="finish-hero" aria-hidden="true"><i class="fa-solid fa-circle-check"></i></div>
     <div class="finish-gap"><br><br></div>
-    <div class="sar-sub" style="color:var(--text)">
-      You’re done and we appreciate your participation Your score is a good starting point. Use it for self-development or to help others. Let us know if you have questions about your assessment. You can download your complete Self-Assessment Report (SAR) below.
-    </div>
+    <div class="sar-sub">You’re done and we appreciate your participation Your score is a good starting point. Use it for self-development or to help others.  You can download your complete Self-Assessment Report (SAR) below. Let us know if you have questions</div>
+</div>
     <div class="finish-gap"><br><br></div>
     <div class="sar-actions">
       <button class="sar-btn" data-nav="back">Back</button>
@@ -543,10 +563,63 @@ function ensurePeerBindings(){
   peerBound = true;
   const card = document.querySelector('.sar-page[data-step="peer"]');
   if(!card) return;
+
   const nameEl = card.querySelector('#peerName');
   const emailEl = card.querySelector('#peerEmail');
   const nextBtn = card.querySelector('#peerNext');
   const shareBtn = card.querySelector('#peerShare');
+
+  // Hotel selector
+  card.addEventListener('click',(e)=>{
+    const btn = e.target.closest('.sar-hotel');
+    if(!btn) return;
+    card.querySelectorAll('.sar-hotel').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    sarState.peer = sarState.peer || {name:'',email:'',hotel:''};
+    sarState.peer.hotel = btn.getAttribute('data-hotel') || "";
+    validatePeer();
+  });
+
+  // Field bindings
+  if(nameEl) nameEl.addEventListener('input', ()=>{
+    sarState.peer = sarState.peer || {name:'',email:'',hotel:''};
+    sarState.peer.name = nameEl.value.trim();
+    validatePeer();
+  });
+  if(emailEl) emailEl.addEventListener('input', ()=>{
+    sarState.peer = sarState.peer || {name:'',email:'',hotel:''};
+    sarState.peer.email = emailEl.value.trim();
+    validatePeer();
+  });
+
+  // New checkbox listeners
+  const expYesEl = document.getElementById('peerExpYes');
+  const expNoEl = document.getElementById('peerExpNo');
+  const sendYesEl = document.getElementById('peerSendYes');
+  const sendNoEl = document.getElementById('peerSendNo');
+  if(expYesEl) expYesEl.addEventListener('change', validatePeer);
+  if(expNoEl) expNoEl.addEventListener('change', validatePeer);
+  if(sendYesEl) sendYesEl.addEventListener('change', ()=>{});
+  if(sendNoEl) sendNoEl.addEventListener('change', ()=>{});
+
+  // Share (CSV) remains optional
+  if(shareBtn){
+    shareBtn.addEventListener('click',(e)=>{ e.preventDefault(); downloadSarResults(); });
+  }
+
+  validatePeer();
+}
+  peerBound = true;
+  const card = document.querySelector('.sar-page[data-step="peer"]');
+  if(!card) return;
+  const nameEl = card.querySelector('#peerName');
+  const emailEl = card.querySelector('#peerEmail');
+  const nextBtn = card.querySelector('#peerNext');
+  const shareBtn = card.querySelector('#peerShare');
+  const expYesEl = document.getElementById("peerExpYes");
+  const expNoEl = document.getElementById("peerExpNo");
+  const sendYesEl = document.getElementById("peerSendYes");
+  const sendNoEl = document.getElementById("peerSendNo");
   card.addEventListener('click',(e)=>{
     const btn = e.target.closest('.sar-hotel');
     if(!btn) return;
@@ -570,7 +643,9 @@ function validatePeer(){
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
-  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
+  const expYes = document.getElementById('peerExpYes');
+  const hasExpYes = !!(expYes && expYes.checked);
+  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && hasExpYes);
 }
 function updateHeaderTitle(){
   const slot = document.getElementById('sarPageTitle');
@@ -580,7 +655,7 @@ function updateHeaderTitle(){
   if(activeTitle){ text = activeTitle.textContent.trim(); }
   const step = sarState.step;
   if(!text){
-    const map = {welcome:'WELCOME', q1:'STATEMENTS PART 1', q2:'STATEMENTS PART 2', score:'SELF-ASSESSMENT SCORE', peer:'PEER REVIEW', done:'YOU\'RE DONE', finish:'FINISH'};
+    const map = {welcome:'WELCOME', q1:'STATEMENTS PART 1', q2:'STATEMENTS PART 2', score:'SELF-ASSESSMENT SCORE', peer:'PEER REVIEW', done:'YOU\'RE DONE', finish:'SELF- ASSESSMENT COMPLETE'};
     text = map[step] || '';
   }
   slot.textContent = text;
