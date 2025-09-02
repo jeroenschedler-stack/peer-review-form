@@ -96,7 +96,6 @@
     .q-item:first-child{border-top:none}
     .q-title{font-size:15px;font-weight:600;line-height:1.35;margin-bottom:2px} /* bold only */
     .q-sub{font-size:15px;line-height:1.35;color:var(--sub);margin-bottom:8px}  /* same size */
-
     .q-scale{display:flex;gap:8px}
     .q-scale input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
     .q-scale label{
@@ -109,7 +108,7 @@
       background:var(--brand);border-color:var(--brand);color:#fff;
     }
 
-    /* Thin progress bar (Part 1) */
+    /* Thin progress bar */
     .thin-progress{height:4px;background:#E5E7EB;border-radius:3px;overflow:hidden;margin:-4px 0 12px}
     .thin-progress > span{display:block;height:100%;width:0;background:var(--brand);transition:width .25s ease}
   </style>
@@ -177,17 +176,20 @@
 
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
-          <button id="q1Next" class="sar-btn primary" data-nav="next" disabled>Next</button>
+          <button id="q1Next" class="sar-btn primary" data-nav="goto" data-step="q2" disabled>Next</button>
         </div>
       </div>
 
-      <!-- Part 2 (placeholder for now) -->
+      <!-- Part 2 — Dynamic questions -->
       <div class="sar-page" data-step="q2">
-        <div class="sar-title">Self-Assessment · Part 2 of 2</div>
-        <p class="sar-sub">Coming next.</p>
+        <div class="sar-title" style="margin-bottom:6px">Self-Assessment · Part 2 of 2</div>
+        <div class="thin-progress" aria-hidden="true"><span id="q2Prog"></span></div>
+
+        <div id="q2List" class="q-list" aria-live="polite"></div>
+
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
-          <button class="sar-btn primary" data-nav="next">Next</button>
+          <button id="q2Next" class="sar-btn primary" data-nav="next" disabled>Next</button>
         </div>
       </div>
 
@@ -195,13 +197,10 @@
       <div class="sar-page" data-step="score"><div class="sar-title">Your Score</div></div>
       <div class="sar-page" data-step="peer"><div class="sar-title">Peer Review</div></div>
       <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
+      <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
 
     </section>
   </main>
-
-  <footer class="sar-footer" style="padding:12px 16px;color:#6B7280;font-size:12px;text-align:center">
-    BED HOSPITALITY · Self-Assessment (SAR)
-  </footer>
 
   <script>
     // 7 steps for the dot bar
@@ -224,6 +223,7 @@
       renderDots();
       if(step === "welcome") ensureWelcomeBindings();
       if(step === "q1") renderQ1();
+      if(step === "q2") renderQ2();   // ensure page 2 loads
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
     function next(){
@@ -297,26 +297,40 @@
       return sarState.questions;
     }
 
-    // --- Render Part 1 (first 10) with thin progress bar
+    // --- Render Part 1 (first 10)
     async function renderQ1(){
       const qs = await loadQuestions();
       const slice = qs.slice(0, 10);
       const mount = document.getElementById('q1List');
       mount.innerHTML = slice.map(q => renderQuestionHTML(q)).join('');
 
-      // Restore selections if any
+      // restore
       slice.forEach(q => {
         const v = sarState.answers[q.id];
-        if(v){
-          const el = document.getElementById(`${q.id}_${v}`);
-          if (el) el.checked = true;
-        }
+        if(v){ const el = document.getElementById(`${q.id}_${v}`); if (el) el.checked = true; }
       });
 
-      // Bind change once
-      mount.onchange = onRatingChanged;
+      mount.onchange = onRatingChangedQ1;
       updateQ1Progress(slice);
       validateQ1Completed(slice);
+    }
+
+    // --- Render Part 2 (next 10)
+    async function renderQ2(){
+      const qs = await loadQuestions();
+      const slice = qs.slice(10, 20);
+      const mount = document.getElementById('q2List');
+      mount.innerHTML = slice.map(q => renderQuestionHTML(q)).join('');
+
+      // restore
+      slice.forEach(q => {
+        const v = sarState.answers[q.id];
+        if(v){ const el = document.getElementById(`${q.id}_${v}`); if (el) el.checked = true; }
+      });
+
+      mount.onchange = onRatingChangedQ2;
+      updateQ2Progress(slice);
+      validateQ2Completed(slice);
     }
 
     function renderQuestionHTML(q){
@@ -338,39 +352,54 @@
       `;
     }
 
-    function onRatingChanged(e){
-      const input = e.target.closest('input[type="radio"]');
-      if(!input) return;
-      const wrap = input.closest('.q-item');
-      const qid = wrap?.getAttribute('data-qid');
+    // Handlers for Q1/Q2
+    function onRatingChangedQ1(e){
+      const input = e.target.closest('input[type="radio"]'); if(!input) return;
+      const wrap = input.closest('.q-item'); const qid = wrap?.getAttribute('data-qid');
       const val = parseInt(input.value, 10);
-      if(qid && val >=1 && val <=5){
+      if(qid && val>=1 && val<=5){
         sarState.answers[qid] = val;
-        const list = Array.from(document.querySelectorAll('#q1List .q-item')).map(el => ({ id: el.getAttribute('data-qid') }));
+        const list = Array.from(document.querySelectorAll('#q1List .q-item'));
         updateQ1Progress(list);
-        validateQ1Completed(document.querySelectorAll('#q1List .q-item'));
+        validateQ1Completed(list);
+      }
+    }
+    function onRatingChangedQ2(e){
+      const input = e.target.closest('input[type="radio"]'); if(!input) return;
+      const wrap = input.closest('.q-item'); const qid = wrap?.getAttribute('data-qid');
+      const val = parseInt(input.value, 10);
+      if(qid && val>=1 && val<=5){
+        sarState.answers[qid] = val;
+        const list = Array.from(document.querySelectorAll('#q2List .q-item'));
+        updateQ2Progress(list);
+        validateQ2Completed(list);
       }
     }
 
-    function validateQ1Completed(list){
-      const items = Array.from(list);
-      const allAnswered = items.every(el => {
-        const qid = el.getAttribute ? el.getAttribute('data-qid') : el.id;
-        return !!sarState.answers[qid];
-      });
-      document.getElementById('q1Next').disabled = !allAnswered;
-    }
-
+    // Progress + validation
     function updateQ1Progress(list){
       const items = Array.from(list);
       const total = items.length;
-      const answered = items.filter(el => {
-        const qid = el.getAttribute ? el.getAttribute('data-qid') : el.id;
-        return !!sarState.answers[qid];
-      }).length;
-      const pct = total ? Math.round((answered / total) * 100) : 0;
-      const bar = document.getElementById('q1Prog');
-      if(bar) bar.style.width = pct + '%';
+      const answered = items.filter(el => sarState.answers[el.getAttribute('data-qid')]).length;
+      const pct = total ? Math.round((answered/total)*100) : 0;
+      const bar = document.getElementById('q1Prog'); if(bar) bar.style.width = pct + '%';
+    }
+    function updateQ2Progress(list){
+      const items = Array.from(list);
+      const total = items.length;
+      const answered = items.filter(el => sarState.answers[el.getAttribute('data-qid')]).length;
+      const pct = total ? Math.round((answered/total)*100) : 0;
+      const bar = document.getElementById('q2Prog'); if(bar) bar.style.width = pct + '%';
+    }
+    function validateQ1Completed(list){
+      const items = Array.from(list);
+      const allAnswered = items.every(el => sarState.answers[el.getAttribute('data-qid')]);
+      document.getElementById('q1Next').disabled = !allAnswered;
+    }
+    function validateQ2Completed(list){
+      const items = Array.from(list);
+      const allAnswered = items.every(el => sarState.answers[el.getAttribute('data-qid')]);
+      document.getElementById('q2Next').disabled = !allAnswered;
     }
 
     // simple HTML escape
