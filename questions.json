@@ -1,0 +1,52 @@
+[
+  {
+    "id": "q1",
+    "statement": "I can check-in guests in 60 seconds",
+    "subtext": "I timed the check-in process three times"
+  },
+  {
+    "id": "q2",
+    "statement": "I check-in groups different than FIT",
+    "subtext": "Our team discussed the best way"
+  },
+  {
+    "id": "q3",
+    "statement": "I don’t show my stress if there is a problem",
+    "subtext": "I know that makes guests really worry"
+  },
+  {
+    "id": "q4",
+    "statement": "I understand why rules can be flexible",
+    "subtext": "I apply rules based on the situation"
+  },
+  {
+    "id": "q5",
+    "statement": "I use my own judgment",
+    "subtext": "I act without asking first"
+  },
+  {
+    "id": "q6",
+    "statement": "I look after the hotel, not just my area",
+    "subtext": "I often check rooms and other areas"
+  },
+  {
+    "id": "q7",
+    "statement": "I take action when I see a problem",
+    "subtext": "And later I check if the problem is fixed"
+  },
+  {
+    "id": "q8",
+    "statement": "I can answer questions about any BED",
+    "subtext": "I have seen all rooms and locations"
+  },
+  {
+    "id": "q9",
+    "statement": "I use names to connect with guests",
+    "subtext": "I share my name and use theirs"
+  },
+  {
+    "id": "q10",
+    "statement": "I scan every guest every time",
+    "subtext": "I don't scan groups but individuals"
+  }
+]
