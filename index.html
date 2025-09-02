@@ -266,7 +266,7 @@
   <div class="sar-row sar-row-fields" style="margin-bottom:12px">
     <label class="sar-field">
       <span class="sar-label">peer name</span>
-      <input id="peerName" type="text" class="sar-input" inputmode="text" placeholder="nick name" />
+      <input id="peerName" type="text" class="sar-input" inputmode="text" />
     </label>
     <label class="sar-field">
       <span class="sar-label">peer email</span>
@@ -298,9 +298,9 @@
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
   <div class="sar-actions">
-    <button class="sar-btn" data-nav="back">Back</button>
-    <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
-  </div>
+  <button class="sar-btn" data-nav="back">Back</button>
+  <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
+</div>
 </div>
       <div class="sar-page" data-step="done">
 </div>
@@ -549,10 +549,12 @@ function ensurePeerBindings(){
   peerBound = true;
   const card = document.querySelector('.sar-page[data-step="peer"]');
   if(!card) return;
+
   const nameEl = card.querySelector('#peerName');
   const emailEl = card.querySelector('#peerEmail');
   const nextBtn = card.querySelector('#peerNext');
-  const shareBtn = card.querySelector('#peerShare');
+
+  // Hotel selector
   card.addEventListener('click',(e)=>{
     const btn = e.target.closest('.sar-hotel');
     if(!btn) return;
@@ -560,19 +562,31 @@ function ensurePeerBindings(){
     btn.classList.add('selected');
     sarState.peer = sarState.peer || {name:'',email:'',hotel:''};
     sarState.peer.hotel = btn.getAttribute('data-hotel') || "";
-    const expYesEl = document.getElementById("peerExpYes");
-const expNoEl = document.getElementById("peerExpNo");
-const sendYesEl = document.getElementById("peerSendYes");
-const sendNoEl = document.getElementById("peerSendNo");
-if(expYesEl) expYesEl.addEventListener("change", validatePeer);
-if(expNoEl) expNoEl.addEventListener("change", validatePeer);
-if(sendYesEl) sendYesEl.addEventListener("change", ()=>{});
-if(sendNoEl) sendNoEl.addEventListener("change", ()=>{});
-validatePeer();
-});
-  if(nameEl) nameEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.name = nameEl.value.trim(); validatePeer(); });
-  if(emailEl) emailEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.email = emailEl.value.trim(); validatePeer(); });
-  if(shareBtn){ shareBtn.addEventListener('click',(e)=>{ e.preventDefault(); downloadSarResults(); }); }
+    validatePeer();
+  });
+
+  // Field bindings
+  if(nameEl) nameEl.addEventListener('input', ()=>{
+    sarState.peer = sarState.peer || {name:'',email:'',hotel:''};
+    sarState.peer.name = nameEl.value.trim();
+    validatePeer();
+  });
+  if(emailEl) emailEl.addEventListener('input', ()=>{
+    sarState.peer = sarState.peer || {name:'',email:'',hotel:''};
+    sarState.peer.email = emailEl.value.trim();
+    validatePeer();
+  });
+
+  // Checkbox listeners
+  const expYesEl = document.getElementById('peerExpYes');
+  const expNoEl = document.getElementById('peerExpNo');
+  const sendYesEl = document.getElementById('peerSendYes');
+  const sendNoEl = document.getElementById('peerSendNo');
+  if(expYesEl) expYesEl.addEventListener('change', validatePeer);
+  if(expNoEl) expNoEl.addEventListener('change', validatePeer);
+  if(sendYesEl) sendYesEl.addEventListener('change', ()=>{});
+  if(sendNoEl) sendNoEl.addEventListener('change', ()=>{});
+
   validatePeer();
 }
 function validatePeer(){
@@ -584,8 +598,9 @@ function validatePeer(){
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
-  const expYes = document.getElementById("peerExpYes"); const hasExpYes = !!(expYes && expYes.checked);
-if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && hasExpYes);
+  const expYes = document.getElementById('peerExpYes');
+  const hasExpYes = !!(expYes && expYes.checked);
+  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && hasExpYes);
 }
 function updateHeaderTitle(){
   const slot = document.getElementById('sarPageTitle');
