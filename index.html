@@ -52,7 +52,7 @@
     /* Rows & buttons */
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
     .sar-actions{display:flex;gap:12px;margin-top:24px;justify-content:flex-start}
-    .sar-btn{
+    .sar-btn{min-width:200px;text-align:center;
       display:inline-flex;align-items:center;justify-content:center;min-width:200px;min-height:46px;
       padding:10px 16px;border-radius:8px;border:1px solid #D1D5DB;background:#fff;color:var(--text);
       cursor:pointer;text-decoration:none;font-size:14px;font-weight:600
@@ -130,7 +130,7 @@
           <div class="sar-scale-row"><span class="sar-badge">5</span><span>I'm excellent at this</span></div>
         </div>
 
-        <div class="sar-actions">
+        <div class="sar-actions" style="margin-top:28px">
           <button id="sarStart" class="sar-btn primary" data-nav="goto" data-step="q1" disabled>Start</button>
         </div>
       </div>
@@ -140,7 +140,7 @@
         <div class="sar-title" id="q1Title">STATEMENTS PART 1</div>
         <div class="thin-progress"><span id="q1Prog"></span></div>
         <div id="q1List" class="q-list"></div>
-        <div class="sar-actions">
+        <div class="sar-actions" style="margin-top:28px">
           <button class="sar-btn" data-nav="back">Back</button>
           <button id="q1Next" class="sar-btn primary" data-nav="goto" data-step="q2" disabled>Next</button>
         </div>
@@ -151,7 +151,7 @@
         <div class="sar-title" id="q2Title">STATEMENTS PART 2</div>
         <div class="thin-progress"><span id="q2Prog"></span></div>
         <div id="q2List" class="q-list"></div>
-        <div class="sar-actions">
+        <div class="sar-actions" style="margin-top:28px">
           <button class="sar-btn" data-nav="back">Back</button>
           <button id="q2Next" class="sar-btn primary" data-nav="next" disabled>Next</button>
         </div>
@@ -292,3 +292,10 @@
         radios+=`<input type="radio" name="${name}" id="${id}" value="${v}" /><label for="${id}" aria-label="${q.id} rate ${v}">${v}</label>`;
       }
       return `<div class="q-item" data-qid="${q.id}"><div class="q-title">${escapeHTML(q.statement)}</div><div class="q-sub">${escapeHTML
+    // --- Update question page titles dynamically
+    function updateQTitle(part) {
+      const title = document.getElementById(`q${part}Title`);
+      if (title) {
+        title.textContent = `STATEMENTS PART ${part}`;
+      }
+    }
