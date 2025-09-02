@@ -58,6 +58,10 @@
     /* Card */
     .sar-card{ background:#fff;border:1px solid var(--border);border-radius:12px;
       padding:20px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04);min-height:auto }
+.finish-hero{ display:flex; justify-content:center; align-items:center; margin-top:8px; }
+.finish-hero i{ font-size:72px; line-height:1; color:var(--brand); }
+.finish-gap{ height:auto; line-height:1; text-align:left; }
+
     @media (max-width:430px){
       .sar-wrap{padding:0}
       .sar-card{border:none;box-shadow:none;border-radius:0;padding:16px}
@@ -295,6 +299,18 @@
       <div class="sar-page" data-step="done">
 </div>
       <div class="sar-page" data-step="finish">
+  <div class="sar-card">
+    <div class="finish-hero" aria-hidden="true"><i class="fa-solid fa-circle-check"></i></div>
+    <div class="finish-gap"><br><br></div>
+    <div class="sar-sub" style="color:var(--text)">
+      You’re done and we appreciate your participation Your score is a good starting point. Use it for self-development or to help others. Let us know if you have questions about your assessment. You can download your complete Self-Assessment Report (SAR) below.
+    </div>
+    <div class="finish-gap"><br><br></div>
+    <div class="sar-actions">
+      <button class="sar-btn" data-nav="back">Back</button>
+      <button class="sar-btn" id="finishShare" onclick="downloadSarResults()">Share</button>
+    </div>
+  </div>
 </div>
 
     </section>
