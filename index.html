@@ -139,7 +139,7 @@
 /* SCORE page */
 .score-wrap{display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start}
 .score-values{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%}
-.score-raw{ font-size:36px; font-weight:800; color:#434343; }
+.score-raw{ font-size:20px; font-weight:800; color:#434343; }
 .scorebar-wrap{ width:100%; }
 .scorebar{ position:relative; width:100%; height:48px; 
   background: linear-gradient(90deg,#ef4444 0%, #f97316 20%, #facc15 40%, #a3e635 65%, #22c55e 100%);
@@ -151,6 +151,18 @@
 .score-band{ font-size:22px; font-weight:700; color:#434343; text-align:left }
 
 .global-progress{display:none!important}
+
+/* Peer page: three actions inline */
+.sar-page[data-step="peer"] .sar-actions{ justify-content:space-between; flex-wrap:nowrap; gap:8px; }
+@media (max-width:360px){
+  .sar-page[data-step="peer"] .sar-actions{ gap:4px; }
+}
+
+/* Bottom action buttons fixed width */
+.sar-actions .sar-btn{ width:100px; min-width:100px; }
+
+/* Peer page: make body text same as intro */
+.sar-page[data-step="peer"] .sar-sub{ color:var(--text); font-size:16px; font-weight:400; }
 </style>
 </head>
 <body>
@@ -172,8 +184,7 @@
       <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
-          <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-        </div>
+</div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
           <label class="sar-field">
@@ -213,8 +224,7 @@
 
       <!-- Part 1 — Dynamic questions -->
       <div class="sar-page" data-step="q1">
-        <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 1</div>
-        <!-- removed page-level thin progress bar (now in header) -->
+<!-- removed page-level thin progress bar (now in header) -->
         <div id="q1List" class="q-list" aria-live="polite"></div>
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
@@ -224,8 +234,7 @@
 
       <!-- Part 2 — Dynamic questions -->
       <div class="sar-page" data-step="q2">
-        <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 2</div>
-        <!-- removed page-level thin progress bar (now in header) -->
+<!-- removed page-level thin progress bar (now in header) -->
         <div id="q2List" class="q-list" aria-live="polite"></div>
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
@@ -235,8 +244,7 @@
 
       <!-- Placeholders -->
       <div class="sar-page" data-step="score">
-  <div class="sar-title">SELF-ASSESSMENT SCORE</div>
-  <div class="score-gap" aria-hidden="true"><br><br><br><br></div>
+<div class="score-gap" aria-hidden="true"><br><br><br><br></div>
   <div class="score-wrap">
     <div class="score-values">
       <div class="score-raw" id="scoreNumber">YOUR SCORE 0/100</div>
@@ -255,14 +263,13 @@
   </div>
 </div>
       <div class="sar-page" data-step="peer">
-  <div class="sar-title">PEER REVIEW</div>
-  <div class="sar-sub" style="margin-bottom:12px">
+<div class="sar-sub" style="margin-bottom:12px">
     You’re almost done! You have completed the self assessment report so now it is time to ask one of your peers to assess you. You can select anyone in your team who has been working in BED for at least two years
   </div>
   <div class="sar-row sar-row-fields" style="margin-bottom:12px">
     <label class="sar-field">
       <span class="sar-label">peer name</span>
-      <input id="peerName" type="text" class="sar-input" inputmode="text" placeholder="nick name" />
+      <input id="peerName" type="text" class="sar-input" inputmode="text" />
     </label>
     <label class="sar-field">
       <span class="sar-label">peer email</span>
@@ -282,8 +289,10 @@
     <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="done" disabled>Next</button>
   </div>
 </div>
-      <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
-      <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
+      <div class="sar-page" data-step="done">
+</div>
+      <div class="sar-page" data-step="finish">
+</div>
 
     </section>
   </main>
