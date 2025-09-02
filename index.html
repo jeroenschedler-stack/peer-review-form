@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BED Hospitality — Self-Assessment </title>
+  <title>BED Hospitality — Self-Assessment (SAR)</title>
   <meta name="theme-color" content="#1E90FF" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,9 +14,9 @@
     :root{
       --brand:#1E90FF;
       --border:#E5E7EB;
-      --text:#434343;
+      --text:#111827;
       --sub:#374151;
-      --active:#bf0101; /* new red for completed/current dots */
+      --active:#ff0000; /* new red for completed/current dots */
       --header-h:64px;
     }
     *{box-sizing:border-box}
@@ -65,7 +65,7 @@
     }
 
     /* Titles */
-    .sar-title{ font-size:22px !important; font-weight:800 !important; margin:8px 0 12px }
+    .sar-title{font-size:18px;font-weight:600;margin:8px 0 12px}
     .sar-sub{color:var(--sub);margin-bottom:16px}
 
     /* Rows & buttons */
@@ -73,7 +73,7 @@
     .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
-      min-height:44px;min-width:140px;
+      min-height:44px;min-width:110px;
       padding:10px 18px;border-radius:8px;border:1px solid #D1D5DB;
       background:#fff;color:var(--text);cursor:pointer;text-decoration:none;user-select:none;
       font-size:16px;font-weight:600;
@@ -128,54 +128,29 @@
       background:var(--brand);border-color:var(--brand);color:#fff;
     }
   
-/* === SCORE PAGE STYLES === */
-.score-wrap{display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:flex-start}
-.score-values{display:flex;flex-direction:column;align-items:center;gap:4px}
-.score-pct{font-size:36px;font-weight:800}
-.score-raw{font-size:16px;color:var(--sub);font-weight:600}
 
-.scorebar-wrap{width:100%;}
-.scorebar{position:relative;width:100%;height:var(--scorebar-h); 
-  background: linear-gradient(90deg,#ef4444 0%, #f97316 20%, #facc15 40%, #a3e635 65%, #22c55e 100%);
-  border-radius:12px;overflow:hidden;border:1px solid #E5E7EB;
+/* Buttons: 110px wide; white text when blue */
+.sar-btn.primary,
+.sar-btn.primary:focus,
+.sar-btn.primary:hover,
+.sar-btn.primary:active{ 
+  background: var(--brand); color:#fff !important; border-color: var(--brand);
 }
-.score-marker{ position:absolute; top:50%; transform:translateY(-50%); width:8px; height:68px; background:#434343; border-radius:4px; left:0 }
-.score-scale{display:flex;justify-content:space-between;font-size:12px;color:#6B7280;margin-top:6px}
-
-.score-band{font-size:18px; font-weight:700; text-align:center; line-height:1.35}
-/* === END SCORE PAGE STYLES === */
+.sar-btn:focus,.sar-btn:hover,.sar-btn:active{ outline:none; }
 
 
-/* === TITLES & SCORE PAGE REVISIONS === */
-:root{ --scorebar-h: 48px; } /* 100% thicker than prior 24px */
-
-.sar-title{ font-size:22px !important; font-weight:800 !important; margin:8px 0 12px }
-
-/* Score typography */
-.score-values{gap:6px}
-.score-pct{ display:none !important; } /* remove percentage display */
-.score-raw{ font-size:36px; font-weight:800; } /* show only raw score at big size */
-
-/* Band text larger but below score size */
-.score-band{ font-size:22px !important; font-weight:700 !important; }
-
-/* Hide 0 and 100 scale labels */
-.score-scale{ display:none !important; }
-
-/* Color bar thickness + marker */
-.scorebar{ height:var(--scorebar-h) !important; border-radius:24px !important; }
-.score-marker{ position:absolute; top:50%; transform:translateY(-50%); width:8px; height:68px; background:#434343; border-radius:4px; left:0 }
-/* gap above buttons */
-.score-spacer{ line-height:1; }
+.sar-page .sar-title{ display:none !important; }
 
 
+/* Header title line + stacked layout */
+:root{ --header-h: 100px; } /* taller header to fit 3 lines */
+.sar-logo-wrap{ display:flex; flex-direction:column; gap:4px; }
+.sar-page-title{ font-size:18px; font-weight:700; color:#434343; }
 
-/* === NEW STYLE OVERRIDES === */
-.score-raw{ color:#434343 !important; }
-.score-band{ color:#434343 !important; text-align:left !important; }
-body{ color:#434343 !important; } /* default text */
-.sar-btn{ color:#434343 !important; } /* button text default */
 
+.score-wrap{ align-items:stretch !important; } .score-band{ text-align:left !important; }
+
+.global-progress{ display:none !important; }
 </style>
 </head>
 <body>
@@ -184,6 +159,7 @@ body{ color:#434343 !important; } /* default text */
   <header class="sar-header">
     <div class="sar-logo-wrap">
       <div class="sar-logo">BED HOSPITALITY 2.0</div>
+      <div class="sar-page-title" id="sarPageTitle" aria-live="polite"></div>
       <div class="sar-dotbar" id="dotbar" aria-label="Progress"></div>
       <!-- Global progress bar inside header -->
       <div class="global-progress" id="gprog" aria-hidden="true"><span id="gprogFill"></span></div>
@@ -196,7 +172,7 @@ body{ color:#434343 !important; } /* default text */
       <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
-          <div class="sar-title">SELF-ASSESSMENT </div>
+          <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
         </div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
@@ -258,31 +234,7 @@ body{ color:#434343 !important; } /* default text */
       </div>
 
       <!-- Placeholders -->
-      <div class="sar-page" data-step="score">
-  <div class="sar-title">SELF-ASSESSMENT SCORE</div>
-  <div class="score-gap" aria-hidden="true"><br><br><br><br></div>
-  <div class="score-wrap">
-    <div class="score-values">
-      <div class="score-pct" id="scorePct">0%</div>
-      <div class="score-raw" id="scoreNumber">0/100</div>
-    </div>
-
-    <div class="scorebar-wrap" aria-label="Score on color bar">
-      <div class="scorebar" id="scoreBar">
-        <span class="score-marker" id="scoreMarker" title="Your score"></span>
-      </div>
-      <div class="score-scale"><span>0</span><span>100</span></div>
-    </div>
-
-    <div class="score-band" id="scoreBandText">—</div>
-  <div class="score-spacer"><br><br><br><br></div>
-  </div>
-
-  <div class="sar-actions">
-    <button class="sar-btn" data-nav="back">Back</button>
-    <button class="sar-btn primary" data-nav="next">Next</button>
-  </div>
-</div>
+      <div class="sar-page" data-step="score"><div class="sar-title">Your Score</div></div>
       <div class="sar-page" data-step="peer"><div class="sar-title">Peer Review</div></div>
       <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
       <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
@@ -307,11 +259,11 @@ body{ color:#434343 !important; } /* default text */
         p.classList.toggle('active', p.dataset.step === step);
       });
       renderDots();
+      updateHeaderTitle();
       updateGlobalProgress();
       if(step === "welcome") ensureWelcomeBindings();
       if(step === "q1") renderQ1();
       if(step === "q2") renderQ2();
-      if(step === "score") renderScore();
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
     function next(){
@@ -484,36 +436,21 @@ body{ color:#434343 !important; } /* default text */
     }
 
     goTo(sarState.step);
-  function scoreBand(pct){
-  if (pct >= 80) return "Excellent! Inspire others.<br>Lead by example";
-  if (pct >= 60) return "Great hospitality!<br>Keep challenging yourself";
-  if (pct >= 40) return "Use self-development.<br>Practise makes you better";
-  return "You’re behind.<br>Ask your team for guidance";
-}
-
-function renderScore(){
-  const page = document.querySelector('.sar-page[data-step="score"]');
-  if(!page) return;
-  const qs = sarState.questions || [];
-  const total = qs.length * 5 || 100; // default to 100 if questions not loaded for any reason
-  let sum = 0;
-  qs.forEach(q => { sum += (sarState.answers[q.id] || 0); });
-  const pct = total ? Math.round((sum / total) * 100) : 0;
-
-  const pctEl = page.querySelector('#scorePct');
-  const rawEl = page.querySelector('#scoreNumber');
-  const bandEl = page.querySelector('#scoreBandText');
-  /* pct hidden */
-  if(rawEl) rawEl.textContent = sum + "/" + total;
-  if(bandEl) bandEl.innerHTML = scoreBand(pct);
-
-  // Position grey marker on the color bar
-  const marker = page.querySelector('#scoreMarker');
-  if(marker){
-    const clamped = Math.max(0, Math.min(100, pct));
-    marker.style.left = `calc(${clamped}% - 4px)`; // center 2px line on position
+  
+function updateHeaderTitle(){
+  const slot = document.getElementById('sarPageTitle');
+  if(!slot) return;
+  const activeTitle = document.querySelector('.sar-page.active .sar-title');
+  let text = '';
+  if(activeTitle){ text = activeTitle.textContent.trim(); }
+  if(!text){
+    const step = sarState.step;
+    const map = {welcome:'WELCOME', q1:'STATEMENTS PART 1', q2:'STATEMENTS PART 2', score:'SELF-ASSESSMENT SCORE', peer:'PEER REVIEW', done:'YOU\'RE DONE', finish:'FINISH'};
+    text = map[step] || '';
   }
+  slot.textContent = text;
 }
+
 </script>
 </body>
 </html>
