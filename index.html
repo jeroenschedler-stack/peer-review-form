@@ -14,7 +14,7 @@
     :root{
       --brand:#1E90FF;
       --border:#E5E7EB;
-      --text:#111827;
+      --text:#434343;
       --sub:#374151;
       --active:#ff0000; /* new red for completed/current dots */
       --header-h:64px;
@@ -120,7 +120,7 @@
     .q-scale input[type="radio"]{position:absolute;opacity:0;pointer-events:none}
     .q-scale label{
       width:36px;height:36px;border-radius:50%;
-      border:1px solid #D1D5DB;background:#fff;color:#111827;
+      border:1px solid #D1D5DB;background:#fff;color:#434343;
       display:inline-flex;align-items:center;justify-content:center;
       font-size:14px;font-weight:600;cursor:pointer;user-select:none;
     }
@@ -153,7 +153,7 @@
 .global-progress{display:none!important}
 
 /* Peer page: three actions inline */
-.sar-page[data-step="peer"] .sar-actions{ justify-content:space-between; flex-wrap:nowrap; gap:8px; }
+.sar-page[data-step="peer"] .sar-actions{ justify-content:flex-end; flex-wrap:nowrap; gap:8px; }
 @media (max-width:360px){
   .sar-page[data-step="peer"] .sar-actions{ gap:4px; }
 }
@@ -162,7 +162,7 @@
 .sar-actions .sar-btn{ width:100px; min-width:100px; }
 
 /* Peer page: make body text same as intro */
-.sar-page[data-step="peer"] .sar-sub{ color:var(--text); font-size:16px; font-weight:400; }
+.sar-page[data-step="peer"] .sar-sub{ color:var(--text); font-size: 15px; font-weight:400; }
 </style>
 </head>
 <body>
@@ -263,9 +263,13 @@
   </div>
 </div>
       <div class="sar-page" data-step="peer">
+<div class="peer-gap" aria-hidden="true"><br><br></div>
 <div class="sar-sub" style="margin-bottom:12px">
     You’re almost done! You have completed the self assessment report so now it is time to ask one of your peers to assess you. You can select anyone in your team who has been working in BED for at least two years
   </div>
+<div class="peer-gap" aria-hidden="true"><br><br></div>
+<div class="sar-peer-link"><a href="#" id="peerSendLink">send peer review form</a></div>
+
   <div class="sar-row sar-row-fields" style="margin-bottom:12px">
     <label class="sar-field">
       <span class="sar-label">peer name</span>
@@ -285,8 +289,7 @@
   </div>
   <div class="sar-actions">
     <button class="sar-btn" data-nav="back">Back</button>
-    <button id="peerShare" class="sar-btn">Share</button>
-    <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="done" disabled>Next</button>
+<button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="done" disabled>Done</button>
   </div>
 </div>
       <div class="sar-page" data-step="done">
