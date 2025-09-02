@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <!-- simple favicon -->
   <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="%231E90FF"/><text x="50%" y="56%" font-size="28" font-family="Arial,Helvetica,sans-serif" font-weight="700" text-anchor="middle" fill="white">BED</text></svg>'>
 
   <style>
@@ -17,7 +16,7 @@
       --border:#E5E7EB;
       --text:#111827;
       --sub:#374151;
-      --active:#FF3B30; /* bright red */
+      --active:#FF3B30; /* red active dot */
     }
     *{box-sizing:border-box}
     html,body{width:100%;height:auto;margin:0;padding:0}
@@ -30,26 +29,12 @@
       padding:0 12px;background:#fff;border-bottom:1px solid var(--border)
     }
     @media (min-width:768px){ .sar-header{padding:0 16px} }
-    .sar-logo{
-      font-weight:600;
-      font-size:18px; /* now same as SAR */
-      letter-spacing:.2px;
-    }
-    .sar-dotbar{
-      display:flex;
-      gap:10px;
-      align-items:center;
-    }
-    .sar-dot{
-      width:16px;
-      height:16px;
-      border-radius:50%;
-      background:#E5E7EB;
-      transition:background .3s ease;
-    }
-    .sar-dot.active{
-      background:var(--active); /* red active dot */
-    }
+    .sar-logo{font-weight:600;font-size:18px;letter-spacing:.2px}
+
+    /* Progress dots (bigger + red active) */
+    .sar-dotbar{display:flex;gap:10px;align-items:center}
+    .sar-dot{width:16px;height:16px;border-radius:50%;background:#E5E7EB;transition:background .3s ease}
+    .sar-dot.active{background:var(--active)}
 
     /* Layout */
     .sar-wrap{max-width:100%;width:100%;margin:0;padding:8px 12px 24px}
@@ -67,12 +52,8 @@
       body{padding-bottom:env(safe-area-inset-bottom,16px)}
     }
 
-    /* Type */
-    .sar-title{
-      font-size:18px;
-      font-weight:600;
-      margin:8px 0 12px;
-    }
+    /* Typography */
+    .sar-title{font-size:18px;font-weight:600;margin:8px 0 12px}
     .sar-sub{color:var(--sub);margin-bottom:16px}
 
     /* Rows & buttons */
@@ -101,7 +82,7 @@
     .sar-input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(30,144,255,.15)}
     @media (max-width:420px){ .sar-row-fields{flex-direction:column} }
 
-    /* Five hotels in one row (auto-resize) */
+    /* Five hotels in one row */
     .sar-hotels{display:flex;gap:6px;flex-wrap:nowrap;justify-content:space-between}
     .sar-hotels .sar-hotel{
       flex:1 1 18%;min-width:0;text-transform:uppercase;font-weight:600;padding:10px 0;font-size:14px
@@ -116,11 +97,8 @@
     .sar-scale-row{display:flex;align-items:center;gap:10px;margin:6px 0}
     .sar-badge{
       display:inline-flex;align-items:center;justify-content:center;
-      width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:600
+      width:24px;height:24px;border-radius:50%;background:#1E90FF;color:#fff;font-size:13px;font-weight:600
     }
-
-    /* Footer */
-    .sar-footer{padding:12px 16px;color:#6B7280;font-size:12px;text-align:center}
   </style>
 </head>
 <body>
@@ -134,14 +112,12 @@
   <main class="sar-wrap">
     <section class="sar-card">
 
-      <!-- Welcome -->
+      <!-- Page: Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
-          <div class="sar-title">BED HOSPITALITY</div>
+          <!-- BED HOSPITALITY removed from here per request -->
           <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-          <div class="sar-sub" style="margin-bottom:16px;text-transform:none">
-            evaluate yourself and your peers
-          </div>
+          <div class="sar-sub" style="margin-bottom:16px;text-transform:none">evaluate yourself and your peers</div>
         </div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
@@ -180,7 +156,16 @@
         </div>
       </div>
 
-      <!-- Placeholder pages -->
+      <!-- Placeholder pages (so all 7 dots appear) -->
+      <div class="sar-page" data-step="userinfo">
+        <div class="sar-title">Your Details</div>
+        <p class="sar-sub">Placeholder page.</p>
+        <div class="sar-actions">
+          <button class="sar-btn" data-nav="back">Back</button>
+          <button class="sar-btn primary" data-nav="next">Next</button>
+        </div>
+      </div>
+
       <div class="sar-page" data-step="q1">
         <div class="sar-title">Questions — Part 1</div>
         <p class="sar-sub">Placeholder page.</p>
@@ -189,6 +174,7 @@
           <button class="sar-btn primary" data-nav="next">Next</button>
         </div>
       </div>
+
       <div class="sar-page" data-step="q2">
         <div class="sar-title">Questions — Part 2</div>
         <p class="sar-sub">Placeholder page.</p>
@@ -197,13 +183,39 @@
           <button class="sar-btn primary" data-nav="next">Next</button>
         </div>
       </div>
+
+      <div class="sar-page" data-step="score">
+        <div class="sar-title">Your Score</div>
+        <p class="sar-sub">Placeholder page.</p>
+        <div class="sar-actions">
+          <button class="sar-btn" data-nav="back">Back</button>
+          <button class="sar-btn primary" data-nav="next">Next</button>
+        </div>
+      </div>
+
+      <div class="sar-page" data-step="peer">
+        <div class="sar-title">Peer Review</div>
+        <p class="sar-sub">Placeholder page.</p>
+        <div class="sar-actions">
+          <button class="sar-btn" data-nav="back">Back</button>
+          <button class="sar-btn primary" data-nav="next">Next</button>
+        </div>
+      </div>
+
+      <div class="sar-page" data-step="done">
+        <div class="sar-title">Completed</div>
+        <p class="sar-sub">Completion page placeholder.</p>
+        <div class="sar-actions">
+          <button class="sar-btn" data-nav="restart">Restart</button>
+        </div>
+      </div>
+
     </section>
   </main>
 
-  <footer class="sar-footer">BED HOSPITALITY · Self-Assessment (SAR)</footer>
-
   <script>
-    const SAR_STEPS = ["welcome","q1","q2"];
+    // 7 steps so all dots are visible
+    const SAR_STEPS = ["welcome","userinfo","q1","q2","score","peer","done"];
 
     const sarState = {
       step: "welcome",
@@ -229,19 +241,23 @@
       const i = SAR_STEPS.indexOf(sarState.step);
       if(i > 0) goTo(SAR_STEPS[i-1]);
     }
+    function restart(){ goTo(SAR_STEPS[0]); }
 
+    // Nav
     document.body.addEventListener('click', (e)=>{
       const btn = e.target.closest('[data-nav]');
       if(!btn) return;
       const act = btn.getAttribute('data-nav');
       if(act==='next') next();
       else if(act==='back') back();
+      else if(act==='restart') restart();
       else if(act==='goto'){
         const step = btn.getAttribute('data-step');
         if(step) goTo(step);
       }
     });
 
+    // Dots
     function renderDots(){
       const bar = document.getElementById('dotbar');
       bar.innerHTML = '';
@@ -252,6 +268,7 @@
       });
     }
 
+    // Welcome page validation
     let welcomeBound = false;
     function ensureWelcomeBindings(){
       if(welcomeBound){ validateWelcome(); return; }
@@ -301,6 +318,7 @@
       startBtn.disabled = !(hasNick && hasEmail && hasHotel);
     }
 
+    // Init
     goTo(sarState.step);
   </script>
 </body>
