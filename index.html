@@ -16,19 +16,17 @@
       --border:#E5E7EB;
       --text:#111827;
       --sub:#374151;
-      --active:#FF3B30; /* red active/done dot */
-      --header-h:64px;  /* fixed header height */
+      --active:#FF3B30;
+      --header-h:64px;
     }
     *{box-sizing:border-box}
     html,body{width:100%;height:auto;margin:0;padding:0}
     body{
       font-family:Inter,system-ui,-apple-system,Arial,sans-serif;
-      background:#F9FAFB;
-      color:var(--text);
-      padding-top: var(--header-h); /* ensure content not hidden behind fixed header */
+      background:#F9FAFB;color:var(--text);
+      padding-top: var(--header-h);
     }
 
-    /* Header (fixed for desktop & mobile) */
     .sar-header{
       position:fixed; top:0; left:0; right:0; z-index:1000;
       height:var(--header-h);
@@ -38,65 +36,45 @@
     }
     @media (min-width:768px){ .sar-header{padding:0 16px} }
 
-    /* Group title + dots left, stacked */
-    .sar-logo-wrap{
-      display:flex; flex-direction:column; align-items:flex-start; gap:6px;
-    }
-    /* 1) More prominent title */
+    .sar-logo-wrap{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
     .sar-logo{
-      font-size:28px;            /* increased from 22px */
-      font-weight:800;           /* bolder */
-      letter-spacing:.35px;
-      color:var(--text);
+      font-size:28px; font-weight:800; letter-spacing:.35px; color:var(--text);
       white-space:nowrap; flex:0 0 auto;
     }
     .sar-dotbar{display:flex; gap:10px; align-items:center; justify-content:flex-start}
-    .sar-dot{
-      width:16px;height:16px;border-radius:50%;background:#E5E7EB;transition:background .3s ease
-    }
-    /* 5) Show completed/current steps in red */
+    .sar-dot{width:16px;height:16px;border-radius:50%;background:#E5E7EB;transition:background .3s ease}
     .sar-dot.done{ background: var(--active); }
-    .sar-dot.current{ box-shadow:0 0 0 2px rgba(30,144,255,.25); } /* subtle ring for current (optional) */
+    .sar-dot.current{ box-shadow:0 0 0 2px rgba(30,144,255,.25); }
 
-    /* Layout */
     .sar-wrap{max-width:100%;width:100%;margin:0;padding:8px 12px 24px}
     @media (min-width:768px){ .sar-wrap{max-width:560px;margin:16px auto;padding:0 16px 24px} }
 
-    /* Card */
-    .sar-card{
-      background:#fff;border:1px solid var(--border);border-radius:12px;
-      padding:20px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04);min-height:auto
-    }
+    .sar-card{ background:#fff;border:1px solid var(--border);border-radius:12px;
+      padding:20px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04);min-height:auto }
     @media (max-width:430px){
       .sar-wrap{padding:0}
       .sar-card{border:none;box-shadow:none;border-radius:0;padding:16px}
       body{padding-bottom:env(safe-area-inset-bottom,16px)}
     }
 
-    /* Titles */
     .sar-title{font-size:18px;font-weight:600;margin:8px 0 12px}
     .sar-sub{color:var(--sub);margin-bottom:16px}
 
-    /* Rows & buttons */
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
-    /* 2a & 2c) Right-align action buttons on all pages */
     .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
       min-height:44px;min-width:140px;
       padding:10px 18px;border-radius:8px;border:1px solid #D1D5DB;
       background:#fff;color:var(--text);cursor:pointer;text-decoration:none;user-select:none;
-      font-size:16px; /* 2b) bigger label text for all buttons */
-      font-weight:600;
+      font-size:16px;font-weight:600;
     }
     .sar-btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
     .sar-btn:disabled{opacity:.6;cursor:not-allowed}
 
-    /* Pages */
     .sar-page{display:none}
     .sar-page.active{display:block}
 
-    /* Inputs */
     .sar-row-fields{gap:12px}
     .sar-field{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
     .sar-label{font-size:12px;color:#6B7280}
@@ -107,21 +85,17 @@
     .sar-input:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(30,144,255,.15)}
     @media (max-width:420px){ .sar-row-fields{flex-direction:column} }
 
-    /* Hotels one row */
     .sar-hotels{display:flex;gap:6px;flex-wrap:nowrap;justify-content:space-between}
     .sar-hotels .sar-hotel{flex:1 1 18%;min-width:0;text-transform:uppercase;font-weight:600;padding:10px 0;font-size:14px}
     .sar-hotel.selected{background:var(--brand);color:#fff;border-color:var(--brand)}
 
-    /* Intro & scale (welcome) */
     .sar-intro p,.sar-scale{font-size:14px;line-height:1.45}
     @media (max-width:360px){ .sar-intro p,.sar-scale{font-size:13px} }
     .sar-scale-row{display:flex;align-items:center;gap:10px;margin:6px 0}
     .sar-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:600}
 
-    /* 3) Double the space above Start on welcome page */
-    .sar-page[data-step="welcome"] .sar-scale{margin-bottom:56px} /* previously 28px */
+    .sar-page[data-step="welcome"] .sar-scale{margin-bottom:56px}
 
-    /* Question list (dynamic) */
     .q-list{display:flex;flex-direction:column;gap:14px}
     .q-item{padding:12px 0;border-top:1px solid var(--border)}
     .q-item:first-child{border-top:none}
@@ -139,14 +113,12 @@
       background:var(--brand);border-color:var(--brand);color:#fff;
     }
 
-    /* Thin progress bar */
     .thin-progress{height:4px;background:#E5E7EB;border-radius:3px;overflow:hidden;margin:-4px 0 12px}
     .thin-progress > span{display:block;height:100%;width:0;background:var(--brand);transition:width .25s ease}
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header class="sar-header">
     <div class="sar-logo-wrap">
       <div class="sar-logo">BED HOSPITALITY 2.0</div>
@@ -157,11 +129,9 @@
   <main class="sar-wrap">
     <section class="sar-card">
 
-      <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
           <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-          <!-- subtext removed -->
         </div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
@@ -200,33 +170,26 @@
         </div>
       </div>
 
-      <!-- Part 1 — Dynamic questions -->
       <div class="sar-page" data-step="q1">
         <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 1</div>
         <div class="thin-progress" aria-hidden="true"><span id="q1Prog"></span></div>
-
         <div id="q1List" class="q-list" aria-live="polite"></div>
-
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
           <button id="q1Next" class="sar-btn primary" data-nav="goto" data-step="q2" disabled>Next</button>
         </div>
       </div>
 
-      <!-- Part 2 — Dynamic questions -->
       <div class="sar-page" data-step="q2">
         <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 2</div>
         <div class="thin-progress" aria-hidden="true"><span id="q2Prog"></span></div>
-
         <div id="q2List" class="q-list" aria-live="polite"></div>
-
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
           <button id="q2Next" class="sar-btn primary" data-nav="next" disabled>Next</button>
         </div>
       </div>
 
-      <!-- Placeholders for full 7-dot flow -->
       <div class="sar-page" data-step="score"><div class="sar-title">Your Score</div></div>
       <div class="sar-page" data-step="peer"><div class="sar-title">Peer Review</div></div>
       <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
@@ -236,17 +199,15 @@
   </main>
 
   <script>
-    // 7 steps for the dot bar
     const SAR_STEPS = ["welcome","q1","q2","score","peer","done","finish"];
 
     const sarState = {
       step: "welcome",
       user: { nickname: "", email: "", hotel: "" },
-      answers: {},         // { qid: 1..5 }
-      questions: []        // loaded from questions.json
+      answers: {},
+      questions: []
     };
 
-    // --- Navigation
     function goTo(step){
       if(!SAR_STEPS.includes(step)) return;
       sarState.step = step;
@@ -256,7 +217,7 @@
       renderDots();
       if(step === "welcome") ensureWelcomeBindings();
       if(step === "q1") renderQ1();
-      if(step === "q2") renderQ2();   // ensure page 2 loads
+      if(step === "q2") renderQ2();
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
     function next(){
@@ -276,7 +237,6 @@
       else if(act==='goto'){ const step = btn.getAttribute('data-step'); if(step) goTo(step); }
     });
 
-    // 5) Dots: show completed steps in red (1 red after page 1, 2 after page 2, etc.)
     function renderDots(){
       const bar = document.getElementById('dotbar');
       bar.innerHTML = '';
@@ -291,7 +251,6 @@
       });
     }
 
-    // --- Welcome bindings
     let welcomeBound = false;
     function ensureWelcomeBindings(){
       if(welcomeBound){ validateWelcome(); return; }
@@ -321,51 +280,42 @@
       const email = card.querySelector('#sarEmail');
       const startBtn = card.querySelector('#sarStart');
       const hasNick = (nick.value || "").trim().length > 0;
-      const hasEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test((email.value || "").trim());
+      const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((email.value || "").trim());
       const hasHotel = !!sarState.user.hotel;
       startBtn.disabled = !(hasNick && hasEmail && hasHotel);
     }
 
-    // --- Load questions.json once
     async function loadQuestions(){
       if (sarState.questions.length) return sarState.questions;
-      const res = await fetch('./questions.json?v=1', {cache: 'no-store'}); // cache-bust + no-store
+      const res = await fetch('./questions.json?v=1', {cache: 'no-store'});
       const data = await res.json();
       sarState.questions = Array.isArray(data) ? data : [];
       return sarState.questions;
     }
 
-    // --- Render Part 1 (first 10)
     async function renderQ1(){
       const qs = await loadQuestions();
       const slice = qs.slice(0, 10);
       const mount = document.getElementById('q1List');
       mount.innerHTML = slice.map(q => renderQuestionHTML(q)).join('');
-
-      // restore
       slice.forEach(q => {
         const v = sarState.answers[q.id];
         if(v){ const el = document.getElementById(`${q.id}_${v}`); if (el) el.checked = true; }
       });
-
       mount.onchange = onRatingChangedQ1;
       updateQ1Progress(slice);
       validateQ1Completed(slice);
     }
 
-    // --- Render Part 2 (next 10)
     async function renderQ2(){
       const qs = await loadQuestions();
       const slice = qs.slice(10, 20);
       const mount = document.getElementById('q2List');
       mount.innerHTML = slice.map(q => renderQuestionHTML(q)).join('');
-
-      // restore
       slice.forEach(q => {
         const v = sarState.answers[q.id];
         if(v){ const el = document.getElementById(`${q.id}_${v}`); if (el) el.checked = true; }
       });
-
       mount.onchange = onRatingChangedQ2;
       updateQ2Progress(slice);
       validateQ2Completed(slice);
@@ -390,7 +340,6 @@
       `;
     }
 
-    // Handlers for Q1/Q2
     function onRatingChangedQ1(e){
       const input = e.target.closest('input[type="radio"]'); if(!input) return;
       const wrap = input.closest('.q-item'); const qid = wrap?.getAttribute('data-qid');
@@ -414,7 +363,6 @@
       }
     }
 
-    // Progress + validation
     function updateQ1Progress(list){
       const items = Array.from(list);
       const total = items.length;
@@ -440,12 +388,13 @@
       document.getElementById('q2Next').disabled = !allAnswered;
     }
 
-    // simple HTML escape
+    // Corrected escapeHTML (the previous version had a syntax error)
     function escapeHTML(s){
-      return String(s).replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',\"'\":'&#39;'}[c]));
+      return String(s).replace(/[&<>\"']/g, function(c){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]);
+      });
     }
 
-    // Init
     goTo(sarState.step);
   </script>
 </body>
