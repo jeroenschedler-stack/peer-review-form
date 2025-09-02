@@ -16,7 +16,7 @@
       --border:#E5E7EB;
       --text:#111827;
       --sub:#374151;
-      --active:#bf0101; /* new red for completed/current dots */
+      --active:#ff0000; /* new red for completed/current dots */
       --header-h:64px;
     }
     *{box-sizing:border-box}
@@ -65,7 +65,7 @@
     }
 
     /* Titles */
-    .sar-title{font-size:18px;font-weight:600;margin:8px 0 12px}
+    .sar-title{ font-size:22px; font-weight:800; }
     .sar-sub{color:var(--sub);margin-bottom:16px}
 
     /* Rows & buttons */
@@ -127,7 +127,31 @@
     .q-scale input[type="radio"]:checked + label{
       background:var(--brand);border-color:var(--brand);color:#fff;
     }
-  </style>
+  
+
+/* Header stacked: brand → page title → dots */
+:root{ --header-h: 100px; --header-gap: 8px; } 
+.sar-logo-wrap{ display:flex; flex-direction:column; gap:var(--header-gap); }
+.sar-page-title{ font-size:18px; font-weight:700; color:#434343; }
+.sar-page .sar-title{ font-size:22px; font-weight:800; }
+
+
+/* SCORE page */
+.score-wrap{display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start}
+.score-values{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%}
+.score-raw{ font-size:36px; font-weight:800; color:#434343; }
+.scorebar-wrap{ width:100%; }
+.scorebar{ position:relative; width:100%; height:48px; 
+  background: linear-gradient(90deg,#ef4444 0%, #f97316 20%, #facc15 40%, #a3e635 65%, #22c55e 100%);
+  border-radius:8px; overflow:visible; border:1px solid #E5E7EB;
+}
+.score-marker{ position:absolute; top:50%; transform:translateY(-50%); 
+  width:8px; height:68px; left:0; background:#434343; border-radius:8px;
+}
+.score-band{ font-size:22px; font-weight:700; color:#434343; text-align:left }
+
+.global-progress{display:none!important}
+</style>
 </head>
 <body>
 
@@ -135,6 +159,7 @@
   <header class="sar-header">
     <div class="sar-logo-wrap">
       <div class="sar-logo">BED HOSPITALITY 2.0</div>
+      <div class="sar-page-title" id="sarPageTitle" aria-live="polite"></div>
       <div class="sar-dotbar" id="dotbar" aria-label="Progress"></div>
       <!-- Global progress bar inside header -->
       <div class="global-progress" id="gprog" aria-hidden="true"><span id="gprogFill"></span></div>
@@ -209,11 +234,30 @@
       </div>
 
       <!-- Placeholders -->
-      <div class="sar-page" data-step="score"><div class="sar-title">Your Score</div></div>
+      <div class="sar-page" data-step="score">
+  <div class="sar-title">SELF-ASSESSMENT SCORE</div>
+  <div class="score-gap" aria-hidden="true"><br><br><br><br></div>
+  <div class="score-wrap">
+    <div class="score-values">
+      <div class="score-raw" id="scoreNumber">YOUR SCORE 0/100</div>
+    </div>
+    <div class="scorebar-wrap" aria-label="Score on color bar">
+      <div class="scorebar" id="scoreBar">
+        <span class="score-marker" id="scoreMarker" title="Your score"></span>
+      </div>
+    </div>
+    <div class="score-band" id="scoreBandText">—</div>
+  </div>
+  <div class="score-spacer"><br><br><br><br></div>
+  <div class="sar-actions">
+    <button class="sar-btn" data-nav="back">Back</button>
+    <button class="sar-btn primary" data-nav="next">Next</button>
+  </div>
+</div>
       <div class="sar-page" data-step="peer">
   <div class="sar-title">PEER REVIEW</div>
   <div class="sar-sub" style="margin-bottom:12px">
-    You’re almost done! You have completed the self assessment report (SAR) so now it is time to ask one of your peers to assess you. You can select anyone in your team who has been working in BED for at least two years
+    You’re almost done! You have completed the self assessment report so now it is time to ask one of your peers to assess you. You can select anyone in your team who has been working in BED for at least two years
   </div>
   <div class="sar-row sar-row-fields" style="margin-bottom:12px">
     <label class="sar-field">
@@ -249,8 +293,7 @@
 
     const sarState = {
       step: "welcome",
-      user: { nickname: "", email: "", hotel: "" },
-      peer: { name: "", email: "", hotel: "" },
+      user: { nickname: "", email: "", hotel: "" }, peer: { name: "", email: "", hotel: "" },
       answers: {},
       questions: []
     };
@@ -262,10 +305,12 @@
         p.classList.toggle('active', p.dataset.step === step);
       });
       renderDots();
+      updateHeaderTitle();
       updateGlobalProgress();
       if(step === "welcome") ensureWelcomeBindings();
       if(step === "q1") renderQ1();
       if(step === "q2") renderQ2();
+      if(step === "score") renderScore();
       if(step === "peer") ensurePeerBindings();
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
@@ -440,6 +485,30 @@
 
     goTo(sarState.step);
   
+function scoreBand(pct){
+  if (pct >= 80) return "Excellent! Inspire others.<br>Lead by example";
+  if (pct >= 60) return "Great hospitality!<br>Keep challenging yourself";
+  if (pct >= 40) return "Use self-development.<br>Practise makes you better";
+  return "You’re behind.<br>Ask your team for guidance";
+}
+function renderScore(){
+  const page = document.querySelector('.sar-page[data-step="score"]');
+  if(!page) return;
+  const qs = sarState.questions || [];
+  const total = qs.length * 5 || 100;
+  let sum = 0;
+  qs.forEach(q => { sum += (sarState.answers[q.id] || 0); });
+  const pct = total ? Math.round((sum / total) * 100) : 0;
+  const rawEl = page.querySelector('#scoreNumber');
+  const bandEl = page.querySelector('#scoreBandText');
+  if(rawEl) rawEl.textContent = "YOUR SCORE " + (sum + "/" + total);
+  if(bandEl) bandEl.innerHTML = scoreBand(pct);
+  const marker = page.querySelector('#scoreMarker');
+  if(marker){
+    const clamped = Math.max(0, Math.min(100, pct));
+    marker.style.left = `calc(${clamped}% - 4px)`;
+  }
+}
 let peerBound = false;
 function ensurePeerBindings(){
   if(peerBound){ validatePeer(); return; }
@@ -455,12 +524,13 @@ function ensurePeerBindings(){
     if(!btn) return;
     card.querySelectorAll('.sar-hotel').forEach(b=>b.classList.remove('selected'));
     btn.classList.add('selected');
+    sarState.peer = sarState.peer || {name:'',email:'',hotel:''};
     sarState.peer.hotel = btn.getAttribute('data-hotel') || "";
     validatePeer();
   });
-  if(nameEl) nameEl.addEventListener('input', ()=>{ sarState.peer.name = nameEl.value.trim(); validatePeer(); });
-  if(emailEl) emailEl.addEventListener('input', ()=>{ sarState.peer.email = emailEl.value.trim(); validatePeer(); });
-  if(shareBtn){ shareBtn.addEventListener('click', (e)=>{ e.preventDefault(); downloadSarResults(); }); }
+  if(nameEl) nameEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.name = nameEl.value.trim(); validatePeer(); });
+  if(emailEl) emailEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.email = emailEl.value.trim(); validatePeer(); });
+  if(shareBtn){ shareBtn.addEventListener('click',(e)=>{ e.preventDefault(); downloadSarResults(); }); }
   validatePeer();
 }
 function validatePeer(){
@@ -471,22 +541,34 @@ function validatePeer(){
   const nextBtn = card.querySelector('#peerNext');
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
-  const hasHotel = !!sarState.peer.hotel;
+  const hasHotel = !!(sarState.peer && sarState.peer.hotel);
   if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
 }
-
+function updateHeaderTitle(){
+  const slot = document.getElementById('sarPageTitle');
+  if(!slot) return;
+  const activeTitle = document.querySelector('.sar-page.active .sar-title');
+  let text = '';
+  if(activeTitle){ text = activeTitle.textContent.trim(); }
+  const step = sarState.step;
+  if(!text){
+    const map = {welcome:'WELCOME', q1:'STATEMENTS PART 1', q2:'STATEMENTS PART 2', score:'SELF-ASSESSMENT SCORE', peer:'PEER REVIEW', done:'YOU\'RE DONE', finish:'FINISH'};
+    text = map[step] || '';
+  }
+  slot.textContent = text;
+}
 function downloadSarResults(){
   const qs = sarState.questions || [];
   const rows = [];
-  rows.push(['Nickname', sarState.user.nickname]);
-  rows.push(['Email', sarState.user.email]);
-  rows.push(['Hotel', sarState.user.hotel]);
+  rows.push(['Nickname', sarState.user?.nickname || '']);
+  rows.push(['Email', sarState.user?.email || '']);
+  rows.push(['Hotel', sarState.user?.hotel || '']);
   rows.push(['Peer Name', sarState.peer?.name || '']);
   rows.push(['Peer Email', sarState.peer?.email || '']);
   rows.push(['Peer Hotel', sarState.peer?.hotel || '']);
-  let sum = 0, total = qs.length * 5;
   rows.push([]);
   rows.push(['Question ID','Statement','Your Rating']);
+  let sum = 0, total = qs.length * 5;
   qs.forEach(q => { const v = sarState.answers[q.id] || 0; sum += v; rows.push([q.id, q.statement, v]); });
   rows.push([]);
   rows.push(['Total Score', sum + '/' + total]);
@@ -502,6 +584,7 @@ function downloadSarResults(){
   URL.revokeObjectURL(url);
   a.remove();
 }
+
 </script>
 </body>
 </html>
