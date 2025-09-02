@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BED Hospitality — Self-Assessment (SAR)</title>
+  <title>BED Hospitality — Self-Assessment </title>
   <meta name="theme-color" content="#1E90FF" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -165,6 +165,12 @@
   width:8px;height:68px;background:#434343;border-radius:8px;left:0}
 .score-band{font-size:22px;font-weight:700;color:#434343;text-align:left}
 /* === END SCORE PAGE STYLES === */
+
+
+/* Header spacing: equal gap between brand → title and title → dots */
+:root{ --header-gap: 8px; }
+.sar-logo-wrap{ gap: var(--header-gap) !important; }
+
 </style>
 </head>
 <body>
@@ -186,7 +192,7 @@
       <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
         <div style="max-width:75%">
-          <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
+          <div class="sar-title">SELF-ASSESSMENT </div>
         </div>
 
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
@@ -504,7 +510,7 @@ function renderScore(){
   const pct = total ? Math.round((sum / total) * 100) : 0;
   const rawEl = page.querySelector('#scoreNumber');
   const bandEl = page.querySelector('#scoreBandText');
-  if(rawEl) rawEl.textContent = sum + "/" + total;
+  if(rawEl) rawEl.textContent = "YOUR SCORE " + sum + "/" + total;
   if(bandEl) bandEl.innerHTML = scoreBand(pct);
   const marker = page.querySelector('#scoreMarker');
   if(marker){
