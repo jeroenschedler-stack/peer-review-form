@@ -127,7 +127,24 @@
     .q-scale input[type="radio"]:checked + label{
       background:var(--brand);border-color:var(--brand);color:#fff;
     }
-  </style>
+  
+/* === SCORE PAGE STYLES === */
+.score-wrap{display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:flex-start}
+.score-values{display:flex;flex-direction:column;align-items:center;gap:4px}
+.score-pct{font-size:36px;font-weight:800}
+.score-raw{font-size:16px;color:var(--sub);font-weight:600}
+
+.scorebar-wrap{width:100%;}
+.scorebar{position:relative;width:100%;height:24px; /* twice as thick as 12px */ 
+  background: linear-gradient(90deg,#22c55e 0%, #a3e635 35%, #facc15 60%, #f97316 80%, #ef4444 100%);
+  border-radius:12px;overflow:hidden;border:1px solid #E5E7EB;
+}
+.score-marker{position:absolute;top:-6px;bottom:-6px;width:2px;background:#9CA3AF;border-radius:1px;left:0}
+.score-scale{display:flex;justify-content:space-between;font-size:12px;color:#6B7280;margin-top:6px}
+
+.score-band{font-size:18px; font-weight:700; text-align:center; line-height:1.35}
+/* === END SCORE PAGE STYLES === */
+</style>
 </head>
 <body>
 
@@ -209,7 +226,30 @@
       </div>
 
       <!-- Placeholders -->
-      <div class="sar-page" data-step="score"><div class="sar-title">Your Score</div></div>
+      <div class="sar-page" data-step="score">
+  <div class="sar-title">SELF-ASSESSMENT SCORE</div>
+  <div class="score-gap" aria-hidden="true"><br><br><br><br></div>
+  <div class="score-wrap">
+    <div class="score-values">
+      <div class="score-pct" id="scorePct">0%</div>
+      <div class="score-raw" id="scoreNumber">0/100</div>
+    </div>
+
+    <div class="scorebar-wrap" aria-label="Score on color bar">
+      <div class="scorebar" id="scoreBar">
+        <span class="score-marker" id="scoreMarker" title="Your score"></span>
+      </div>
+      <div class="score-scale"><span>0</span><span>100</span></div>
+    </div>
+
+    <div class="score-band" id="scoreBandText">—</div>
+  </div>
+
+  <div class="sar-actions">
+    <button class="sar-btn" data-nav="back">Back</button>
+    <button class="sar-btn primary" data-nav="next">Next</button>
+  </div>
+</div>
       <div class="sar-page" data-step="peer"><div class="sar-title">Peer Review</div></div>
       <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
       <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
@@ -238,6 +278,7 @@
       if(step === "welcome") ensureWelcomeBindings();
       if(step === "q1") renderQ1();
       if(step === "q2") renderQ2();
+      if(step === "score") renderScore();
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
     function next(){
@@ -410,6 +451,36 @@
     }
 
     goTo(sarState.step);
-  </script>
+  function scoreBand(pct){
+  if (pct >= 80) return "Excellent! Inspire others.<br>Lead by example";
+  if (pct >= 60) return "Great hospitality!<br>Keep challenging yourself";
+  if (pct >= 40) return "Use self-development.<br>Practise makes you better";
+  return "You’re behind.<br>Ask your team for guidance";
+}
+
+function renderScore(){
+  const page = document.querySelector('.sar-page[data-step="score"]');
+  if(!page) return;
+  const qs = sarState.questions || [];
+  const total = qs.length * 5 || 100; // default to 100 if questions not loaded for any reason
+  let sum = 0;
+  qs.forEach(q => { sum += (sarState.answers[q.id] || 0); });
+  const pct = total ? Math.round((sum / total) * 100) : 0;
+
+  const pctEl = page.querySelector('#scorePct');
+  const rawEl = page.querySelector('#scoreNumber');
+  const bandEl = page.querySelector('#scoreBandText');
+  if(pctEl) pctEl.textContent = pct + "%";
+  if(rawEl) rawEl.textContent = sum + "/" + total;
+  if(bandEl) bandEl.innerHTML = scoreBand(pct);
+
+  // Position grey marker on the color bar
+  const marker = page.querySelector('#scoreMarker');
+  if(marker){
+    const clamped = Math.max(0, Math.min(100, pct));
+    marker.style.left = `calc(${clamped}% - 1px)`; // center 2px line on position
+  }
+}
+</script>
 </body>
 </html>
