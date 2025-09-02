@@ -127,6 +127,22 @@
     .q-scale input[type="radio"]:checked + label{
       background:var(--brand);border-color:var(--brand);color:#fff;
     }
+
+    /* SCORE PAGE */
+    .score-wrap{display:flex;flex-direction:column;gap:14px}
+    .score-top{display:flex;align-items:baseline;gap:12px}
+    .score-big{font-size:40px;font-weight:800;line-height:1}
+    .score-band{font-size:16px;font-weight:700;color:#374151}
+    .score-bar{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;height:14px;border-radius:7px;overflow:hidden;border:1px solid var(--border)}
+    .score-seg{height:100%}
+    .seg-1{background:#ef4444}
+    .seg-2{background:#f59e0b}
+    .seg-3{background:#eab308}
+    .seg-4{background:#22c55e}
+    .seg-5{background:#10b981}
+    .score-marker{position:absolute;top:-6px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:6px solid #6B7280;transform:translateX(-50%)} /* gray triangle */
+    .score-text{font-size:14px;color:#374151}
+
   </style>
 </head>
 <body>
@@ -209,7 +225,28 @@
       </div>
 
       <!-- Placeholders -->
-      <div class="sar-page" data-step="score"><div class="sar-title">Your Score</div></div>
+      <div class="sar-page" data-step="score">
+        <div class="sar-title">SELF-ASSESSMENT SCORE</div>
+        <div id="scoreWrap" class="score-wrap">
+          <div class="score-top">
+            <div class="score-big" id="scoreValue">--</div>
+            <div class="score-band" id="scoreBand">—</div>
+          </div>
+          <div class="score-bar" aria-label="Score scale 0 to 100">
+            <div class="score-seg seg-1" data-min="0" data-max="20" title="0–20"></div>
+            <div class="score-seg seg-2" data-min="21" data-max="40" title="21–40"></div>
+            <div class="score-seg seg-3" data-min="41" data-max="60" title="41–60"></div>
+            <div class="score-seg seg-4" data-min="61" data-max="80" title="61–80"></div>
+            <div class="score-seg seg-5" data-min="81" data-max="100" title="81–100"></div>
+            <div class="score-marker" id="scoreMarker" aria-hidden="true"></div>
+          </div>
+          <div class="score-text" id="scoreText"></div>
+        </div>
+        <div class="sar-actions">
+          <button class="sar-btn" data-nav="back">Back</button>
+          <button id="scoreNext" class="sar-btn primary" data-nav="goto" data-step="peer">Next</button>
+        </div>
+      </div>
       <div class="sar-page" data-step="peer"><div class="sar-title">Peer Review</div></div>
       <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
       <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
@@ -238,6 +275,7 @@
       if(step === "welcome") ensureWelcomeBindings();
       if(step === "q1") renderQ1();
       if(step === "q2") renderQ2();
+      if(step === "score") renderScore();
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
     function next(){
@@ -407,6 +445,49 @@
       return String(s).replace(/[&<>\"']/g, function(c){
         return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]);
       });
+    }
+
+
+    // Bands for score interpretation
+    const SCORE_BANDS = [
+      {min:0,  max:20,  label:"BEGINNER",  text:"You’re starting your Journey. Focus on basics and consistent routine."},
+      {min:21, max:40,  label:"EMERGING",  text:"You show potential. Practice the standards more consistently in daily work."},
+      {min:41, max:60,  label:"COMPETENT", text:"Solid base. Keep refining and start helping others with best practices."},
+      {min:61, max:80,  label:"ADVANCED",  text:"Strong performer. Lead small improvements and mentor peers."},
+      {min:81, max:100, label:"EXCELLENT", text:"Role model. Share methods and help define new standards."}
+    ];
+
+    function calcTotalScore(){
+      // Sum of all answered ratings (20–100). If unanswered, treat as 0.
+      let total = 0;
+      const qs = sarState.questions.length ? sarState.questions : [];
+      const ids = qs.length ? qs.map(q=>q.id) : Object.keys(sarState.answers);
+      ids.forEach(id => { total += (sarState.answers[id] || 0); });
+      return total;
+    }
+
+    function findBand(score){
+      return SCORE_BANDS.find(b => score >= b.min && score <= b.max) || SCORE_BANDS[0];
+    }
+
+    function renderScore(){
+      const total = calcTotalScore();
+      const band = findBand(total);
+      // numbers
+      const elVal = document.getElementById('scoreValue');
+      const elBand = document.getElementById('scoreBand');
+      const elText = document.getElementById('scoreText');
+      if(elVal) elVal.textContent = String(total);
+      if(elBand) elBand.textContent = band.label;
+      if(elText) elText.textContent = band.text;
+
+      // marker position along 0..100 bar
+      const bar = document.querySelector('.score-bar');
+      const marker = document.getElementById('scoreMarker');
+      if(bar && marker){
+        const pct = Math.max(0, Math.min(100, total)); // clamp
+        marker.style.left = pct + '%';
+      }
     }
 
     goTo(sarState.step);
