@@ -151,6 +151,14 @@
 .score-band{ font-size:22px; font-weight:700; color:#434343; text-align:left }
 
 .global-progress{display:none!important}
+    /* Finish page icon */
+.finish-hero{ display:flex; justify-content:center; align-items:center; margin-top:8px; }
+.finish-hero i{ font-size:72px; line-height:1; color:var(--brand); }
+
+/* Spacers used in multiple pages */
+.sar-gap-1{ height:1.2em; }
+.sar-gap-3{ height:3.6em; }
+
 </style>
 </head>
 <body>
@@ -277,13 +285,34 @@
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
   <div class="sar-actions">
-    <button class="sar-btn" data-nav="back">Back</button>
-    <button id="peerShare" class="sar-btn">Share</button>
-    <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Next</button>
-  </div>
+  <button class="sar-btn" data-nav="back">Back</button>
+  <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
+</div>
 </div>
       <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
-      <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
+     <!-- FINISH PAGE -->
+<div class="sar-page" data-step="finish">
+  <div class="sar-card">
+    <div class="sar-gap-1"></div>
+
+    <div class="finish-hero" aria-hidden="true">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+
+    <div class="sar-gap-1"></div>
+
+    <div class="sar-sub">
+      You’re done and we appreciate your participation Your score is a good starting point. Use it for self-development or to help others.  You can download your complete Self-Assessment Report (SAR) below. Let us know if you have questions
+    </div>
+
+    <div class="sar-gap-3"></div>
+
+    <div class="sar-actions">
+      <button class="sar-btn" data-nav="goto" data-step="peer">Back</button>
+      <button class="sar-btn" id="finishShare" onclick="downloadSarResults()">Share</button>
+    </div>
+  </div>
+</div>
 
     </section>
   </main>
