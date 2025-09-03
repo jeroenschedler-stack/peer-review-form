@@ -581,7 +581,8 @@ function updateHeaderTitle(){
   if(activeTitle){ text = activeTitle.textContent.trim(); }
   const step = sarState.step;
   if(!text){
-    const map = {welcome:'WELCOME', q1:'STATEMENTS PART 1', q2:'STATEMENTS PART 2', score:'SELF-ASSESSMENT SCORE', peer:'PEER REVIEW', done:'YOU\'RE DONE', finish:'FINISH'};
+    const map = {welcome:'WELCOME', q1:'STATEMENTS PART 1', q2:'STATEMENTS PART 2', score:'SELF-ASSESSMENT SCORE', peer:'PEER REVIEW', done:'YOU\'RE DONE', finish:'SELF- ASSESSMENT COMPLETED'
+};
     text = map[step] || '';
   }
   slot.textContent = text;
