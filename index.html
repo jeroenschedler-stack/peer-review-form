@@ -18,9 +18,8 @@
       --sub:#374151;
       --active:#ff0000; /* new red for completed/current dots */
       --header-h:64px;
-    
-      --wrap-max:560px;
-    }
+    --wrap-max:560px;
+}
     *{box-sizing:border-box}
     html,body{width:100%;height:auto;margin:0;padding:0}
     body{
@@ -30,13 +29,13 @@
     }
 
     /* Header */
-    .sar-header{
+    /* Header (centered to content width on all devices) */
+.sar-header{
   position:fixed; top:0; left:0; right:0; z-index:1000;
   height:var(--header-h);
   display:flex; align-items:center; justify-content:center;
   background:#fff; border-bottom:1px solid var(--border);
 }
-
     @media (min-width:768px){
   .sar-header .sar-logo-wrap{ padding:0 16px; }
 }
