@@ -14,12 +14,10 @@
     :root{
       --brand:#1E90FF;
       --border:#E5E7EB;
-      --text:#434343;
+      --text:#111827;
       --sub:#374151;
       --active:#ff0000; /* new red for completed/current dots */
       --header-h:64px;
-      --container-w: 900px;
-      --hotel-gap:8px;
     }
     *{box-sizing:border-box}
     html,body{width:100%;height:auto;margin:0;padding:0}
@@ -30,10 +28,16 @@
     }
 
     /* Header */
-    .sar-header{position:fixed; top:0; left:0; right:0; z-index:1000;height:var(--header-h);display:flex; align-items:center; justify-content:flex-start;background:#fff; border-bottom:1px solid var(--border);gap:12px;}
-    @media (min-width:768px){ .sar-header{position:fixed; top:0; left:0; right:0; z-index:1000;height:var(--header-h);display:flex; align-items:center; justify-content:flex-start;background:#fff; border-bottom:1px solid var(--border);gap:12px;} }
+    .sar-header{
+      position:fixed; top:0; left:0; right:0; z-index:1000;
+      height:var(--header-h);
+      display:flex; align-items:center; justify-content:flex-start;
+      padding:0 12px; background:#fff; border-bottom:1px solid var(--border);
+      gap:12px;
+    }
+    @media (min-width:768px){ .sar-header{padding:0 16px} }
 
-    .sar-logo-wrap{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; max-width:var(--container-w); width:100%; margin:0 auto; padding:0 16px; }
+    .sar-logo-wrap{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
     .sar-logo{ font-size:28px; font-weight:800; letter-spacing:.35px; color:var(--text); white-space:nowrap; }
     .sar-dotbar{ display:flex; gap:10px; align-items:center; justify-content:flex-start }
     /* Dots 20% smaller (16px -> ~13px), no borders, new red for done/current */
@@ -48,15 +52,14 @@
     .global-progress > span{ display:block; height:100%; width:0; background:var(--brand); transition:width .25s ease; }
 
     /* Layout */
-    .sar-wrap{max-width:var(--container-w);width:100%;margin:0 auto;padding:8px 16px 24px}
-    @media (min-width:768px){ .sar-wrap{max-width:var(--container-w);width:100%;margin:0 auto;padding:8px 16px 24px} }
+    .sar-wrap{max-width:100%;width:100%;margin:0;padding:8px 12px 24px}
+    @media (min-width:768px){ .sar-wrap{max-width:560px;margin:16px auto;padding:0 16px 24px} }
 
     /* Card */
     .sar-card{ background:#fff;border:1px solid var(--border);border-radius:12px;
       padding:20px 16px;box-shadow:0 1px 2px rgba(0,0,0,.04);min-height:auto }
-.sar-card{ --hotel-cell: calc((100% - 5*var(--hotel-gap))/6); }
     @media (max-width:430px){
-      .sar-wrap{max-width:var(--container-w);width:100%;margin:0 auto;padding:8px 16px 24px}
+      .sar-wrap{padding:0}
       .sar-card{border:none;box-shadow:none;border-radius:0;padding:16px}
       body{padding-bottom:env(safe-area-inset-bottom,16px)}
     }
@@ -68,8 +71,7 @@
     /* Rows & buttons */
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
     .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
-    .sar-actions .sar-btn{width:calc(2*var(--hotel-cell) + var(--hotel-gap));min-width:calc(2*var(--hotel-cell) + var(--hotel-gap));height:44px;font-size:15px}
-.sar-btn{
+    .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
       min-height:44px;min-width:140px;
       padding:10px 18px;border-radius:8px;border:1px solid #D1D5DB;
@@ -83,9 +85,7 @@
     .sar-page{display:none}
     .sar-page.active{display:block}
 
-    .sar-gap-1{height:1.2em}
-.sar-gap-3{height:3.6em}
-/* Inputs */
+    /* Inputs */
     .sar-row-fields{gap:12px}
     .sar-field{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
     .sar-label{font-size:12px;color:#6B7280}
@@ -97,8 +97,8 @@
     @media (max-width:420px){ .sar-row-fields{flex-direction:column} }
 
     /* Hotels one row */
-    .sar-hotels{display:flex;gap:var(--hotel-gap);flex-wrap:nowrap;justify-content:flex-start}
-    .sar-hotels .sar-hotel{flex:0 0 var(--hotel-cell);min-width:0;text-transform:uppercase;font-weight:600;padding:10px 0;font-size:14px}
+    .sar-hotels{display:flex;gap:6px;flex-wrap:nowrap;justify-content:space-between}
+    .sar-hotels .sar-hotel{flex:1 1 18%;min-width:0;text-transform:uppercase;font-weight:600;padding:10px 0;font-size:14px}
     .sar-hotel.selected{background:var(--brand);color:#fff;border-color:var(--brand)}
 
     /* Intro & scale (welcome) */
@@ -171,8 +171,6 @@
 
       <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
-<div class="sar-gap-1"></div>
-
         <div style="max-width:75%">
           <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
         </div>
@@ -215,13 +213,10 @@
 
       <!-- Part 1 — Dynamic questions -->
       <div class="sar-page" data-step="q1">
-<div class="sar-gap-1"></div>
-
         <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 1</div>
         <!-- removed page-level thin progress bar (now in header) -->
         <div id="q1List" class="q-list" aria-live="polite"></div>
-        <div class="sar-gap-3"></div>
-<div class="sar-actions">
+        <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
           <button id="q1Next" class="sar-btn primary" data-nav="goto" data-step="q2" disabled>Next</button>
         </div>
@@ -229,13 +224,10 @@
 
       <!-- Part 2 — Dynamic questions -->
       <div class="sar-page" data-step="q2">
-<div class="sar-gap-1"></div>
-
         <div class="sar-title" style="margin-bottom:6px">STATEMENTS PART 2</div>
         <!-- removed page-level thin progress bar (now in header) -->
         <div id="q2List" class="q-list" aria-live="polite"></div>
-        <div class="sar-gap-3"></div>
-<div class="sar-actions">
+        <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
           <button id="q2Next" class="sar-btn primary" data-nav="next" disabled>Next</button>
         </div>
@@ -243,8 +235,6 @@
 
       <!-- Placeholders -->
       <div class="sar-page" data-step="score">
-<div class="sar-gap-1"></div>
-
   <div class="sar-title">SELF-ASSESSMENT SCORE</div>
   <div class="score-gap" aria-hidden="true"><br><br><br><br></div>
   <div class="score-wrap">
@@ -265,8 +255,6 @@
   </div>
 </div>
       <div class="sar-page" data-step="peer">
-<div class="sar-gap-1"></div>
-
   <div class="sar-title">PEER REVIEW</div>
   <div class="sar-sub" style="margin-bottom:12px">
     You’re almost done! You have completed the self assessment report so now it is time to ask one of your peers to assess you. You can select anyone in your team who has been working in BED for at least two years
@@ -288,19 +276,14 @@
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
-  <div class="sar-gap-3"></div>
-<div class="sar-actions">
+  <div class="sar-actions">
     <button class="sar-btn" data-nav="back">Back</button>
     <button id="peerShare" class="sar-btn">Share</button>
-    <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="done" disabled>Next</button>
+    <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Next</button>
   </div>
 </div>
-      <div class="sar-page" data-step="done">
-<div class="sar-gap-1"></div>
-<div class="sar-title">Done</div></div>
-      <div class="sar-page" data-step="finish">
-<div class="sar-gap-1"></div>
-<div class="sar-title">Finish</div></div>
+      <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
+      <div class="sar-page" data-step="finish"><div class="sar-title">Finish</div></div>
 
     </section>
   </main>
