@@ -252,7 +252,7 @@ p{color:#434343;line-height:1.6;}
     <div class="sar-gap-3"></div>
 <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
-          <button id="q2Next" class="sar-btn primary" data-nav="next" disabled>Next</button>
+          <button id="q2Next" class="sar-btn primary" data-nav="next" disabled>Submit</button>
         </div>
       </div>
 
@@ -301,8 +301,11 @@ p{color:#434343;line-height:1.6;}
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
     <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
+    <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
-  </div>
+</div>
+      <div class="sar-gap-1"></div>
+    <div class="sar-gap-1"></div>
   <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
   <button id="peerSend" class="sar-btn" type="button">Send</button>
   <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
@@ -323,8 +326,6 @@ p{color:#434343;line-height:1.6;}
     <div class="sar-sub">
       You’re done and we appreciate your participation Your score is a good starting point. Use it for self-development or to help others.  You can download your complete Self-Assessment Report (SAR) below. Let us know if you have questions
     </div>
-
-    <div class="sar-gap-3"></div>
 
     <div class="sar-actions">
       <button class="sar-btn" data-nav="goto" data-step="peer">Back</button>
@@ -610,7 +611,7 @@ card.addEventListener('click',(e)=>{
   if(nameEl) nameEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.name = nameEl.value.trim(); validatePeer(); });
   if(emailEl) emailEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.email = emailEl.value.trim(); validatePeer(); });
   if(shareBtn){ shareBtn.addEventListener('click',(e)=>{ e.preventDefault(); downloadSarResults(); }); }
-      validatePeer();
+        validatePeer();
   if(sendBtn){
     sendBtn.addEventListener('click', function(e){
       e.preventDefault();
@@ -632,25 +633,10 @@ card.addEventListener('click',(e)=>{
     });
   }
   validatePeer();
-  if(sendBtn){
-    sendBtn.addEventListener('click', function(e){
-      e.preventDefault();
-      var hasName = (nameEl && nameEl.value || "").trim().length > 0;
-      var hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl && emailEl.value || "").trim());
-      var hasHotel = !!(sarState.peer && sarState.peer.hotel);
-      if(!(hasName && hasEmail && hasHotel)){
-        alert('Please fill peer nick name, email address, and select a hotel.');
-        return;
-      }
-      var ok = confirm('your peer has 24 months experience?');
-      if(!ok){
-        alert('Please confirm YES to continue.');
-        return;
-      }
-      sarState.peer = sarState.peer || {};
-      sarState.peer.confirm24 = true;
-      validatePeer();
-    });
+);
+  }
+  validatePeer();
+);
   }
   validatePeer();
 }
