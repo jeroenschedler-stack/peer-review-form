@@ -68,11 +68,14 @@
     .sar-title{ font-size:22px; font-weight:800; }
 .sar-para-title{font-size:14px;font-weight:800;text-transform:uppercase;color:#434343;margin-bottom:8px}
     .sar-sub{color:var(--sub);margin-bottom:16px}
+.sar-intro p{ text-align: justify; }
 p{color:#434343;line-height:1.6;}
 
     /* Rows & buttons */
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
     .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+.sar-page[data-step="peer"] .sar-actions{justify-content:flex-start}
+.sar-page[data-step="peer"] .sar-actions .sar-btn{flex:0 0 calc((100% - 16px)/3);min-width:0}
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
       min-height:44px;min-width:140px;
@@ -200,12 +203,13 @@ p{color:#434343;line-height:1.6;}
         </div>
 
         <div class="sar-row sar-hotels" role="group" aria-label="Choose your BED Hotel" style="margin-bottom:12px">
-          <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
-          <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
-          <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
-          <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
-          <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
-        </div>
+              <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
+    <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
+    <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
+    <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
+    <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
+    <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
+</div>
 
         <div class="sar-intro" style="margin-bottom:8px">
           <p>Self-assessment helps your personal growth and development. Read each statement and think how you act in these situations. Then select the rating that best fits you. Be honest with yourself. The goal is to know your own strengths and opportunities.</p>
@@ -219,9 +223,12 @@ p{color:#434343;line-height:1.6;}
           <div class="sar-scale-row"><span class="sar-badge">5</span><span>I'm excellent at this</span></div>
         </div>
 
-        <div class="sar-actions">
-          <button id="sarStart" class="sar-btn primary" data-nav="goto" data-step="q1" disabled>start</button>
-        </div>
+            <div class="sar-gap-3"></div>
+  <div class="sar-actions">
+          <button class="sar-btn" data-nav="back">Back</button>
+  <button id="peerSend" class="sar-btn" type="button">Send</button>
+  <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
+</div>
       </div>
 
       <!-- Part 1 — Dynamic questions -->
@@ -277,13 +284,14 @@ p{color:#434343;line-height:1.6;}
     <div class="sar-gap-1"></div>
   <div class="sar-para-title">FIND YOUR PEER REVIEWER</div>
   <div class="sar-intro" style="margin-bottom:12px"><p>You completed your self-assessment report. The next step is your peer review. You can choose anyone in your team but he or she must have been in BED for min. 24 months. When your peer accepts to review you, complete the information below and press Send. This will forward the review form to your peer.</p></div>
-<div class="sar-row sar-row-fields" style="margin-bottom:12px">
+  <div class="sar-gap-1"></div>
+  <div class="sar-row sar-row-fields" style="margin-bottom:12px">
     <label class="sar-field">
-      <span class="sar-label">peer name</span>
-      <input id="peerName" type="text" class="sar-input" inputmode="text" placeholder="nick name" />
+      <span class="sar-label">peer nick name</span>
+      <input id="peerName" type="text" class="sar-input" inputmode="text" />
     </label>
     <label class="sar-field">
-      <span class="sar-label">peer email</span>
+      <span class="sar-label">peer email address</span>
       <input id="peerEmail" type="email" class="sar-input" inputmode="email" autocomplete="email" />
     </label>
   </div>
@@ -558,6 +566,7 @@ function ensurePeerBindings(){
   const emailEl = card.querySelector('#peerEmail');
   const nextBtn = card.querySelector('#peerNext');
   const shareBtn = card.querySelector('#peerShare');
+  const sendBtn = card.querySelector('#peerSend');
   card.addEventListener('click',(e)=>{
     const btn = e.target.closest('.sar-hotel');
     if(!btn) return;
@@ -570,6 +579,27 @@ function ensurePeerBindings(){
   if(nameEl) nameEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.name = nameEl.value.trim(); validatePeer(); });
   if(emailEl) emailEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.email = emailEl.value.trim(); validatePeer(); });
   if(shareBtn){ shareBtn.addEventListener('click',(e)=>{ e.preventDefault(); downloadSarResults(); }); }
+    validatePeer();
+  if(sendBtn){
+    sendBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      var hasName = (nameEl && nameEl.value || "").trim().length > 0;
+      var hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl && emailEl.value || "").trim());
+      var hasHotel = !!(sarState.peer && sarState.peer.hotel);
+      if(!(hasName && hasEmail && hasHotel)){
+        alert('Please fill peer nick name, email address, and select a hotel.');
+        return;
+      }
+      var ok = confirm('your peer has 24 months experience?');
+      if(!ok){
+        alert('Please confirm YES to continue.');
+        return;
+      }
+      sarState.peer = sarState.peer || {};
+      sarState.peer.confirm24 = true;
+      validatePeer();
+    });
+  }
   validatePeer();
 }
 function validatePeer(){
@@ -581,7 +611,7 @@ function validatePeer(){
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
-  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
+  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && !!(sarState.peer && sarState.peer.confirm24));
 }
 function updateHeaderTitle(){
   const slot = document.getElementById('sarPageTitle');
