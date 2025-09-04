@@ -527,13 +527,11 @@ p{color:#434343;line-height:1.6;}
 
     // Correct escapeHTML
     function escapeHTML(s){
-      return String(s).replace(/[&<>\"']/g, function(c){
-        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]);
-      });
-    }
+  return String(s).replace(/[&<>\"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
 
-    goTo(sarState.step);
-  
 function scoreBand(pct){
   if (pct >= 80) return "Excellent! Inspire others.<br>Lead by example";
   if (pct >= 60) return "Great hospitality!<br>Keep challenging yourself";
@@ -561,6 +559,59 @@ function renderScore(){
 let peerBound = false;
 function ensurePeerBindings(){
   if(peerBound){ validatePeer(); return; }
+  peerBound = true;
+  const card = document.querySelector('.sar-page[data-step="peer"]');
+  if(!card) return;
+  const nameEl = card.querySelector('#peerName');
+  const emailEl = card.querySelector('#peerEmail');
+  const nextBtn = card.querySelector('#peerNext');
+  const sendBtn = card.querySelector('#peerSend');
+
+  // Hotel selection
+  card.addEventListener('click', function(e){
+    const b = e.target.closest('.sar-hotel');
+    if(!b) return;
+    card.querySelectorAll('.sar-hotel').forEach(x=>x.classList.remove('selected'));
+    b.classList.add('selected');
+    sarState.peer = sarState.peer || {name:'', email:'', hotel:'', confirm24:false};
+    sarState.peer.hotel = b.getAttribute('data-hotel') || '';
+    validatePeer();
+  });
+
+  if(nameEl) nameEl.addEventListener('input', function(){
+    sarState.peer = sarState.peer || {name:'', email:'', hotel:'', confirm24:false};
+    sarState.peer.name = (nameEl.value || '').trim();
+    validatePeer();
+  });
+
+  if(emailEl) emailEl.addEventListener('input', function(){
+    sarState.peer = sarState.peer || {name:'', email:'', hotel:'', confirm24:false};
+    sarState.peer.email = (emailEl.value || '').trim();
+    validatePeer();
+  });
+
+  if(sendBtn){
+    sendBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      var hasName = (nameEl && nameEl.value || '').trim().length > 0;
+      var hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl && emailEl.value || '').trim());
+      var hasHotel = !!(sarState.peer && sarState.peer.hotel);
+      if(!(hasName && hasEmail && hasHotel)){
+        alert('Please fill peer nick name, email address, and select a hotel.');
+        return;
+      }
+      var ok = confirm('your peer has 24 months experience?');
+      if(!ok){
+        alert('Please confirm YES to continue.');
+        return;
+      }
+      sarState.peer.confirm24 = true;
+      validatePeer();
+    });
+  }
+
+  validatePeer();
+}
   peerBound = true;
   const card = document.querySelector('.sar-page[data-step="peer"]');
   if(!card) return;
@@ -646,10 +697,12 @@ function validatePeer(){
   const nameEl = card.querySelector('#peerName');
   const emailEl = card.querySelector('#peerEmail');
   const nextBtn = card.querySelector('#peerNext');
-
-  if(nextBtn){
-    nextBtn.addEventListener('click', function(e){
-      if(nextBtn.disabled){ e.preventDefault(); return; }
+  const hasName = ((nameEl && nameEl.value) || '').trim().length > 0;
+  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(((emailEl && emailEl.value) || '').trim());
+  const hasHotel = !!(sarState.peer && sarState.peer.hotel);
+  const ok = hasName && hasEmail && hasHotel && !!(sarState.peer && sarState.peer.confirm24);
+  if(nextBtn) nextBtn.disabled = !ok;
+}
       var hasName = (nameEl && nameEl.value || "").trim().length > 0;
       var hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl && emailEl.value || "").trim());
       var hasHotel = !!(sarState.peer && sarState.peer.hotel);
