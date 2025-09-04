@@ -301,10 +301,11 @@ p{color:#434343;line-height:1.6;}
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
     <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
+    <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
+  <div class="sar-gap-1"></div>
   <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
-  <button id="peerSend" class="sar-btn" type="button">Send</button>
   <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
 </div>
 </div>
@@ -689,7 +690,7 @@ function validatePeer(){
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
-  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && !!(sarState.peer && sarState.peer.confirm24));
+  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
 }
 function updateHeaderTitle(){
   const slot = document.getElementById('sarPageTitle');
