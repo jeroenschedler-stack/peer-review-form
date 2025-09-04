@@ -75,7 +75,7 @@ p{color:#434343;line-height:1.6;}
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
     .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
 .sar-page[data-step="peer"] .sar-actions{justify-content:flex-start}
-.sar-page[data-step="peer"] .sar-actions .sar-btn{flex:0 0 calc((100% - 16px)/3);min-width:0}
+.sar-page[data-step="peer"] .sar-actions .sar-btn{flex:0 0 calc((100% - 8px)/2);min-width:0}
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
       min-height:44px;min-width:140px;
@@ -225,10 +225,8 @@ p{color:#434343;line-height:1.6;}
 
             <div class="sar-gap-3"></div>
   <div class="sar-actions">
-          <button class="sar-btn" data-nav="back">Back</button>
-  <button id="peerSend" class="sar-btn" type="button">Send</button>
-  <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
-</div>
+          <button id="sarStart" class="sar-btn primary" data-nav="goto" data-step="q1" disabled>start</button>
+        </div>
       </div>
 
       <!-- Part 1 — Dynamic questions -->
@@ -302,8 +300,7 @@ p{color:#434343;line-height:1.6;}
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
-  <div class="sar-actions">
-  <button class="sar-btn" data-nav="back">Back</button>
+  <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
   <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
 </div>
 </div>
@@ -327,7 +324,7 @@ p{color:#434343;line-height:1.6;}
 
     <div class="sar-actions">
       <button class="sar-btn" data-nav="goto" data-step="peer">Back</button>
-      <button class="sar-btn" id="finishShare" onclick="downloadSarResults()">Share</button>
+      <button class="sar-btn" id="finishShare" onclick="downloadSarResults()">Send</button>
     </div>
   </div>
 </div>
@@ -565,9 +562,34 @@ function ensurePeerBindings(){
   const nameEl = card.querySelector('#peerName');
   const emailEl = card.querySelector('#peerEmail');
   const nextBtn = card.querySelector('#peerNext');
+
+  if(nextBtn){
+    nextBtn.addEventListener('click', function(e){
+      if(nextBtn.disabled){ e.preventDefault(); return; }
+      var hasName = (nameEl && nameEl.value || "").trim().length > 0;
+      var hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl && emailEl.value || "").trim());
+      var hasHotel = !!(sarState.peer && sarState.peer.hotel);
+      if(!(hasName && hasEmail && hasHotel)){
+        e.preventDefault();
+        alert('Please fill peer nick name, email address, and select a hotel.');
+        return;
+      }
+      if(!(sarState.peer && sarState.peer.confirm24)){
+        var ok = confirm('your peer has 24 months experience?');
+        if(!ok){
+          e.preventDefault();
+          alert('Please confirm YES to continue.');
+          return;
+        }
+        sarState.peer = sarState.peer || {};
+        sarState.peer.confirm24 = true;
+        validatePeer();
+        goTo('finish');
+      }
+    });
+  }
   const shareBtn = card.querySelector('#peerShare');
-  const sendBtn = card.querySelector('#peerSend');
-  card.addEventListener('click',(e)=>{
+card.addEventListener('click',(e)=>{
     const btn = e.target.closest('.sar-hotel');
     if(!btn) return;
     card.querySelectorAll('.sar-hotel').forEach(b=>b.classList.remove('selected'));
@@ -608,6 +630,32 @@ function validatePeer(){
   const nameEl = card.querySelector('#peerName');
   const emailEl = card.querySelector('#peerEmail');
   const nextBtn = card.querySelector('#peerNext');
+
+  if(nextBtn){
+    nextBtn.addEventListener('click', function(e){
+      if(nextBtn.disabled){ e.preventDefault(); return; }
+      var hasName = (nameEl && nameEl.value || "").trim().length > 0;
+      var hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl && emailEl.value || "").trim());
+      var hasHotel = !!(sarState.peer && sarState.peer.hotel);
+      if(!(hasName && hasEmail && hasHotel)){
+        e.preventDefault();
+        alert('Please fill peer nick name, email address, and select a hotel.');
+        return;
+      }
+      if(!(sarState.peer && sarState.peer.confirm24)){
+        var ok = confirm('your peer has 24 months experience?');
+        if(!ok){
+          e.preventDefault();
+          alert('Please confirm YES to continue.');
+          return;
+        }
+        sarState.peer = sarState.peer || {};
+        sarState.peer.confirm24 = true;
+        validatePeer();
+        goTo('finish');
+      }
+    });
+  }
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
