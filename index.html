@@ -267,7 +267,7 @@ p{color:#434343;line-height:1.6;}
 <div class="sar-page" data-step="peer">
 <div class="sar-gap-1"></div>
 <div class="sar-para-title">FIND YOUR PEER REVIEWER</div>
-<div class="sar-intro" style="margin-bottom:12px"><p>You completed your self-assessment. The next step is peer review. Choose anyone in your team but they must have been in BED for at least 24 months. When your peer accepts, complete the information and press Send to forward the review for to your peer.</p></div>
+<div class="sar-intro" style="margin-bottom:12px"><p>You completed your self-assessment report. The next step is your peer review. You can choose anyone in your team but he or she must have been in BED for min. 24 months. When your peer accepts to review you, complete the information below and press Send. This will forward the review form to your peer.</p></div>
 <div class="sar-gap-1"></div>
 <div class="sar-row sar-row-fields" style="margin-bottom:12px">
 <label class="sar-field">
@@ -284,17 +284,36 @@ p{color:#434343;line-height:1.6;}
 <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
 <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
 <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
-<button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
 <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
 </div>
-<div class="sar-gap-1"></div>
 <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
+<button class="sar-btn" id="peerSend" type="button">Send</button>
 <button class="sar-btn primary" data-nav="goto" data-step="finish" disabled="" id="peerNext">Done</button>
 </div>
 </div>
 <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
 <!-- FINISH PAGE -->
-<div class="sar-page" data-step="finish"><div class="sar-card"><div class="sar-title" style="display:none">SELF-ASSESSMENT COMPLETED</div><div style="min-height:40vh;display:flex;align-items:center;justify-content:center;flex-direction:column;"><div style="width:140px;height:140px;border-radius:50%;background:var(--brand,#1E90FF);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(0,0,0,.07);margin-bottom:20px;"><i class="fa-solid fa-check" style="font-size:72px;color:#fff;line-height:1"></i></div><div style="font-size:24px;font-weight:700;color:#222;text-align:center">Congratulations</div></div><div class="sar-actions" style="display:flex;justify-content:flex-end;gap:10px;margin-top:40px"><button class="sar-btn" data-nav="goto" data-step="peer">Back</button><button class="sar-btn" disabled="" id="finishPdf">PDF</button></div></div></div>
+<div class="sar-page" data-step="finish">
+<div class="sar-card"><div style="min-height:40vh;display:flex;align-items:center;justify-content:center;flex-direction:column;"><div style="width:140px;height:140px;border-radius:50%;background:var(--brand,#1E90FF);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(0,0,0,.07);margin-bottom:20px;">
+<svg aria-hidden="true" focusable="false" height="84" viewbox="0 0 24 24" width="84" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 12.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+</svg>
+</div></div>
+<div class="sar-gap-1"></div>
+<div aria-hidden="true" class="finish-hero">
+<i class="fa-solid fa-circle-check"></i>
+</div>
+<div class="sar-gap-1"></div>
+<div class="sar-sub">
+      You’re done and we appreciate your participation Your score is a good starting point. Use it for self-development or to help others.  You can download your complete Self-Assessment Report (SAR) below. Let us know if you have questions
+    </div>
+<div class="sar-gap-3"></div>
+<div class="sar-actions">
+<button class="sar-btn" data-nav="goto" data-step="peer">Back</button>
+<button class="sar-btn" id="finishShare" onclick="downloadSarResults()">Send</button>
+</div>
+</div>
+</div>
 </section>
 </main>
 <script>
@@ -559,7 +578,6 @@ function ensurePeerBindings(){
     });
   }
   const shareBtn = card.querySelector('#peerShare');
-  const sendBtn = card.querySelector('#peerSend');
 card.addEventListener('click',(e)=>{
     const btn = e.target.closest('.sar-hotel');
     if(!btn) return;
@@ -651,7 +669,7 @@ function validatePeer(){
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
-  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
+  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && !!(sarState.peer && sarState.peer.confirm24));
 }
 function updateHeaderTitle(){
   const slot = document.getElementById('sarPageTitle');
