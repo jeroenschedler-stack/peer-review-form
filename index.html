@@ -169,6 +169,15 @@ p{color:#434343;line-height:1.6;}
 .sar-gap-1{ height:1.2em; }
 .sar-gap-3{ height:3.6em; }
 
+
+/* Finish mark */
+.finish-mark{width:156px;height:156px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background: radial-gradient(circle at 50% 50%, #1E90FF 0%, #1E90FF 60%, #e8f3ff 61%, #e8f3ff 100%);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+.finish-mark i{font-size:72px;color:#fff;line-height:1}
+
 </style>
 </head>
 <body>
@@ -301,11 +310,10 @@ p{color:#434343;line-height:1.6;}
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
     <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
-    <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
-  <div class="sar-gap-1"></div>
   <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
+  <button id="peerSend" class="sar-btn" type="button">Send</button>
   <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
 </div>
 </div>
@@ -315,22 +323,12 @@ p{color:#434343;line-height:1.6;}
   <div class="sar-card">
     <div class="sar-gap-1"></div>
 
-    <div class="finish-hero" aria-hidden="true">
-      <i class="fa-solid fa-circle-check"></i>
-    </div>
+    <div class="finish-hero" aria-hidden="true"><div class="finish-mark"><i class="fa-solid fa-check"></i></div></div>
 
     <div class="sar-gap-1"></div>
+<div class="sar-gap-3"></div>
 
-    <div class="sar-sub">
-      You’re done and we appreciate your participation Your score is a good starting point. Use it for self-development or to help others.  You can download your complete Self-Assessment Report (SAR) below. Let us know if you have questions
-    </div>
-
-    <div class="sar-gap-3"></div>
-
-    <div class="sar-actions">
-      <button class="sar-btn" data-nav="goto" data-step="peer">Back</button>
-      <button class="sar-btn" id="finishShare" onclick="downloadSarResults()">Send</button>
-    </div>
+    <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button><button class="sar-btn" id="finishPdf" disabled title="Coming soon">PDF</button></div>
   </div>
 </div>
 
@@ -599,7 +597,6 @@ function ensurePeerBindings(){
     });
   }
   const shareBtn = card.querySelector('#peerShare');
-  const sendBtn = card.querySelector('#peerSend');
 card.addEventListener('click',(e)=>{
     const btn = e.target.closest('.sar-hotel');
     if(!btn) return;
@@ -691,7 +688,7 @@ function validatePeer(){
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
-  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
+  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && !!(sarState.peer && sarState.peer.confirm24));
 }
 function updateHeaderTitle(){
   const slot = document.getElementById('sarPageTitle');
