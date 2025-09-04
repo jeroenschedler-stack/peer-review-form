@@ -71,10 +71,6 @@
     /* Rows & buttons */
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
     .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
-.sar-checks{display:flex;flex-direction:column;gap:8px;margin:12px 0}
-.sar-check{display:flex;align-items:center;gap:8px;color:#434343}
-.sar-check input{width:18px;height:18px}
-.sar-hint{font-size:12px;color:#8a8a8a;margin-top:4px}
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
       min-height:44px;min-width:140px;
@@ -241,7 +237,7 @@
         <div id="q2List" class="q-list" aria-live="polite"></div>
         <div class="sar-actions">
           <button class="sar-btn" data-nav="back">Back</button>
-          <button id="q2Next" class="sar-btn primary" data-nav="next" disabled>Next</button>
+          <button id="q2Next" class="sar-btn primary" data-nav="next" disabled>Submit</button>
         </div>
       </div>
 
@@ -281,22 +277,13 @@
       <input id="peerEmail" type="email" class="sar-input" inputmode="email" autocomplete="email" />
     </label>
   </div>
-  
-    <div class="sar-row sar-checks">
-      <label class="sar-check"><input type="checkbox" id="peerConfirm24"> <span>Please confirm your peer has 24-month experience.</span></label>
-      <label class="sar-check"><input type="checkbox" id="peerSend" disabled> <span>Send the review form to your peer.</span></label>
-      <div id="peerSendHint" class="sar-hint" style="display:none">Confirm experience to enable sending.</div>
-    </div>
-<div class="sar-row sar-hotels" role="group" aria-label="Choose peer's BED Hotel" style="margin-bottom:12px">
+  <div class="sar-row sar-hotels" role="group" aria-label="Choose peer's BED Hotel" style="margin-bottom:12px">
     <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
     <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
-    <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
-</div>
-      <div class="sar-gap-1"></div>
-    <div class="sar-gap-1"></div>
+  </div>
   <div class="sar-actions">
   <button class="sar-btn" data-nav="back">Back</button>
   <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
