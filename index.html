@@ -301,10 +301,11 @@ p{color:#434343;line-height:1.6;}
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
     <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
+    <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
+  <div class="sar-gap-1"></div>
   <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
-  <button id="peerSend" class="sar-btn" type="button">Send</button>
   <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
 </div>
 </div>
@@ -566,7 +567,6 @@ function ensurePeerBindings(){
   const nameEl = card.querySelector('#peerName');
   const emailEl = card.querySelector('#peerEmail');
   const nextBtn = card.querySelector('#peerNext');
-  const sendBtn = card.querySelector('#peerSend');
   if(nextBtn){
     nextBtn.addEventListener('click', function(e){
       if(nextBtn.disabled){ e.preventDefault(); return; }
@@ -599,6 +599,7 @@ function ensurePeerBindings(){
     });
   }
   const shareBtn = card.querySelector('#peerShare');
+  const sendBtn = card.querySelector('#peerSend');
 card.addEventListener('click',(e)=>{
     const btn = e.target.closest('.sar-hotel');
     if(!btn) return;
