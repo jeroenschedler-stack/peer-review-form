@@ -170,14 +170,44 @@ p{color:#434343;line-height:1.6;}
 .sar-gap-3{ height:3.6em; }
 
 
-/* Finish mark */
-.finish-mark{width:156px;height:156px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  background: radial-gradient(circle at 50% 50%, #1E90FF 0%, #1E90FF 60%, #e8f3ff 61%, #e8f3ff 100%);
-  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+/* === Finish page — graphic-only (scoped) === */
+.finish-hero {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.finish-mark i{font-size:72px;color:#fff;line-height:1}
-
+.finish-badge {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 24px rgba(0,0,0,.07);
+}
+.finish-badge i {
+  font-size: 72px;
+  line-height: 1;
+  color: #fff;
+}
+/* Match button sizing & alignment with global actions */
+.sar-actions-finish {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+}
+.sar-actions-finish .sar-btn {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  width: 140px;
+}
+#finishPdf[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+}
 </style>
 </head>
 <body>
@@ -310,27 +340,38 @@ p{color:#434343;line-height:1.6;}
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
     <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
+    <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
+  <div class="sar-gap-1"></div>
   <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
-  <button id="peerSend" class="sar-btn" type="button">Send</button>
   <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
 </div>
 </div>
       <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
      <!-- FINISH PAGE -->
+<!-- FINISH PAGE -->
 <div class="sar-page" data-step="finish">
   <div class="sar-card">
     <div class="sar-gap-1"></div>
 
-    <div class="finish-hero" aria-hidden="true"><div class="finish-mark"><i class="fa-solid fa-check"></i></div></div>
+    <!-- Graphic-only hero -->
+    <div class="finish-hero" aria-hidden="true">
+      <div class="finish-badge">
+        <i class="fa-solid fa-check"></i>
+      </div>
+    </div>
 
-    <div class="sar-gap-1"></div>
-<div class="sar-gap-3"></div>
+    <div class="sar-gap-3"></div>
 
-    <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button><button class="sar-btn" id="finishPdf" disabled title="Coming soon">PDF</button></div>
+    <!-- Action buttons -->
+    <div class="sar-actions sar-actions-finish">
+      <button class="sar-btn" data-nav="goto" data-step="peer">Back</button>
+      <button class="sar-btn" id="finishPdf" disabled>PDF</button>
+    </div>
   </div>
 </div>
+<!-- END FINISH PAGE -->
 
     </section>
   </main>
@@ -597,6 +638,7 @@ function ensurePeerBindings(){
     });
   }
   const shareBtn = card.querySelector('#peerShare');
+  const sendBtn = card.querySelector('#peerSend');
 card.addEventListener('click',(e)=>{
     const btn = e.target.closest('.sar-hotel');
     if(!btn) return;
@@ -688,7 +730,7 @@ function validatePeer(){
   const hasName = (nameEl?.value || "").trim().length > 0;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl?.value || "").trim());
   const hasHotel = !!(sarState.peer && sarState.peer.hotel);
-  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel && !!(sarState.peer && sarState.peer.confirm24));
+  if(nextBtn) nextBtn.disabled = !(hasName && hasEmail && hasHotel);
 }
 function updateHeaderTitle(){
   const slot = document.getElementById('sarPageTitle');
