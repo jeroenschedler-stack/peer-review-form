@@ -86,7 +86,7 @@
     .sar-page.active{display:block}
 
     /* Inputs */
-    .sar-row-fields{display:flex;gap:12px;align-items:flex-end}
+    .sar-row-fields{gap:12px}
     .sar-field{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
     .sar-label{font-size:12px;color:#6B7280}
     .sar-input{
@@ -159,6 +159,38 @@
 .sar-gap-1{ height:1.2em; }
 .sar-gap-3{ height:3.6em; }
 
+
+/* === I-01 overrides === */
+:root{ --text:#434343; --wrap-max:560px; }
+
+/* Center header content to same width as body */
+.sar-header{ justify-content:center; padding:0; }
+.sar-header .sar-logo-wrap{
+  width:100%; max-width:var(--wrap-max);
+  padding:0 12px;
+  display:flex; flex-direction:column; align-items:flex-start; gap:6px;
+}
+@media (min-width:768px){
+  .sar-header .sar-logo-wrap{ padding:0 16px; }
+}
+/* Body container width on larger screens */
+@media (min-width:768px){
+  .sar-wrap{ max-width:var(--wrap-max); margin:16px auto; padding:0 16px 24px; }
+}
+
+/* Hotels: force one logical row of 6 equal buttons */
+.sar-hotels{ gap:6px; flex-wrap:nowrap; }
+.sar-hotels .sar-hotel{ flex:0 0 calc((100% - 5*6px)/6); min-width:0; }
+
+/* Intro paragraph justification */
+.sar-intro p{ text-align:justify; }
+
+/* Intro page actions align to grid of 6 columns so one button = 2 hotels + 1 gap */
+.sar-page[data-step="welcome"] .sar-actions{
+  display:grid; grid-template-columns:repeat(6,1fr); gap:6px; margin-top:16px;
+}
+.sar-page[data-step="welcome"] #sarStart{ grid-column:5 / span 2; min-width:0; }
+
 </style>
 </head>
 <body>
@@ -179,10 +211,7 @@
 
       <!-- Welcome -->
       <div class="sar-page" data-step="welcome">
-        <div style="max-width:75%">
-          <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-        </div>
-
+        <div class="sar-gap-1"></div>
         <div class="sar-row sar-row-fields" style="margin-bottom:12px">
           <label class="sar-field">
             <span class="sar-label">your nickname</span>
@@ -199,9 +228,12 @@
           <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
           <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
           <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
+          <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
           <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
         </div>
 
+        <div class="sar-gap-1"></div>
+        <div class="sar-subtitle" style="font-weight:800;text-transform:uppercase;margin:0 0 6px">HOW TO ASSESS YOURSELF</div>
         <div class="sar-intro" style="margin-bottom:8px">
           <p>Self-assessment helps your personal growth and development. Read each statement and think how you act in these situations. Then select the rating that best fits you. Be honest with yourself. The goal is to know your own strengths and opportunities.</p>
         </div>
@@ -213,6 +245,8 @@
           <div class="sar-scale-row"><span class="sar-badge">4</span><span>I'm great at this</span></div>
           <div class="sar-scale-row"><span class="sar-badge">5</span><span>I'm excellent at this</span></div>
         </div>
+
+        <div class="sar-gap-3"></div>
 
         <div class="sar-actions">
           <button id="sarStart" class="sar-btn primary" data-nav="goto" data-step="q1" disabled>start</button>
