@@ -287,18 +287,14 @@ p{color:#434343;line-height:1.6;}
 <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
 </div>
 <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
-<button class="sar-btn" id="peerSend" type="button">Send</button>
+
 <button class="sar-btn primary" data-nav="goto" data-step="finish" disabled="" id="peerNext">Done</button>
 </div>
 </div>
 <div class="sar-page" data-step="done"><div class="sar-title">Done</div></div>
 <!-- FINISH PAGE -->
 <div class="sar-page" data-step="finish">
-<div class="sar-card"><div style="min-height:40vh;display:flex;align-items:center;justify-content:center;flex-direction:column;"><div style="width:140px;height:140px;border-radius:50%;background:var(--brand,#1E90FF);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(0,0,0,.07);margin-bottom:20px;">
-<svg aria-hidden="true" focusable="false" height="84" viewbox="0 0 24 24" width="84" xmlns="http://www.w3.org/2000/svg">
-<path d="M6 12.5l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
-</svg>
-</div></div>
+<div class="sar-card">
 <div class="sar-gap-1"></div>
 <div aria-hidden="true" class="finish-hero">
 <i class="fa-solid fa-circle-check"></i>
@@ -713,6 +709,53 @@ function downloadSarResults(){
   a.remove();
 }
 
+</script>
+
+<script>
+(function(){
+  // Peer page Done enabling patch
+  function bySel(root, sel){ return (root||document).querySelector(sel); }
+  function allSel(root, sel){ return Array.from((root||document).querySelectorAll(sel)); }
+  function isEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v||'').trim()); }
+
+  function bindPeer(){
+    var card = bySel(document, '.sar-page[data-step="peer"]');
+    if(!card) return;
+    var nameEl = bySel(card, '#peerName');
+    var emailEl = bySel(card, '#peerEmail');
+    var nextBtn = bySel(card, '#peerNext');
+    if(!nextBtn) return;
+
+    function hasHotel(){
+      return !!bySel(card, '.sar-hotel.selected');
+    }
+    function update(){
+      var ok = (nameEl && nameEl.value.trim().length > 0) &&
+               (emailEl && isEmail(emailEl.value)) &&
+               hasHotel();
+      nextBtn.disabled = !ok;
+    }
+    // Listeners
+    if(nameEl) nameEl.addEventListener('input', update);
+    if(emailEl) emailEl.addEventListener('input', update);
+    allSel(card, '.sar-hotel').forEach(function(btn){
+      btn.addEventListener('click', function(){ 
+        // Mark selected in case upstream handler didn't
+        allSel(card, '.sar-hotel').forEach(function(b){ b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        update();
+      });
+    });
+    // Initial
+    update();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bindPeer);
+  } else {
+    bindPeer();
+  }
+})();
 </script>
 </body>
 </html>
