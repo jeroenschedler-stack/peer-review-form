@@ -75,7 +75,7 @@ p{color:#434343;line-height:1.6;}
     .sar-row{display:flex;gap:8px;flex-wrap:wrap}
     .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
 .sar-page[data-step="peer"] .sar-actions{justify-content:flex-start}
-.sar-page[data-step="peer"] .sar-actions .sar-btn{flex:0 0 calc((100% - 8px)/2);min-width:0}
+.sar-page[data-step="peer"] .sar-actions .sar-btn{flex:0 0 calc((100% - 16px)/3);min-width:0}
     .sar-btn{
       display:inline-flex;align-items:center;justify-content:center;
       min-height:44px;min-width:140px;
@@ -146,6 +146,8 @@ p{color:#434343;line-height:1.6;}
 .score-wrap{display:flex;flex-direction:column;gap:16px;align-items:stretch;justify-content:flex-start}
 .score-values{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%}
 .score-label{font-size:14px;color:#434343;}
+.score-label + .score-raw{margin-top:6px;}
+.score-label + .score-band{margin-top:6px;}
 .score-label + .score-band{margin-top:6px;}
 .score-raw{ font-size: 28px; font-weight:800; color:#434343; }
 .scorebar-wrap{ width:100%; margin:1.2em 0; }
@@ -203,7 +205,7 @@ p{color:#434343;line-height:1.6;}
         </div>
 
         <div class="sar-row sar-hotels" role="group" aria-label="Choose your BED Hotel" style="margin-bottom:12px">
-              <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
+                  <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
     <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
     <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
     <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
@@ -224,6 +226,7 @@ p{color:#434343;line-height:1.6;}
         </div>
 
             <div class="sar-gap-3"></div>
+      <div class="sar-gap-3"></div>
   <div class="sar-actions">
           <button id="sarStart" class="sar-btn primary" data-nav="goto" data-step="q1" disabled>start</button>
         </div>
@@ -301,6 +304,7 @@ p{color:#434343;line-height:1.6;}
     <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
   </div>
   <div class="sar-actions"><button class="sar-btn" data-nav="back">Back</button>
+  <button id="peerSend" class="sar-btn" type="button">Send</button>
   <button id="peerNext" class="sar-btn primary" data-nav="goto" data-step="finish" disabled>Done</button>
 </div>
 </div>
@@ -562,6 +566,11 @@ function ensurePeerBindings(){
   const nameEl = card.querySelector('#peerName');
   const emailEl = card.querySelector('#peerEmail');
   const nextBtn = card.querySelector('#peerNext');
+  if(nextBtn){
+    nextBtn.addEventListener('click', function(e){
+      if(nextBtn.disabled){ e.preventDefault(); return; }
+    });
+  }
 
   if(nextBtn){
     nextBtn.addEventListener('click', function(e){
@@ -601,7 +610,28 @@ card.addEventListener('click',(e)=>{
   if(nameEl) nameEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.name = nameEl.value.trim(); validatePeer(); });
   if(emailEl) emailEl.addEventListener('input', ()=>{ sarState.peer = sarState.peer || {}; sarState.peer.email = emailEl.value.trim(); validatePeer(); });
   if(shareBtn){ shareBtn.addEventListener('click',(e)=>{ e.preventDefault(); downloadSarResults(); }); }
-    validatePeer();
+      validatePeer();
+  if(sendBtn){
+    sendBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      var hasName = (nameEl && nameEl.value || "").trim().length > 0;
+      var hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((emailEl && emailEl.value || "").trim());
+      var hasHotel = !!(sarState.peer && sarState.peer.hotel);
+      if(!(hasName && hasEmail && hasHotel)){
+        alert('Please fill peer nick name, email address, and select a hotel.');
+        return;
+      }
+      var ok = confirm('your peer has 24 months experience?');
+      if(!ok){
+        alert('Please confirm YES to continue.');
+        return;
+      }
+      sarState.peer = sarState.peer || {};
+      sarState.peer.confirm24 = true;
+      validatePeer();
+    });
+  }
+  validatePeer();
   if(sendBtn){
     sendBtn.addEventListener('click', function(e){
       e.preventDefault();
