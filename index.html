@@ -14,7 +14,7 @@
     :root{
       --brand:#1E90FF;
       --border:#E5E7EB;
-      --text:#111827;
+      --text:#434343;
       --sub:#374151;
       --active:#ff0000; /* new red for completed/current dots */
       --header-h:64px;
@@ -81,6 +81,11 @@
     .sar-btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
     .sar-btn:disabled{opacity:.6;cursor:not-allowed}
 
+    /* Actions alignment */
+    .sar-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+    .sar-actions.three .sar-btn{flex:0 0 calc((100% - 16px)/3);min-width:0}
+
+
     /* Pages */
     .sar-page{display:none}
     .sar-page.active{display:block}
@@ -102,13 +107,14 @@
     .sar-hotel.selected{background:var(--brand);color:#fff;border-color:var(--brand)}
 
     /* Intro & scale (welcome) */
+    .sar-intro p{ text-align: justify; }
     .sar-intro p,.sar-scale{font-size:14px;line-height:1.45}
     @media (max-width:360px){ .sar-intro p,.sar-scale{font-size:13px} }
     .sar-scale-row{display:flex;align-items:center;gap:10px;margin:6px 0}
     .sar-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:13px;font-weight:600}
 
     /* Extra space above start */
-    .sar-page[data-step="welcome"] .sar-scale{margin-bottom:56px}
+    .sar-page[data-step="welcome"] .sar-scale{margin-bottom:0}
 
     /* Questions */
     .q-list{display:flex;flex-direction:column;gap:14px}
@@ -170,20 +176,8 @@
       <div class="sar-page-title" id="sarPageTitle" aria-live="polite"></div>
       <div class="sar-dotbar" id="dotbar" aria-label="Progress"></div>
       <!-- Global progress bar inside header -->
-      <div class="global-progress" id="gprog" aria-hidden="true"><span id="gprogFill"></span></div>
-    </div>
-  </header>
-
-  <main class="sar-wrap">
-    <section class="sar-card">
-
-      <!-- Welcome -->
-      <div class="sar-page" data-step="welcome">
-        <div style="max-width:75%">
-          <div class="sar-title">SELF-ASSESSMENT (SAR)</div>
-        </div>
-
-        <div class="sar-row sar-row-fields" style="margin-bottom:12px">
+      <div class="global-pro<div class="sar-page" data-step="welcome">
+<div class="sar-row sar-row-fields" style="margin-bottom:12px">
           <label class="sar-field">
             <span class="sar-label">your nickname</span>
             <input id="sarNick" type="text" class="sar-input" inputmode="text" autocomplete="nickname" />
@@ -194,15 +188,19 @@
           </label>
         </div>
 
-        <div class="sar-row sar-hotels" role="group" aria-label="Choose your BED Hotel" style="margin-bottom:12px">
+                  <div class="sar-gap-1"></div>
+          <div class="sar-row sar-hotels" role="group" aria-label="Choose your BED Hotel" style="margin-bottom:12px">
           <button class="sar-btn sar-hotel" data-hotel="BCK">BCK</button>
           <button class="sar-btn sar-hotel" data-hotel="BPS">BPS</button>
           <button class="sar-btn sar-hotel" data-hotel="BNM">BNM</button>
           <button class="sar-btn sar-hotel" data-hotel="BCG">BCG</button>
+          <button class="sar-btn sar-hotel" data-hotel="FLY">FLY</button>
           <button class="sar-btn sar-hotel" data-hotel="BED">BED</button>
-        </div>
+</div>
 
-        <div class="sar-intro" style="margin-bottom:8px">
+                  <div class="sar-gap-1"></div>
+          <div class="sar-heading" style="font-weight:700;text-transform:uppercase;color:#434343;margin-bottom:6px">HOW TO ASSESS YOURSELF</div>
+          <div class="sar-intro" style="margin-bottom:8px">
           <p>Self-assessment helps your personal growth and development. Read each statement and think how you act in these situations. Then select the rating that best fits you. Be honest with yourself. The goal is to know your own strengths and opportunities.</p>
         </div>
 
@@ -214,8 +212,14 @@
           <div class="sar-scale-row"><span class="sar-badge">5</span><span>I'm excellent at this</span></div>
         </div>
 
-        <div class="sar-actions">
+                  <div class="sar-gap-1"></div>
+          <div class="sar-actions">
           <button id="sarStart" class="sar-btn primary" data-nav="goto" data-step="q1" disabled>start</button>
+        </div>
+      </div>
+
+      <!-- Part 1 — Dynamic questions -->
+           <button id="sarStart" class="sar-btn primary" data-nav="goto" data-step="q1" disabled>start</button>
         </div>
       </div>
 
