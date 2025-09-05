@@ -324,7 +324,7 @@ p{color:#434343;line-height:1.6;}
   </div>
 
   <!-- Auto-size the checkmark to match "Congratulations" width -->
-  <script>
+  {% raw %}<script>
   (function() {
     function sizeFinishIcon() {
       var img = document.getElementById('finishIcon');
@@ -344,7 +344,7 @@ p{color:#434343;line-height:1.6;}
       new MutationObserver(sizeFinishIcon).observe(page, {attributes:true, attributeFilter:['class']});
     }
   })();
-  </script>
+  </script>{% endraw %}
 </div></div>
 </div>
 </div>
