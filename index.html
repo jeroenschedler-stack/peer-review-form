@@ -554,7 +554,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <body>
 <main class="container">
 <h1>BED HOSPITALITY 2.0</h1>
-<p class="subheader">TEAM MEMBER FORM</p>
+<p class="subheader">PEER REVIEW FORM</p>
 <div class="progress" id="progressHeader">
 <span class="dot"></span><span class="dot"></span><span class="dot"></span>
 <span class="dot"></span><span class="dot"></span><span class="dot"></span>
@@ -575,11 +575,11 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <option>BED Support</option>
 </select>
 </div>
-<h2 class="section-title">peer information</h2>
-<p class="intro">after you assess yourself one of your peers must review you. select anyone in your team who worked in BED for at least 12 months</p>
-<div class="row"><label for="peerName">name peer</label><input id="peerName"/></div>
-<div class="row"><label for="peerEmail">email peer</label><input id="peerEmail" type="email"/></div>
-<div class="row"><label for="peerHotel">peer location</label>
+<h2 class="section-title">team member information</h2>
+<p class="intro">enter the details of the team member you will assess. you must work in the same hotel and have at least 12 months experience in BED</p>
+<div class="row"><label for="peerName">name member</label><input id="peerName"/></div>
+<div class="row"><label for="peerEmail">email member</label><input id="peerEmail" type="email"/></div>
+<div class="row"><label for="peerHotel">member location</label>
 <select id="peerHotel" required="">
 <option disabled="" selected="" value="">select hotel</option>
 <option>BED Changkian</option>
@@ -905,7 +905,7 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
     if (id === 'q1') { subheaderEl.textContent = 'STATEMENTS PART 1'; } 
     else if (id === 'q2') { subheaderEl.textContent = 'STATEMENTS PART 2'; } 
     else if (id === 'congrats') { subheaderEl.textContent = 'ASSESSMENT COMPLETED'; } 
-    else { subheaderEl.textContent = 'TEAM MEMBER FORM'; }
+    else { subheaderEl.textContent = 'PEER REVIEW FORM'; }
   };
 
   function formatDate(){
