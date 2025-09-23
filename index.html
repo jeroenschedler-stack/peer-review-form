@@ -576,10 +576,10 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 </select>
 </div>
 <h2 class="section-title">team member information</h2>
-<p class="intro">enter the details of the team member you will assess. you must work in the same hotel and have at least 12 months experience in BED</p>
-<div class="row"><label for="peerName">name member</label><input id="peerName"/></div>
-<div class="row"><label for="peerEmail">email member</label><input id="peerEmail" type="email"/></div>
-<div class="row"><label for="peerHotel">member location</label>
+<p class="intro">enter the details of the team member you are about to assess. you must work in the same hotel and have at least 12 months experience in BED</p>
+<div class="row"><label for="peerName">team member</label><input id="peerName"/></div>
+<div class="row"><label for="peerEmail">email</label><input id="peerEmail" type="email"/></div>
+<div class="row"><label for="peerHotel">location</label>
 <select id="peerHotel" required="">
 <option disabled="" selected="" value="">select hotel</option>
 <option>BED Changkian</option>
@@ -599,7 +599,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
   <br>
 <h2 class="section-title">INSTRUCTIONS</h2>
 <p class="intro">
-      Read each statement and think how you act in these situations. Then select the rating that best fits you. Be honest with yourself. The goal is to know what you're good at and what you could do better
+      Read each statement and think how your friend acts in these situations. Then select the rating that first best fits. Be honest and sincere. The goal is to help them to find out what they're good at and what they could do better
     </p>
 <h2 class="section-title">RATING</h2>
 <ul class="scale-list" style="list-style:none; padding:0; margin:10px 0">
@@ -670,7 +670,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <div class="modal-backdrop" id="eligBackdrop" style="position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:50">
 <div class="modal" style="width:min(92vw,520px); background:#fff; border-radius:18px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,.25)">
 <h3 style="margin:0 0 10px 0; font-size:18px">please confirm</h3>
-<p style="margin:0 0 18px 0; font-size:16px; line-height:1.5; color:#222">the person that will review you worked in BED for at least 12 months?</p>
+<p style="margin:0 0 18px 0; font-size:16px; line-height:1.5; color:#222">to review another team member you must have worked in BED for at least 12 months</p>
 <div class="row-btns" style="display:flex; justify-content:flex-end; gap:10px">
 <button class="btn-secondary" id="eligCancel">Cancel</button>
 <button id="eligOk">OK</button>
