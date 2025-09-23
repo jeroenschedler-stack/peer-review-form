@@ -81,7 +81,7 @@
     {
       "id": 11,
       "statement": "You make great last impressions",
-      "subtext": "You walk them out and wait until their car has left",
+      "subtext": "You stay outside until their car has left",
       "group": "BED competencies"
     },
     {
@@ -116,8 +116,8 @@
     },
     {
       "id": 17,
-      "statement": "You tell guests they can use other BED facilities",
-      "subtext": "You offer downtown coffee, big pool or breakfast",
+      "statement": "Your guests know they can go to other BED",
+      "subtext": "You offer downtown coffee, pool or breakfast",
       "group": "collaboration"
     },
     {
@@ -128,7 +128,7 @@
     },
     {
       "id": 19,
-      "statement": "You talk with guests because you are interested",
+      "statement": "Your talk with guests is genuine",
       "subtext": "When you force yourself it will not be real",
       "group": "BED competencies"
     },
@@ -170,7 +170,7 @@
     },
     {
       "id": 26,
-      "statement": "You send messages that look like you wrote them",
+      "statement": "Your messages look like you wrote them",
       "subtext": "You don’t copy AI because guests will know",
       "group": "BED competencies"
     },
@@ -201,7 +201,7 @@
     {
       "id": 31,
       "statement": "You look after the whole hotel, not only front",
-      "subtext": "You include rooms, maintenance and back areas",
+      "subtext": "You check rooms, maintenance and back areas",
       "group": "taking ownership"
     },
     {
@@ -212,7 +212,7 @@
     },
     {
       "id": 33,
-      "statement": "You don’t pass issues to others but act yourself",
+      "statement": "You fix issues yourself",
       "subtext": "You follow up later to make sure it’s fixed",
       "group": "taking ownership"
     },
@@ -225,7 +225,7 @@
     {
       "id": 35,
       "statement": "You have no manuals that show you what to do",
-      "subtext": "That means you cannot do anything wrong",
+      "subtext": "You make decisions based on common sense",
       "group": "taking ownership"
     }
   ]
