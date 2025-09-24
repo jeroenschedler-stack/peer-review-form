@@ -138,9 +138,9 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 
     /* Title block */
     .pdf-top{display:grid; grid-template-columns: 1fr 220px; gap:16px; align-items:start; margin-bottom:10px}
-    .pdf-title{font-size:26px; font-weight:800; color:var(--blue); margin:0}
-    .pdf-sub{font-size:20px; font-weight:700; color:var(--blue); margin:2px 0 2px 0}
-    .pdf-date{font-size:14px; color:var(--blue); margin:2px 0 10px 0}
+    .pdf-title{font-size:34px; font-weight:900; color:var(--blue); margin:0}
+    .pdf-sub{font-size:28px; font-weight:700; color:var(--blue); margin:2px 0 2px 0}
+    .pdf-date{font-size:18px; color:var(--blue); margin:2px 0 10px 0}
     .pdf-divider{height:1px; background:#cfd4dc; margin:8px 0 14px 0}
 
     /* ====== SCORE BOX (SAFE TO EDIT) ====== */
@@ -153,9 +153,9 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
       padding:12px 14px;
       text-align:center;
     }
-    .score-box .label{font-size:12px; font-weight:700; letter-spacing:.5px}
+    .score-box .label{font-size:18px; font-weight:600; letter-spacing:.5px}
     .score-box .pct{font-size:34px; font-weight:800; margin:6px 0 2px 0}
-    .score-box .raw{font-size:12px; opacity:.95}
+    .score-box .raw{font-size:18px; font-weight:600; opacity:.95}
 
     /* ====== SECTION HEADERS (SAFE TO EDIT) ====== */
     .sec-h{
@@ -684,7 +684,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <div class="pdf-top">
 <div>
 <div class="pdf-title">BED HOSPITALITY 2.0</div>
-<div class="pdf-sub">Self-Assessment Report</div>
+<div class="pdf-sub">Peer Reviewer Report</div>
 <div class="pdf-date" id="pdfDate">Assessment Date —</div>
 </div>
 <div class="score-box">
@@ -694,7 +694,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 </div>
 </div>
 <div class="pdf-divider"></div>
-<div class="sec-h info-bar"><span>PERSONAL INFORMATION</span><span class="peer-label">PEER INFORMATION</span></div>
+<div class="sec-h info-bar"><span>TEAM MEMBER INFORMATION</span><span class="peer-label">PEER REVIEWER INFORMATION</span></div>
 <div class="info-grid">
 <div>
 <div class="sub-h">PERSONAL INFORMATION</div>
@@ -713,7 +713,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 </div>
 </div>
 </div>
-<div class="sec-h assess-bar"><span class="lbl-group">SCORE BY GROUP</span><span class="lbl-pct">%</span><span class="lbl-desc">DESCRIPTION</span></div>
+<div class="sec-h assess-bar"><span class="lbl-group">SCORE BY GROUP</span></div>
 <div class="card" style="padding:0">
 <table>
 <tbody id="pdfGroupRows">
