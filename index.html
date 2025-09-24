@@ -829,8 +829,10 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
     return res;
   }
 
-  function groupDescMap(){
-    const m = {}; (S.groups||[]).forEach(g=>m[g.name]=g.description||''); return m;
+function groupDescMap(){
+  const m = {};
+  (S().groups||[]).forEach(g => m[g.name] = g.description || DESC[g.name] || '');
+  return m;
   }
 
   function renderGroupResults(){
@@ -952,20 +954,20 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
     document.getElementById('pdfPeerEmail').textContent = document.getElementById('peerEmail').value || '';
     document.getElementById('pdfPeerHotel').textContent = document.getElementById('peerHotel').value || '';
 
-    // Group rows
-    const gp = computeGroupPercents();
-    const descMap = groupDescMap();
-    const order = ["Hospitality Skills","Hospitality Competencies","Taking Ownership","Collaboration"];
-    const body = document.getElementById('pdfGroupRows');
-    body.innerHTML='';
-    order.forEach(name=>{
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td'); tdName.textContent = 'Score ' + name;
-      const tdPct = document.createElement('td'); tdPct.textContent = (gp[name] != null ? gp[name] : '—') + '%';
-      const tdDesc = document.createElement('td'); tdDesc.textContent = descMap[name] || '(add description)';
-      tr.appendChild(tdName); tr.appendChild(tdPct); tr.appendChild(tdDesc);
-      body.appendChild(tr);
-    });
+// Group rows
+const gp = computeGroupPercents();
+const descMap = groupDescMap();
+const order = ["Hospitality Skills","Hospitality Competencies","Taking Ownership","Collaboration"];
+const body = document.getElementById('pdfGroupRows');
+body.innerHTML='';
+order.forEach(name=>{
+  const tr = document.createElement('tr');
+  const tdName = document.createElement('td'); tdName.textContent = 'Score ' + name;
+  const tdPct  = document.createElement('td'); tdPct.textContent  = (gp[name] != null ? gp[name] : '—') + '%';
+  const tdDesc = document.createElement('td'); tdDesc.textContent = descMap[name] || '';
+  tr.appendChild(tdName); tr.appendChild(tdPct); tr.appendChild(tdDesc);
+  body.appendChild(tr);
+});
 
     // Statements table
     const tb = document.querySelector('#pdfStatements tbody');
