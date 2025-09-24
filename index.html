@@ -1302,30 +1302,6 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
     });
   };
 
-  // Override buildPdfReport
-  const _buildPdf = window.buildPdfReport;
-  window.buildPdfReport = function(){
-    const S = window.__S || window.S || {};
-    (S.questions||[]).forEach(q => { if (MAP[q.group]) q.group = MAP[q.group]; });
-    (S.groups||[]).forEach(g => { if (MAP[g.name]) g.name = MAP[g.name]; });
-    const order = normalizedOrder(S);
-    // Call original to lay out the PDF shell first (date, name, totals, etc.)
-    if (typeof _buildPdf === 'function') _buildPdf();
-    // Then replace the SCORE BY GROUP table using our normalized order
-    const table = document.getElementById('pdfGroupTable');
-    if (table){
-      table.innerHTML = '';
-      const byPct = (window.computeGroupPercents ? window.computeGroupPercents() : {});
-      order.forEach(name => {
-        const tr = document.createElement('tr');
-        const td1 = document.createElement('td'); td1.textContent = name;
-        const td2 = document.createElement('td'); td2.textContent = (byPct[name] ?? 0) + '%';
-        tr.appendChild(td1); tr.appendChild(td2);
-        table.appendChild(tr);
-      });
-    }
-  };
-})();
 </script>
 
 
@@ -1373,38 +1349,15 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
       wrap.innerHTML =
         '<div class="group-line"><span class="group-name">'+ name +'</span><span class="group-pct">'+ p +'%</span></div>' +
         '<div class="group-desc">'+ (descMap[name] || '') +'</div>';
-      holder.appendChild(wrap);
+    holder.appendChild(wrap);
     });
   };
-
-  // Replace PDF builder (keeps original totals/date/etc. from existing function)
-  const _origBuild = window.buildPdfReport;
-  window.buildPdfReport = function(){
-    normalizeAll();
-    if (typeof _origBuild === 'function') _origBuild(); // lays out date, totals, info, statements
-
-    const S = window.__S || window.S || {};
-    const body = document.getElementById('pdfGroupRows');
-    if(!body) return;
-    // Rebuild the SCORE BY GROUP rows with normalized order and clean labels
-    body.innerHTML = '';
-    const pctMap = (window.computeGroupPercents ? window.computeGroupPercents() : {});
-    const descMap = {}; (S.groups||[]).forEach(g => descMap[g.name] = g.description || '');
-    const names = byOrder(Object.keys(descMap));
-    names.forEach(name => {
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td'); tdName.textContent = name;
-      const tdPct  = document.createElement('td'); tdPct.textContent  = (pctMap[name] ?? 0) + '%';
-      const tdDesc = document.createElement('td'); tdDesc.textContent = descMap[name] || '';
-      tr.appendChild(tdName); tr.appendChild(tdPct); tr.appendChild(tdDesc);
-      body.appendChild(tr);
-    });
-  };
-})();
 </script>
+
 <script>
 // === Strong patch v2: force-normalize + recompute group % independent of S.groups ===
 (function(){
+
   const MAP = {
     "Hospitality Skills":"hospitality skills",
     "Hospitality Competencies":"BED competencies",
@@ -1491,25 +1444,6 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
     });
   };
 
-  const _origBuild = window.buildPdfReport;
-  window.buildPdfReport = function(){
-    ensureNormalized();
-    if (typeof _origBuild === 'function') _origBuild();
-    const body = document.getElementById('pdfGroupRows');
-    if (!body) return;
-    body.innerHTML='';
-    const pct = window.computeGroupPercents();
-    const d   = descMap();
-    orderedNames().forEach(name => {
-      const tr = document.createElement('tr');
-      const td1=document.createElement('td'); td1.textContent=name;
-      const td2=document.createElement('td'); td2.textContent=(pct[name]??0)+'%';
-      const td3=document.createElement('td'); td3.textContent=d[name]||'';
-      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
-      body.appendChild(tr);
-    });
-  };
-
   // Ensure our overrides are active BEFORE submitAll runs
   document.addEventListener('DOMContentLoaded', ensureNormalized);
   // Also prime right before clicking submit
@@ -1592,24 +1526,6 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
     });
   };
 
-  const _build = window.buildPdfReport;
-  window.buildPdfReport = function(){
-    ensureNormalized();
-    if (typeof _build === 'function') _build();
-    const body = document.getElementById('pdfGroupRows');
-    if(!body) return;
-    body.innerHTML = '';
-    const pct = computeGroupPercents();
-    const desc = {}; (S().groups||[]).forEach(g=>desc[g.name]=g.description||DESC[g.name]||"");
-    orderedNames().forEach(name=>{
-      const tr=document.createElement('tr');
-      const td1=document.createElement('td'); td1.textContent=name;
-      const td2=document.createElement('td'); td2.textContent=(pct[name]??0)+'%';
-      const td3=document.createElement('td'); td3.textContent=desc[name]||'';
-      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
-      body.appendChild(tr);
-    });
-  };
 
   // Re-normalize and re-render at the exact moments that matter
   window.addEventListener('load', ensureNormalized);
