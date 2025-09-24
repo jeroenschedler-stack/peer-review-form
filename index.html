@@ -655,10 +655,11 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
       peer review<br>completed
     </h3>
     <p style="font-size:18px; color:#374151">
-      Click PDF to download the full report.<br>
-      Please send the review form to your peer.
+      Click PDF to download the report.<br>
+      Send the review form to your peer.
     </p>
   </div>
+  <br>
   <br>
   <br>
 <div class="page-actions" 
@@ -672,7 +673,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <div class="modal-backdrop" id="eligBackdrop" style="position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:50">
 <div class="modal" style="width:min(92vw,520px); background:#fff; border-radius:18px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,.25)">
 <h3 style="margin:0 0 10px 0; font-size:18px">please confirm</h3>
-<p style="margin:0 0 18px 0; font-size:16px; line-height:1.5; color:#222">I know the person well and I worked in BED for at least 12 months</p>
+<p style="margin:0 0 18px 0; font-size:16px; line-height:1.5; color:#222">I know the team member well and I worked in BED for at least 12 months</p>
 <div class="row-btns" style="display:flex; justify-content:flex-end; gap:10px">
 <button class="btn-secondary" id="eligCancel">Cancel</button>
 <button id="eligOk">OK</button>
@@ -869,7 +870,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 
   el('submitAll').onclick = () => {
     const totals = computeTotals();
-    el('scorePercent').textContent = 'OVERALL SCORE = ' + totals.pct + '%';
+    el('scorePercent').textContent = 'OVERALL SCORE ' + totals.pct + '%';
     const gauge = el('gauge');
     gauge.style.setProperty('--marker', totals.pct + '%'); 
     gauge.style.position='relative';
