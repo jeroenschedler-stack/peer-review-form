@@ -648,20 +648,47 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 </div>
 </section>
 <!-- Congrats -->
-<section id="congrats" style="display:none; padding-top:40px;">
-  <div class="big-check"></div>
-  <div class="center">
-    <h3 style="font-size:32px; margin:8px 0 6px 0; color:#373737;">
-      peer review<br>completed
-    </h3>
-    <p style="font-size:18px; color:#374151">
-      Click PDF to download the report.<br>
-      Send the review form to your peer.
-    </p>
+<section id="congrats" style="display:none">
+  <br>
+  <br>
+  <br>
+<style>
+.number-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;          /* circle size */
+  height: 28px;
+  border-radius: 50%;   /* makes it round */
+  background-color: #1E90FF; /* same blue as rating scales, adjust if needed */
+  color: #fff;          /* white number */
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;   /* space between circle and text */
+}
+.step {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 18px;
+  color: #374151;
+}
+</style>
+<div class="big-check"></div>
+<div class="center">
+  <h3 style="font-size:34px; margin:8px 0 6px 0; color:#373737;peer review<br>completed
+  </h3>
+  <div class="step">
+    <span class="number-circle">1</span>
+    click PDF to download the full report
   </div>
-  <br>
-  <br>
-  <br>
+  <div class="step">
+    <span class="number-circle">2</span>
+    please send a copy to the team member
+    <br>
+    <br>
+  </div>
+</div>
 <div class="page-actions" 
      style="display:flex; gap:14px; justify-content:center; margin-top:10px">
   <button class="btn-secondary btn-wide" id="congratsBack">Back</button>
@@ -673,7 +700,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <div class="modal-backdrop" id="eligBackdrop" style="position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:50">
 <div class="modal" style="width:min(92vw,520px); background:#fff; border-radius:18px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,.25)">
 <h3 style="margin:0 0 10px 0; font-size:18px">please confirm</h3>
-<p style="margin:0 0 18px 0; font-size:16px; line-height:1.5; color:#222">I know the team member well and I worked in BED for at least 12 months</p>
+<p style="margin:0 0 18px 0; font-size:16px; line-height:1.5; color:#222">I know the person well and I worked in BED for at least 12 months</p>
 <div class="row-btns" style="display:flex; justify-content:flex-end; gap:10px">
 <button class="btn-secondary" id="eligCancel">Cancel</button>
 <button id="eligOk">OK</button>
@@ -870,7 +897,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 
   el('submitAll').onclick = () => {
     const totals = computeTotals();
-    el('scorePercent').textContent = 'OVERALL SCORE ' + totals.pct + '%';
+    el('scorePercent').textContent = 'OVERALL SCORE = ' + totals.pct + '%';
     const gauge = el('gauge');
     gauge.style.setProperty('--marker', totals.pct + '%'); 
     gauge.style.position='relative';
@@ -1605,41 +1632,6 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
       setTimeout(window.buildPdfReport, 0);
     }
   }, true);
-})();
-</script>
-<script>
-// === Desktop PDF reliability patch ===
-// Ensures group % + descriptions are updated BEFORE printing (desktop is faster than mobile).
-(function(){
-  const build = window.buildPdfReport || function(){};
-  const normalize = (window.ensureNormalized || function(){}); // present in your hot-fix
-
-  function rebuildThenPrint(){
-    try { normalize(); } catch(e){}
-    try { build(); } catch(e){}
-    // Let the DOM update settle, then print
-    requestAnimationFrame(() => setTimeout(() => {
-      try { window.print(); } catch(e){}
-    }, 150));
-  }
-
-  // Hook the PDF button
-  function hook(){
-    const btn = document.getElementById('congratsPdf');
-    if (!btn) return;
-    btn.addEventListener('click', function(ev){
-      ev.stopPropagation();
-      ev.preventDefault();
-      rebuildThenPrint();
-      return false;
-    }, true);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', hook);
-  } else {
-    hook();
-  }
 })();
 </script>
 
