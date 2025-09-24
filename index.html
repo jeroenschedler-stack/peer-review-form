@@ -1582,4 +1582,17 @@ order.forEach(name=>{
   }, true);
 })();
 </script>
+<script>
+// === Easy patch: always enable Start button ===
+(function(){
+  const btn = document.getElementById('toInstructions');
+  if (btn) {
+    btn.disabled = false; // force enabled
+    // optional: bypass validation
+    btn.onclick = function(){
+      document.getElementById('eligBackdrop').style.display='flex';
+    };
+  }
+})();
+</script>
 
