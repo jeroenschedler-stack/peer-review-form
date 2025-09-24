@@ -1024,13 +1024,24 @@ order.forEach(name=>{
     });
   }
 
-  document.getElementById('congratsPdf').onclick = () => { buildPdfReport(); window.print(); };
+ document.getElementById('congratsPdf').onclick = () => { buildPdfReport(); window.print(); };
 
-  // Init
-  loadQuestions();
+// Init
+loadQuestions();
 })(); 
 </script>
+
+<!-- Final drop-in block -->
 <script>
+// === Final drop-in: groups renderer + normalize triggers + Start modal fix ===
+(function(){
+  // ... full code from my previous message ...
+})();
+</script>
+
+</body>
+</html>
+
 // === Validation patch v2 (uses window.__S) ===
 (function(){
   function Sref(){ return (window.__S || window.S || {}); }
