@@ -2,19 +2,19 @@
   "groups": [
     {
       "name": "hospitality skills",
-      "description": "Basic service skills for daily tasks and guest care."
+      "description": "Basic skills for daily tasks and guest service"
     },
     {
       "name": "BED competencies",
-      "description": "Advanced ability to read people and situations."
+      "description": "Advanced ability to read people and situations"
     },
     {
       "name": "taking ownership",
-      "description": "Acting independently and sharing responsibility."
+      "description": "Acting independently and sharing responsibility"
     },
     {
       "name": "collaboration",
-      "description": "Building trust and helping across the BED community."
+      "description": "Building trust and helping others across BED"
     }
   ],
   "questions": [
