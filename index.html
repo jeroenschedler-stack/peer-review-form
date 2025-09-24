@@ -1549,50 +1549,100 @@ order.forEach(name=>{
     return arr.sort((a,b)=> (ORDER.indexOf(a)+1||999) - (ORDER.indexOf(b)+1||999));
   }
 
-  // --- FORCE our renderers (overwrite anything defined earlier)
+ <script>
+// Safe override of renderGroupResults (no globals required)
+(function(){
+  function S(){ return (window.__S || window.S || {}); }
+  const DESC_FALLBACK = {
+    "hospitality skills":"Practical service actions and daily guest care done the BED way.",
+    "BED competencies":"Reading people and situations; proactive judgement; turning intent into consistent action.",
+    "taking ownership":"Acting independently, fixing problems, and sharing responsibility for outcomes.",
+    "collaboration":"Building trust, communicating clearly, and helping across the BED community."
+  };
+  function orderedNames(){
+    return ["hospitality skills","BED competencies","taking ownership","collaboration"];
+  }
+  function computeGroupPercents(){
+    const st = S(), buckets = {};
+    (st.questions||[]).forEach(q=>{
+      const g = q && q.group; if(!g) return;
+      (buckets[g] ||= []).push(parseInt((st.answers||{})[q.id],10)||0);
+    });
+    const out = {};
+    Object.keys(buckets).forEach(g=>{
+      const vals = buckets[g].filter(v=>v>0);
+      if(!vals.length){ out[g]=0; return; }
+      const avg = vals.reduce((a,b)=>a+b,0)/vals.length;
+      out[g] = Math.round(25 + ((avg - 1) / 4) * 75);
+    });
+    return out;
+  }
   window.renderGroupResults = function(){
-    ensureNormalized();
     const holder = document.getElementById('groupResults');
     if(!holder) return;
+    const st = S();
     const pct = computeGroupPercents();
-    const desc = {}; (S().groups||[]).forEach(g=>desc[g.name]=g.description||DESC[g.name]||"");
+    const desc = {};
+    (st.groups||[]).forEach(g=>desc[g.name]=g.description||DESC_FALLBACK[g.name]||"");
     holder.innerHTML = "";
     orderedNames().forEach(name=>{
       const p = pct[name] ?? 0;
       const wrap = document.createElement('div');
       wrap.className = 'group-row';
-      wrap.innerHTML = '<div style="font-weight:700">'+name+' '+p+'%</div>'
-                     + '<div class="group-desc">'+(desc[name]||'')+'</div>';
+      wrap.innerHTML =
+        '<div style="font-weight:700">'+name+' '+p+'%</div>'+
+        '<div class="group-desc">'+(desc[name]||'')+'</div>';
       holder.appendChild(wrap);
     });
   };
+})();
+</script>
 
-
-  // Re-normalize and re-render at the exact moments that matter
-  window.addEventListener('load', ensureNormalized);
+<script>
+// Re-normalize and re-render at the exact moments that matter
+(function(){
+  if (typeof window.ensureNormalized === 'function') {
+    window.addEventListener('load', window.ensureNormalized);
+  }
   document.addEventListener('click', function(ev){
     if (ev.target && ev.target.id === 'submitAll') {
-      ensureNormalized();
-      setTimeout(window.renderGroupResults, 0);
+      if (typeof window.ensureNormalized === 'function') window.ensureNormalized();
+      if (typeof window.renderGroupResults === 'function') setTimeout(window.renderGroupResults, 0);
     }
     if (ev.target && ev.target.id === 'congratsPdf') {
-      ensureNormalized();
-      setTimeout(window.buildPdfReport, 0);
+      if (typeof window.ensureNormalized === 'function') window.ensureNormalized();
+      if (typeof window.buildPdfReport === 'function') setTimeout(window.buildPdfReport, 0);
     }
   }, true);
 })();
 </script>
+
 <script>
-// === Easy patch: always enable Start button ===
+// Minimal fix: keep validation; wire Start -> modal with OK/Cancel
 (function(){
-  const btn = document.getElementById('toInstructions');
-  if (btn) {
-    btn.disabled = false; // force enabled
-    // optional: bypass validation
-    btn.onclick = function(){
-      document.getElementById('eligBackdrop').style.display='flex';
-    };
-  }
+  var btn = document.getElementById('toInstructions');
+  var ok  = document.getElementById('eligOk');
+  var cancel = document.getElementById('eligCancel');
+  var backdrop = document.getElementById('eligBackdrop');
+  if (!btn || !ok || !cancel || !backdrop) return;
+
+  // keep Start conditional on 6 fields
+  if (typeof validateWelcome === 'function') validateWelcome();
+
+  btn.onclick = function(){
+    if (btn.disabled) return;           // respect validation
+    backdrop.style.display = 'flex';    // open modal
+  };
+  ok.onclick = function(){
+    backdrop.style.display = 'none';
+    if (typeof show === 'function') show('instructions');
+  };
+  cancel.onclick = function(){
+    backdrop.style.display = 'none';
+  };
 })();
 </script>
+
+
+
 
