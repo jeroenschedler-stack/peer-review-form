@@ -926,6 +926,23 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
     document.getElementById('pdfDate').textContent = 'Assessment Date ' + formatDate();
     document.getElementById('pdfTotalPct').textContent = (isFinite(totals.pct) ? totals.pct : '—') + '%';
     document.getElementById('pdfTotalRaw').textContent = (totals.raw||0) + ' OUT OF ' + ((S.questions||[]).length * 5 || 175);
+// === PDF recommendation band (under the date / OVERALL SCORE) ===
+(function(){
+  const recTarget = document.getElementById('pdfBandText');
+  if (!recTarget) return;
+  let rec = '';
+  if (totals.pct < 50) {
+    rec = 'You are behind and need more support. Please contact your coach and ask your team members for guidance';
+  } else if (totals.pct < 70) {
+    rec = 'Focus on developing yourself. Practice makes you better. Ask for honest feedback from your friends so you know what you can do better';
+  } else if (totals.pct < 85) {
+    rec = 'Great hospitality! Keep challenging yourself and help others by giving them honest and positive feedback';
+  } else {
+    rec = 'Awesome! Your understanding of BED is an inspiration for others. Continue to lead others by example';
+  }
+  const pctText = isFinite(totals.pct) ? totals.pct + '%' : '—%';
+  recTarget.innerHTML = 'Your overall assessment score is ' + pctText + ' and here are our recommendations:<br>' + rec;
+})();
 
     // Info
     document.getElementById('pdfEmpName').textContent = document.getElementById('nick').value || '';
