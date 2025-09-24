@@ -648,47 +648,19 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 </div>
 </section>
 <!-- Congrats -->
-<section id="congrats" style="display:none">
-  <br>
-  <br>
-  <br>
-<style>
-.number-circle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;          /* circle size */
-  height: 28px;
-  border-radius: 50%;   /* makes it round */
-  background-color: #1E90FF; /* same blue as rating scales, adjust if needed */
-  color: #fff;          /* white number */
-  font-size: 16px;
-  font-weight: bold;
-  margin-right: 10px;   /* space between circle and text */
-}
-.step {
-  display: flex;
-  align-items: center;
-  margin-top: 8px;
-  font-size: 18px;
-  color: #374151;
-}
-</style>
-<div class="big-check"></div>
-<div class="center">
-  <h3 style="font-size:34px; margin:8px 0 6px 0; color:#373737;peer review<br>completed
-  </h3>
-  <div class="step">
-    <span class="number-circle">1</span>
-    click PDF to download the full report
+<section id="congrats" style="display:none; padding-top:40px;">
+  <div class="big-check"></div>
+  <div class="center">
+    <h3 style="font-size:32px; margin:8px 0 6px 0; color:#373737;">
+      peer review<br>completed
+    </h3>
+    <p style="font-size:18px; color:#374151">
+      Click PDF to download the full report.<br>
+      Please send the review form to your peer.
+    </p>
   </div>
-  <div class="step">
-    <span class="number-circle">2</span>
-    please send a copy to the team member
-    <br>
-    <br>
-  </div>
-</div>
+  <br>
+  <br>
 <div class="page-actions" 
      style="display:flex; gap:14px; justify-content:center; margin-top:10px">
   <button class="btn-secondary btn-wide" id="congratsBack">Back</button>
