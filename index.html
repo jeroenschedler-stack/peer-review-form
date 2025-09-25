@@ -138,9 +138,9 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 
     /* Title block */
     .pdf-top{display:grid; grid-template-columns: 1fr 220px; gap:16px; align-items:start; margin-bottom:10px}
-    .pdf-title{font-size:34px; font-weight:900; color:var(--blue); margin:0}
-    .pdf-sub{font-size:28px; font-weight:700; color:var(--blue); margin:2px 0 2px 0}
-    .pdf-date{font-size:18px; color:var(--blue); margin:2px 0 10px 0}
+    .pdf-title{font-size:26px; font-weight:800; color:var(--blue); margin:0}
+    .pdf-sub{font-size:20px; font-weight:700; color:var(--blue); margin:2px 0 2px 0}
+    .pdf-date{font-size:14px; color:var(--blue); margin:2px 0 10px 0}
     .pdf-divider{height:1px; background:#cfd4dc; margin:8px 0 14px 0}
 
     /* ====== SCORE BOX (SAFE TO EDIT) ====== */
@@ -153,9 +153,9 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
       padding:12px 14px;
       text-align:center;
     }
-    .score-box .label{font-size:18px; font-weight:600; letter-spacing:.5px}
-    .score-box .pct{font-size:36px; font-weight:800; margin:6px 0 2px 0}
-    .score-box .raw{font-size:18px; font-weight:800; opacity:.95}
+    .score-box .label{font-size:12px; font-weight:700; letter-spacing:.5px}
+    .score-box .pct{font-size:34px; font-weight:800; margin:6px 0 2px 0}
+    .score-box .raw{font-size:12px; opacity:.95}
 
     /* ====== SECTION HEADERS (SAFE TO EDIT) ====== */
     .sec-h{
@@ -554,14 +554,14 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <body>
 <main class="container">
 <h1>BED HOSPITALITY 2.0</h1>
-<p class="subheader">PEER REVIEW FORM</p>
+<p class="subheader">TEAM MEMBER FORM</p>
 <div class="progress" id="progressHeader">
 <span class="dot"></span><span class="dot"></span><span class="dot"></span>
 <span class="dot"></span><span class="dot"></span><span class="dot"></span>
 </div>
 <!-- PAGE 1 -->
 <section id="welcome">
-<h2 class="section-title">your information</h2>
+<h2 class="section-title">team member information</h2>
 <div class="row"><label for="nick">your name</label><input id="nick"/></div>
 <div class="row"><label for="email">your email</label><input id="email" type="email"/></div>
 <div class="row"><label for="hotel">your location</label>
@@ -575,11 +575,11 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <option>BED Support</option>
 </select>
 </div>
-<h2 class="section-title">team member information</h2>
-<p class="intro">enter the details of the team member you will review. you must know that person well and worked in BED for at least 12 months</p>
-<div class="row"><label for="peerName">team member</label><input id="peerName"/></div>
-<div class="row"><label for="peerEmail">email</label><input id="peerEmail" type="email"/></div>
-<div class="row"><label for="peerHotel">location</label>
+<h2 class="section-title">peer information</h2>
+<p class="intro">after you assess yourself ask one of your friends to review you. this is called peer review. your peer must know you well and worked in BED for at least 12 months</p>
+<div class="row"><label for="peerName">name peer</label><input id="peerName"/></div>
+<div class="row"><label for="peerEmail">email peer</label><input id="peerEmail" type="email"/></div>
+<div class="row"><label for="peerHotel">peer location</label>
 <select id="peerHotel" required="">
 <option disabled="" selected="" value="">select hotel</option>
 <option>BED Changkian</option>
@@ -597,17 +597,17 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <!-- Instructions -->
 <section id="instructions" style="display:none">
   <br>
-<h2 class="section-title">INSTRUCTIONS</h2>
+<h2 class="section-title">SELF-ASSESSMENT</h2>
 <p class="intro">
-      Read each statement and think how the team member acts in these situations. Then select the rating that fits best. Be honest and sincere. The goal is to help your friends to find out what they're good at and what they could do better
+      Read each statement and think how you act in these situations. Then select the rating that best fits you. Be honest with yourself. The goal is to know what you're good at and what you could do better
     </p>
 <h2 class="section-title">RATING</h2>
 <ul class="scale-list" style="list-style:none; padding:0; margin:10px 0">
-<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">1</span> <span>You are not so good at this</span></li>
-<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">2</span> <span>You can be better at this</span></li>
-<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">3</span> <span>You are average at this</span></li>
-<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">4</span> <span>You are good at this</span></li>
-<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">5</span> <span>You are very good at this</span></li>
+<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">1</span> <span>I am not good at this</span></li>
+<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">2</span> <span>I need to be better at this</span></li>
+<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">3</span> <span>I am average at this</span></li>
+<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">4</span> <span>I am good at this</span></li>
+<li class="scale-item" style="display:flex; align-items:center; gap:10px; margin:8px 0; font-size:12pt"><span class="badge" style="width:28px; height:28px; border-radius:50%; background:var(--blue); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700">5</span> <span>I am very good at this</span></li>
 </ul>
   <br>
   <br>
@@ -633,7 +633,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 </div>
 </section>
 <!-- Score -->
-<section id="finish" style="display:none"><div class="score-section"><div class="score-kicker">your peer review scores</div><div class="score-big" id="scorePercent">OVERALL SCORE —%</div><div class="gauge" id="gauge"></div><div class="rec-kicker"></div><div class="rec-text" id="recText">—</div></div>
+<section id="finish" style="display:none"><div class="score-section"><div class="score-kicker">your self assessment results</div><div class="score-big" id="scorePercent">OVERALL SCORE —%</div><div class="gauge" id="gauge"></div><div class="rec-kicker"></div><div class="rec-text" id="recText">—</div></div>
 <br/>
 <div id="groupResultsContainer" style="margin-top:18px">
 <div class="group-summary">
@@ -652,15 +652,44 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
   <br>
   <br>
   <br>
+<style>
+.number-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;          /* circle size */
+  height: 28px;
+  border-radius: 50%;   /* makes it round */
+  background-color: #1E90FF; /* same blue as rating scales, adjust if needed */
+  color: #fff;          /* white number */
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;   /* space between circle and text */
+}
+.step {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 18px;
+  color: #374151;
+}
+</style>
 <div class="big-check"></div>
 <div class="center">
-<h3 style="font-size:32px; margin:8px 0 6px 0; color:#373737;">peer review<br>completed
-</h3>
-<p style="font-size:18px; color:#374151">Click PDF to download the report<br>Send a copy to your team member</p>
+  <h3 style="font-size:34px; margin:8px 0 6px 0; color:#373737;">
+    self-assessment<br>completed
+  </h3>
+  <div class="step">
+    <span class="number-circle">1</span>
+    click PDF to download the full report
+  </div>
+  <div class="step">
+    <span class="number-circle">2</span>
+    please send your peer the review form
+    <br>
+    <br>
+  </div>
 </div>
-  <br>
-  <br>
-  <br>
 <div class="page-actions" 
      style="display:flex; gap:14px; justify-content:center; margin-top:10px">
   <button class="btn-secondary btn-wide" id="congratsBack">Back</button>
@@ -672,7 +701,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <div class="modal-backdrop" id="eligBackdrop" style="position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:50">
 <div class="modal" style="width:min(92vw,520px); background:#fff; border-radius:18px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,.25)">
 <h3 style="margin:0 0 10px 0; font-size:18px">please confirm</h3>
-<p style="margin:0 0 18px 0; font-size:16px; line-height:1.5; color:#222">I know the team member well and worked in BED for at least 12 months</p>
+<p style="margin:0 0 18px 0; font-size:16px; line-height:1.5; color:#222">my peer knows me well and worked in BED for at least 12 months</p>
 <div class="row-btns" style="display:flex; justify-content:flex-end; gap:10px">
 <button class="btn-secondary" id="eligCancel">Cancel</button>
 <button id="eligOk">OK</button>
@@ -683,17 +712,18 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 <section aria-hidden="true" id="pdfReport">
 <div class="pdf-top">
 <div>
-<div class="pdf-title">BED HOSPITALITY 3.0</div>
-<div class="pdf-sub">Peer Reviewer Report</div>
+<div class="pdf-title">BED HOSPITALITY 2.0</div>
+<div class="pdf-sub" style="font-size:22px;">Team Member Report</div>
 <div class="pdf-date" id="pdfDate">Assessment Date —</div>
 </div>
 <div class="score-box">
+<div class="label">TOTAL SCORE</div>
 <div class="pct" id="pdfTotalPct">—%</div>
-<div class="raw" id="pdfTotalRaw">— OUT OF 175 POINTS</div>
+<div class="raw" id="pdfTotalRaw">— OUT OF 175</div>
 </div>
 </div>
 <div class="pdf-divider"></div>
-<div class="sec-h info-bar"><span>TEAM MEMBER</span><span class="peer-label">PEER REVIEWER</span></div>
+<div class="sec-h info-bar"><span>PERSONAL INFORMATION</span><span class="peer-label">PEER INFORMATION</span></div>
 <div class="info-grid">
 <div>
 <div class="sub-h">PERSONAL INFORMATION</div>
@@ -712,10 +742,7 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
 </div>
 </div>
 </div>
-<div class="sec-h assess-bar"><span class="lbl-group">OVERALL SCORE</span></div>
-<div id="pdfBandText" style="margin-top:6px;font-size:16px;font-weight:500;color:#2F2F2F;width:100%;display:block;text-align:left;line-height:1.4;"></div>
-
-  <div class="sec-h assess-bar"><span class="lbl-group">SCORE BY GROUP</span></div>
+<div class="sec-h assess-bar"><span class="lbl-group">SCORE BY GROUP</span><span class="lbl-pct">%</span><span class="lbl-desc">DESCRIPTION</span></div>
 <div class="card" style="padding:0">
 <table>
 <tbody id="pdfGroupRows">
@@ -829,29 +856,26 @@ button:disabled{background:#ccc; color:#666; cursor:not-allowed;}
     return res;
   }
 
-// === Helpers for group calculations and descriptions ===
-function getState(){ 
-  return window.__S || window.S || {}; 
-}
+  function groupDescMap(){
+    const m = {}; (S.groups||[]).forEach(g=>m[g.name]=g.description||''); return m;
+  }
 
-function computeGroupPercents(){
-  const st = getState(), out = {};
-  (st.groups||[]).forEach(g=>{
-    const max = g.max || 1, val = g.score || 0;
-    out[g.name] = Math.round(100 * val / max);
-  });
-  return out;
-}
-
-function groupDescMap(){
-  const m = {}, st = getState();
-  (st.groups||[]).forEach(g => m[g.name] = g.description || (typeof DESC!=='undefined' ? (DESC[g.name]||'') : ''));
-  return m;
-}
-
-function orderedNames(){
-  return ["Hospitality Skills","Hospitality Competencies","Taking Ownership","Collaboration"];
-}
+  function renderGroupResults(){
+    const holder = document.getElementById('groupResults');
+    if(!holder) return;
+    const gp = computeGroupPercents();
+    const desc = groupDescMap();
+    const order = ["Hospitality Skills","Hospitality Competencies","Taking Ownership","Collaboration"];
+    let rows = '';
+    order.forEach(name=>{
+      const p = gp[name] ?? 0;
+      rows += '<div class="group-row">'
+           +    '<div style="font-weight:600">'+name+' '+p+'%</div>'
+           +  '</div>'
+           +  '<div class="group-desc">'+(desc[name]||'')+'</div>';
+    });
+    holder.innerHTML = rows;
+  }
 
   // Navigation + eligibility modal
   const _eligOkBtn = document.getElementById('eligOk');
@@ -874,7 +898,7 @@ function orderedNames(){
 
   el('submitAll').onclick = () => {
     const totals = computeTotals();
-    el('scorePercent').textContent = 'OVERALL SCORE ' + totals.pct + '%';
+    el('scorePercent').textContent = 'OVERALL SCORE = ' + totals.pct + '%';
     const gauge = el('gauge');
     gauge.style.setProperty('--marker', totals.pct + '%'); 
     gauge.style.position='relative';
@@ -911,8 +935,8 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
     if (!subheaderEl) return;
     if (id === 'q1') { subheaderEl.textContent = 'STATEMENTS PART 1'; } 
     else if (id === 'q2') { subheaderEl.textContent = 'STATEMENTS PART 2'; } 
-    else if (id === 'congrats') { subheaderEl.textContent = 'PEER REVIEW FORM'; } 
-    else { subheaderEl.textContent = 'PEER REVIEW FORM'; }
+    else if (id === 'congrats') { subheaderEl.textContent = 'TEAM MEMBER FORM'; } 
+    else { subheaderEl.textContent = 'TEAM MEMBER FORM'; }
   };
 
   function formatDate(){
@@ -921,69 +945,14 @@ else rec='Awesome! Your understanding of BED is an inspiration for others. Conti
       const opts = {day:'numeric', month:'short', year:'numeric'};
       return dt.toLocaleDateString(undefined, opts);
     }catch(_){ return ''; }
-function buildPdfReport(){
-  // Date + score box
-  const totals = computeTotals();
-  document.getElementById('pdfDate').textContent = 'Assessment Date ' + formatDate();
-  document.getElementById('pdfTotalPct').textContent = (isFinite(totals.pct) ? totals.pct : '—') + '%';
-  document.getElementById('pdfTotalRaw').textContent = (totals.raw||0) + ' OUT OF ' + ((S.questions||[]).length * 5 || 175);
-
-  // === PDF recommendation band (under the date / OVERALL SCORE) ===
-  (function(){
-    const recTarget = document.getElementById('pdfBandText');
-    if (!recTarget) return;
-    let rec = '';
-    if (totals.pct < 50) {
-      rec = 'You are behind and need more support. Please contact your coach and ask your team members for guidance';
-    } else if (totals.pct < 70) {
-      rec = 'Focus on developing yourself. Practice makes you better. Ask for honest feedback from your friends so you know what you can do better';
-    } else if (totals.pct < 85) {
-      rec = 'Great hospitality! Keep challenging yourself and help others by giving them honest and positive feedback';
-    } else {
-      rec = 'Awesome! Your understanding of BED is an inspiration for others. Continue to lead others by example';
-    }
-    const pctText = isFinite(totals.pct) ? totals.pct + '%' : '—%';
-    recTarget.innerHTML = 'Your overall assessment score is ' + pctText + ' and here are our recommendations:<br>' + rec;
-  })();
-
-  // === PDF SCORE BY GROUP rows ===
-  const body = document.getElementById('pdfGroupRows');
-  if (body){
-    body.innerHTML = '';
-    const gp = computeGroupPercents();
-    const desc = groupDescMap();
-    const order = orderedNames();
-    order.forEach(name=>{
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td'); tdName.textContent = name;
-      const tdPct  = document.createElement('td'); tdPct.textContent  = (gp[name] ?? 0) + '%';
-      const tdDesc = document.createElement('td'); tdDesc.textContent = desc[name] || '';
-      tr.appendChild(tdName); tr.appendChild(tdPct); tr.appendChild(tdDesc);
-      body.appendChild(tr);
-    });
   }
-}
-  // === PDF SCORE BY GROUP rows ===
-  const body = document.getElementById('pdfGroupRows');
-  if (body){
-    body.innerHTML = '';
-    const gp = computeGroupPercents();
-    const desc = groupDescMap();
-    const order = orderedNames();
-    order.forEach(name=>{
-      const tr = document.createElement('tr');
-      const tdName = document.createElement('td'); tdName.textContent = name;
-      const tdPct  = document.createElement('td'); tdPct.textContent  = (gp[name] ?? 0) + '%';
-      const tdDesc = document.createElement('td'); tdDesc.textContent = desc[name] || '';
-      tr.appendChild(tdName); tr.appendChild(tdPct); tr.appendChild(tdDesc);
-      body.appendChild(tr);
-    });
-  }
-}
 
-  const pctText = isFinite(totals.pct) ? totals.pct + '%' : '—%';
-  recTarget.innerHTML = 'Your overall assessment score is ' + pctText + ' and here are our recommendations:<br>' + rec;
-})();
+  function buildPdfReport(){
+    // Date + score box
+    const totals = computeTotals();
+    document.getElementById('pdfDate').textContent = 'Assessment Date ' + formatDate();
+    document.getElementById('pdfTotalPct').textContent = (isFinite(totals.pct) ? totals.pct : '—') + '%';
+    document.getElementById('pdfTotalRaw').textContent = (totals.raw||0) + ' OUT OF ' + ((S.questions||[]).length * 5 || 175);
 
     // Info
     document.getElementById('pdfEmpName').textContent = document.getElementById('nick').value || '';
@@ -993,20 +962,20 @@ function buildPdfReport(){
     document.getElementById('pdfPeerEmail').textContent = document.getElementById('peerEmail').value || '';
     document.getElementById('pdfPeerHotel').textContent = document.getElementById('peerHotel').value || '';
 
-// Group rows
-const gp = computeGroupPercents();
-const descMap = groupDescMap();
-const order = ["Hospitality Skills","Hospitality Competencies","Taking Ownership","Collaboration"];
-const body = document.getElementById('pdfGroupRows');
-body.innerHTML='';
-order.forEach(name=>{
-  const tr = document.createElement('tr');
-  const tdName = document.createElement('td'); tdName.textContent = 'Score ' + name;
-  const tdPct  = document.createElement('td'); tdPct.textContent  = (gp[name] != null ? gp[name] : '—') + '%';
-  const tdDesc = document.createElement('td'); tdDesc.textContent = descMap[name] || '';
-  tr.appendChild(tdName); tr.appendChild(tdPct); tr.appendChild(tdDesc);
-  body.appendChild(tr);
-});
+    // Group rows
+    const gp = computeGroupPercents();
+    const descMap = groupDescMap();
+    const order = ["Hospitality Skills","Hospitality Competencies","Taking Ownership","Collaboration"];
+    const body = document.getElementById('pdfGroupRows');
+    body.innerHTML='';
+    order.forEach(name=>{
+      const tr = document.createElement('tr');
+      const tdName = document.createElement('td'); tdName.textContent = 'Score ' + name;
+      const tdPct = document.createElement('td'); tdPct.textContent = (gp[name] != null ? gp[name] : '—') + '%';
+      const tdDesc = document.createElement('td'); tdDesc.textContent = descMap[name] || '(add description)';
+      tr.appendChild(tdName); tr.appendChild(tdPct); tr.appendChild(tdDesc);
+      body.appendChild(tr);
+    });
 
     // Statements table
     const tb = document.querySelector('#pdfStatements tbody');
@@ -1024,24 +993,13 @@ order.forEach(name=>{
     });
   }
 
- document.getElementById('congratsPdf').onclick = () => { buildPdfReport(); window.print(); };
+  document.getElementById('congratsPdf').onclick = () => { buildPdfReport(); window.print(); };
 
-// Init
-loadQuestions();
+  // Init
+  loadQuestions();
 })(); 
 </script>
-
-<!-- Final drop-in block -->
 <script>
-// === Final drop-in: groups renderer + normalize triggers + Start modal fix ===
-(function(){
-  // ... full code from my previous message ...
-})();
-</script>
-
-</body>
-</html>
-
 // === Validation patch v2 (uses window.__S) ===
 (function(){
   function Sref(){ return (window.__S || window.S || {}); }
@@ -1354,6 +1312,30 @@ loadQuestions();
     });
   };
 
+  // Override buildPdfReport
+  const _buildPdf = window.buildPdfReport;
+  window.buildPdfReport = function(){
+    const S = window.__S || window.S || {};
+    (S.questions||[]).forEach(q => { if (MAP[q.group]) q.group = MAP[q.group]; });
+    (S.groups||[]).forEach(g => { if (MAP[g.name]) g.name = MAP[g.name]; });
+    const order = normalizedOrder(S);
+    // Call original to lay out the PDF shell first (date, name, totals, etc.)
+    if (typeof _buildPdf === 'function') _buildPdf();
+    // Then replace the SCORE BY GROUP table using our normalized order
+    const table = document.getElementById('pdfGroupTable');
+    if (table){
+      table.innerHTML = '';
+      const byPct = (window.computeGroupPercents ? window.computeGroupPercents() : {});
+      order.forEach(name => {
+        const tr = document.createElement('tr');
+        const td1 = document.createElement('td'); td1.textContent = name;
+        const td2 = document.createElement('td'); td2.textContent = (byPct[name] ?? 0) + '%';
+        tr.appendChild(td1); tr.appendChild(td2);
+        table.appendChild(tr);
+      });
+    }
+  };
+})();
 </script>
 
 
@@ -1401,15 +1383,38 @@ loadQuestions();
       wrap.innerHTML =
         '<div class="group-line"><span class="group-name">'+ name +'</span><span class="group-pct">'+ p +'%</span></div>' +
         '<div class="group-desc">'+ (descMap[name] || '') +'</div>';
-    holder.appendChild(wrap);
+      holder.appendChild(wrap);
     });
   };
-</script>
 
+  // Replace PDF builder (keeps original totals/date/etc. from existing function)
+  const _origBuild = window.buildPdfReport;
+  window.buildPdfReport = function(){
+    normalizeAll();
+    if (typeof _origBuild === 'function') _origBuild(); // lays out date, totals, info, statements
+
+    const S = window.__S || window.S || {};
+    const body = document.getElementById('pdfGroupRows');
+    if(!body) return;
+    // Rebuild the SCORE BY GROUP rows with normalized order and clean labels
+    body.innerHTML = '';
+    const pctMap = (window.computeGroupPercents ? window.computeGroupPercents() : {});
+    const descMap = {}; (S.groups||[]).forEach(g => descMap[g.name] = g.description || '');
+    const names = byOrder(Object.keys(descMap));
+    names.forEach(name => {
+      const tr = document.createElement('tr');
+      const tdName = document.createElement('td'); tdName.textContent = name;
+      const tdPct  = document.createElement('td'); tdPct.textContent  = (pctMap[name] ?? 0) + '%';
+      const tdDesc = document.createElement('td'); tdDesc.textContent = descMap[name] || '';
+      tr.appendChild(tdName); tr.appendChild(tdPct); tr.appendChild(tdDesc);
+      body.appendChild(tr);
+    });
+  };
+})();
+</script>
 <script>
 // === Strong patch v2: force-normalize + recompute group % independent of S.groups ===
 (function(){
-
   const MAP = {
     "Hospitality Skills":"hospitality skills",
     "Hospitality Competencies":"BED competencies",
@@ -1496,6 +1501,25 @@ loadQuestions();
     });
   };
 
+  const _origBuild = window.buildPdfReport;
+  window.buildPdfReport = function(){
+    ensureNormalized();
+    if (typeof _origBuild === 'function') _origBuild();
+    const body = document.getElementById('pdfGroupRows');
+    if (!body) return;
+    body.innerHTML='';
+    const pct = window.computeGroupPercents();
+    const d   = descMap();
+    orderedNames().forEach(name => {
+      const tr = document.createElement('tr');
+      const td1=document.createElement('td'); td1.textContent=name;
+      const td2=document.createElement('td'); td2.textContent=(pct[name]??0)+'%';
+      const td3=document.createElement('td'); td3.textContent=d[name]||'';
+      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+      body.appendChild(tr);
+    });
+  };
+
   // Ensure our overrides are active BEFORE submitAll runs
   document.addEventListener('DOMContentLoaded', ensureNormalized);
   // Also prime right before clicking submit
@@ -1560,100 +1584,55 @@ loadQuestions();
     return arr.sort((a,b)=> (ORDER.indexOf(a)+1||999) - (ORDER.indexOf(b)+1||999));
   }
 
- <script>
-// Safe override of renderGroupResults (no globals required)
-(function(){
-  function S(){ return (window.__S || window.S || {}); }
-  const DESC_FALLBACK = {
-    "hospitality skills":"Practical service actions and daily guest care done the BED way.",
-    "BED competencies":"Reading people and situations; proactive judgement; turning intent into consistent action.",
-    "taking ownership":"Acting independently, fixing problems, and sharing responsibility for outcomes.",
-    "collaboration":"Building trust, communicating clearly, and helping across the BED community."
-  };
-  function orderedNames(){
-    return ["hospitality skills","BED competencies","taking ownership","collaboration"];
-  }
-  function computeGroupPercents(){
-    const st = S(), buckets = {};
-    (st.questions||[]).forEach(q=>{
-      const g = q && q.group; if(!g) return;
-      (buckets[g] ||= []).push(parseInt((st.answers||{})[q.id],10)||0);
-    });
-    const out = {};
-    Object.keys(buckets).forEach(g=>{
-      const vals = buckets[g].filter(v=>v>0);
-      if(!vals.length){ out[g]=0; return; }
-      const avg = vals.reduce((a,b)=>a+b,0)/vals.length;
-      out[g] = Math.round(25 + ((avg - 1) / 4) * 75);
-    });
-    return out;
-  }
+  // --- FORCE our renderers (overwrite anything defined earlier)
   window.renderGroupResults = function(){
+    ensureNormalized();
     const holder = document.getElementById('groupResults');
     if(!holder) return;
-    const st = S();
     const pct = computeGroupPercents();
-    const desc = {};
-    (st.groups||[]).forEach(g=>desc[g.name]=g.description||DESC_FALLBACK[g.name]||"");
+    const desc = {}; (S().groups||[]).forEach(g=>desc[g.name]=g.description||DESC[g.name]||"");
     holder.innerHTML = "";
     orderedNames().forEach(name=>{
       const p = pct[name] ?? 0;
       const wrap = document.createElement('div');
       wrap.className = 'group-row';
-      wrap.innerHTML =
-        '<div style="font-weight:700">'+name+' '+p+'%</div>'+
-        '<div class="group-desc">'+(desc[name]||'')+'</div>';
+      wrap.innerHTML = '<div style="font-weight:700">'+name+' '+p+'%</div>'
+                     + '<div class="group-desc">'+(desc[name]||'')+'</div>';
       holder.appendChild(wrap);
     });
   };
-})();
-</script>
 
-<script>
-// Re-normalize and re-render at the exact moments that matter
-(function(){
-  if (typeof window.ensureNormalized === 'function') {
-    window.addEventListener('load', window.ensureNormalized);
-  }
+  const _build = window.buildPdfReport;
+  window.buildPdfReport = function(){
+    ensureNormalized();
+    if (typeof _build === 'function') _build();
+    const body = document.getElementById('pdfGroupRows');
+    if(!body) return;
+    body.innerHTML = '';
+    const pct = computeGroupPercents();
+    const desc = {}; (S().groups||[]).forEach(g=>desc[g.name]=g.description||DESC[g.name]||"");
+    orderedNames().forEach(name=>{
+      const tr=document.createElement('tr');
+      const td1=document.createElement('td'); td1.textContent=name;
+      const td2=document.createElement('td'); td2.textContent=(pct[name]??0)+'%';
+      const td3=document.createElement('td'); td3.textContent=desc[name]||'';
+      tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+      body.appendChild(tr);
+    });
+  };
+
+  // Re-normalize and re-render at the exact moments that matter
+  window.addEventListener('load', ensureNormalized);
   document.addEventListener('click', function(ev){
     if (ev.target && ev.target.id === 'submitAll') {
-      if (typeof window.ensureNormalized === 'function') window.ensureNormalized();
-      if (typeof window.renderGroupResults === 'function') setTimeout(window.renderGroupResults, 0);
+      ensureNormalized();
+      setTimeout(window.renderGroupResults, 0);
     }
     if (ev.target && ev.target.id === 'congratsPdf') {
-      if (typeof window.ensureNormalized === 'function') window.ensureNormalized();
-      if (typeof window.buildPdfReport === 'function') setTimeout(window.buildPdfReport, 0);
+      ensureNormalized();
+      setTimeout(window.buildPdfReport, 0);
     }
   }, true);
 })();
 </script>
-
-<script>
-// Minimal fix: keep validation; wire Start -> modal with OK/Cancel
-(function(){
-  var btn = document.getElementById('toInstructions');
-  var ok  = document.getElementById('eligOk');
-  var cancel = document.getElementById('eligCancel');
-  var backdrop = document.getElementById('eligBackdrop');
-  if (!btn || !ok || !cancel || !backdrop) return;
-
-  // keep Start conditional on 6 fields
-  if (typeof validateWelcome === 'function') validateWelcome();
-
-  btn.onclick = function(){
-    if (btn.disabled) return;           // respect validation
-    backdrop.style.display = 'flex';    // open modal
-  };
-  ok.onclick = function(){
-    backdrop.style.display = 'none';
-    if (typeof show === 'function') show('instructions');
-  };
-  cancel.onclick = function(){
-    backdrop.style.display = 'none';
-  };
-})();
-</script>
-
-
-
 
