@@ -1,7 +1,7 @@
 {
   "groups": [
     {
-      "name": "hospitality skills",
+      "name": "Hospitality skills",
       "description": "Basic skills for daily tasks and guest service"
     },
     {
@@ -9,11 +9,11 @@
       "description": "Advanced ability to read people and situations"
     },
     {
-      "name": "taking ownership",
+      "name": "Taking ownership",
       "description": "Acting independently and sharing responsibility"
     },
     {
-      "name": "collaboration",
+      "name": "Collaboration",
       "description": "Building trust and helping others across BED"
     }
   ],
@@ -128,7 +128,7 @@
     },
     {
       "id": 19,
-      "statement": "Your talk with guests is genuine",
+      "statement": "When you talk with guests it's genuine",
       "subtext": "When you force yourself it will not be real",
       "group": "BED competencies"
     },
@@ -140,7 +140,7 @@
     },
     {
       "id": 21,
-      "statement": "Your friends often give you honest feedback",
+      "statement": "You like it when your friends give you honest feedback",
       "subtext": "You’re happy they help you to grow",
       "group": "collaboration"
     },
@@ -224,8 +224,8 @@
     },
     {
       "id": 35,
-      "statement": "You have no manuals that show you what to do",
-      "subtext": "You make decisions based on common sense",
+      "statement": "You use passion and common sense",
+      "subtext": "You always try to do the right thing",
       "group": "taking ownership"
     }
   ]
