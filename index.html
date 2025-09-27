@@ -1839,5 +1839,86 @@
   }, true);
 })();
 </script>
+        <script>
+// PEER hotfix: make Q2 completion dynamic, keep the button enabled, and bypass old guards
+(function () {
+  var btn = document.getElementById('submitAll');
+  if (!btn) return;
+
+  // Keep reference to your original handler (set earlier in the file)
+  var originalOnClick = btn.onclick;
+
+  function q2Visible () {
+    var s = document.getElementById('q2');
+    return !!(s && s.style.display !== 'none');
+  }
+  function requiredCount () {
+    var box = document.getElementById('list-q2');
+    return box ? box.querySelectorAll('.q-item').length : 0;
+  }
+  function answeredCount () {
+    var box = document.getElementById('list-q2');
+    if (!box) return 0;
+    var n = 0;
+    box.querySelectorAll('.q-item').forEach(function (it) {
+      if (it.querySelector('.pill.selected')) n++;
+    });
+    return n;
+  }
+  function q2Done () {
+    var need = requiredCount();
+    // If nothing rendered, allow progression (don’t deadlock)
+    if (!need) return true;
+    return answeredCount() >= need;
+  }
+
+  // Keep the button's disabled state in sync with what's on the page
+  function syncDisabled () {
+    if (!q2Visible()) return;
+    btn.disabled = !q2Done();
+  }
+
+  // Re-sync on any pill click (after .selected toggles)
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.classList && e.target.classList.contains('pill')) {
+      setTimeout(syncDisabled, 0);
+    }
+  }, true);
+
+  // Also re-sync whenever your router shows a new section
+  if (typeof window.show === 'function') {
+    var _show = window.show;
+    window.show = function (id) {
+      _show(id);
+      setTimeout(syncDisabled, 0);
+    };
+  }
+
+  // As a belt-and-suspenders: observe DOM changes in Q2 answers
+  var q2Box = document.getElementById('list-q2');
+  if (q2Box && window.MutationObserver) {
+    var mo = new MutationObserver(function () { setTimeout(syncDisabled, 0); });
+    mo.observe(q2Box, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  }
+
+  // Last line of defense: on click, bypass old hard-guards if complete and run your original handler
+  btn.addEventListener('click', function (e) {
+    // If we’re complete, prevent legacy guards from cancelling the click
+    if (q2Done()) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (typeof originalOnClick === 'function') {
+        originalOnClick.call(btn, e);  // computes totals and show('finish')
+      }
+    }
+    // If not complete, let existing validators block as before
+  }, true);
+
+  // Initial sync + periodic nudge in case anything slips through
+  setTimeout(syncDisabled, 0);
+  var tick = setInterval(syncDisabled, 300);
+  window.addEventListener('beforeunload', function(){ clearInterval(tick); });
+})();
+</script>
     </body>
 </html>
