@@ -77,19 +77,15 @@
               #pdfReport #pdfStatements td:nth-child(4),
               #pdfReport #pdfStatements th:nth-child(4) { text-align:center !important; }
 
-              /* 9) Print-only fixes */
-              @media print {
-                #pdfReport #pdfGroupRows td{
-                  padding:8px 1px !important; vertical-align:middle !important; font-size:12px !important; text-align:left !important;
-                }
-                #pdfReport .statements-bar{
-                  display:grid !important; grid-template-columns:10% 55% 20% 15% !important; align-items:center !important; padding:6px 10px !important;
-                }
-                #pdfReport .statements-bar .lbl-stmt{ grid-column:1 / span 2 !important; justify-self:start !important; text-align:left !important; }
-                #pdfReport .statements-bar .lbl-group{ grid-column:3 !important; justify-self:start !important; text-align:left !important; }
-                #pdfReport .statements-bar .lbl-score{ grid-column:4 !important; justify-self:center !important; text-align:center !important; }
-
-
+            /* 9) Print-only fixes */
+@media print {
+  #pdfReport #pdfGroupRows td{
+    padding:8px 1px !important;
+    vertical-align:middle !important;
+    font-size:12px !important;
+    text-align:left !important;
+  }
+}
 
               /* SCORE */
               .score-kicker{font-size:10pt; font-weight:400; color:#999999; margin:12px 0 8px 0}
@@ -282,15 +278,6 @@
               }
             }
 
-            /* PDF: lock Statements table column widths */
-            @media print {
-              #pdfReport .statements-table { table-layout: fixed; width: 100%; }
-              #pdfReport .statements-table col:nth-child(1) { width: 10%; }
-              #pdfReport .statements-table col:nth-child(2) { width: 50%; }
-              #pdfReport .statements-table col:nth-child(3) { width: 20%; }
-              #pdfReport .statements-table col:nth-child(4) { width: 20%; }
-            }
-
             /* PDF: lock Information section to 20/30/20/30 total width */
             @media print {
               /* Ensure the whole info section spans exactly the report width */
@@ -323,72 +310,22 @@
               }
             }
 
-            /* PDF: lock Statements table columns to 10/45/30/15 */
-            @media print {
-              #pdfReport .statements-table { table-layout: fixed; width: 100%; }
-              #pdfReport .statements-table col:nth-child(1) { width: 10%; }
-              #pdfReport .statements-table col:nth-child(2) { width: 45%; }
-              #pdfReport .statements-table col:nth-child(3) { width: 30%; }
-              #pdfReport .statements-table col:nth-child(4) { width: 15%; }
-            }
-
-            /* PDF: Statements header bar with STATEMENTS, GROUP, SCORE */
-            @media print {
-              #pdfReport .statements-bar {
-                display: grid;
-                grid-template-columns: 10% 45% 30% 15%; /* NO / STATEMENT / GROUP / RATING */
-                align-items: center;
-              }
-              #pdfReport .statements-bar .lbl-stmt { grid-column: 2; text-align: left; }
-              #pdfReport .statements-bar .lbl-group { grid-column: 3; text-align: left; }
-              #pdfReport .statements-bar .lbl-score { grid-column: 4; text-align: center; }
-            }
-
-            /* PDF: Refine Statements section alignment */
-            @media print {
-              /* Header bar grid still uses locked column widths */
-              #pdfReport .statements-bar {
-                display: grid;
-                grid-template-columns: 10% 45% 30% 15%;
-                align-items: center;
-              }
-              /* Align STATEMENTS over NO column (left with numbers) */
-              #pdfReport .statements-bar .lbl-stmt { grid-column: 1; text-align: left; }
-              /* Align GROUP over Group col, left aligned */
-              #pdfReport .statements-bar .lbl-group { grid-column: 3; text-align: left; }
-              /* Align SCORE over Score col, centered */
-              #pdfReport .statements-bar .lbl-score { grid-column: 4; text-align: center; }
-
-              /* Body cells alignment */
-              #pdfReport .statements-table td:nth-child(1) { text-align: left; }   /* NO. */
-              #pdfReport .statements-table td:nth-child(2) { text-align: left; }   /* STATEMENT text */
-              #pdfReport .statements-table td:nth-child(3) { text-align: left; }   /* GROUP values */
-              #pdfReport .statements-table td:nth-child(4) { text-align: center; } /* SCORE values */
-            }
-
-            /* PDF: Fine-tune Statements section header alignment and hide duplicate header rows */
-            @media print {
-              /* Normalize padding for the header bar to align with table columns */
-              #pdfReport .statements-bar {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-              }
-              #pdfReport .statements-bar span {
-                margin: 0 !important;
-                padding: 0 !important;
-              }
-
-              /* Reaffirm grid alignment */
-              #pdfReport .statements-bar {
-                display: grid;
-                grid-template-columns: 10% 45% 30% 15%;
-                align-items: center;
-              }
-              #pdfReport .statements-bar .lbl-stmt { grid-column: 1; text-align: left; }
-              #pdfReport .statements-bar .lbl-group { grid-column: 3; text-align: left; }
-              #pdfReport .statements-bar .lbl-score { grid-column: 4; text-align: center; }
+          /* PDF: Fine-tune Statements section header alignment and hide duplicate header rows */
+@media print {
+  #pdfReport .statements-bar {
+    display: grid;
+    grid-template-columns: 10% 55% 20% 15% !important; /* NO | STATEMENT | GROUP | SCORE */
+    align-items: center;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  #pdfReport .statements-bar span { margin: 0 !important; padding: 0 !important; }
+  #pdfReport .statements-bar .lbl-stmt { grid-column: 1; text-align: left; }
+  #pdfReport .statements-bar .lbl-group { grid-column: 3; text-align: left; }
+  #pdfReport .statements-bar .lbl-score { grid-column: 4; text-align: center; }
+}
 
               /* Body cells alignment */
               #pdfReport .statements-table td:nth-child(1) { text-align: left; }
@@ -409,13 +346,6 @@
             #pdfReport .info-grid .card .kv-label b,
             #pdfReport .info-grid .card .kv-label strong {
               font-weight: 400 !important;
-            }
-
-            /* Hide any residual header row (NO/STATEMENT/GROUP/RATING) */
-            #pdfReport #pdfStatements thead,
-            #pdfReport #pdfStatements tr:first-child th,
-            #pdfReport #pdfStatements tr:first-child td {
-              display: none !important;
             }
 
              .q-item{padding:12px 0;  display:grid; grid-template-columns: 26px 1fr; column-gap:6px; align-items:baseline}
@@ -543,7 +473,7 @@
                 <div id="list-q2"></div>
                 <div class="actions">
                     <button class="btn-secondary" id="backToQ1">Back</button>
-                    <button id="toFinish">Next</button>
+                    <button id="submitAll">Next</button>
                 </div>
             </section>
 
@@ -675,11 +605,22 @@
             <!-- Statements -->
             <div class="sec-h statements-bar"><span class="lbl-stmt" style="display: block;">STATEMENTS</span><span class="lbl-group" style="display: block;">GROUP</span><span class="lbl-score" style="display: block;">SCORE</span></div>
             <div class="card" style="padding: 0;">
-                <table id="pdfStatements">
-                    <tbody>
-                        <!-- rows injected -->
-                    </tbody>
-                </table>
+             <table id="pdfStatements" class="statements-table">
+  <colgroup>
+    <col><col><col><col>
+  </colgroup>
+  <thead class="visually-hidden">
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Statement</th>
+      <th scope="col">Group</th>
+      <th scope="col">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- rows injected -->
+  </tbody>
+</table>
             </div>
         </section>
         <script>
@@ -706,9 +647,9 @@
                 }
                 setProgress(1);
 
-                function stripLeadingNumber(t) {
-                    return String(t || "").replace(/^\\s*\\d+\\.\\s*/, "");
-                }
+                function stripLeadingNumber(t){
+  return String(t||'').replace(/^\s*\d+\.\s*/, '');
+}
 
                 function makeQ(q, ord) {
                     const wrap = document.createElement("div");
@@ -912,6 +853,7 @@
                         subheaderEl.textContent = "PEER REVIEW FORM";
                     }
                 };
+                window.show = show;
 
                 function formatDate() {
                     try {
@@ -1803,28 +1745,4 @@
                 );
             })();
         </script>
-        <script>
-            (function(){
-              // Date format: DDMMMYYYY (e.g., 24Sep2025)
-              function formatDateDDMMMYYYY(d=new Date()){
-                const mon = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-                const dd  = String(d.getDate()).padStart(2,'0');
-                return `${dd}${mon[d.getMonth()]}${d.getFullYear()}`;
-              }
-
-              // Try multiple sources to get overall % (robust)
-              function getOverallPct(){
-                try { if (typeof window.computeOverallPercent === 'function') {
-                  const v = window.computeOverallPercent(); if (!isNaN(v)) return Math.round(v);
-                }} catch(e){}
-                try { if (window.totals && typeof window.totals.pct === 'number') return Math.round(window.totals.pct); } catch(e){}
-                const sp = document.getElementById('scorePercent');
-                if (sp) {
-                  const m = sp.textContent.match(/(\d+)\s*%/);
-                  if (m) return parseInt(m[1],10);
-                }
-                return 0;
-              })()
-        </script>
-    </body>
-</html>
+       
