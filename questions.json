@@ -2,7 +2,7 @@
   "groups": [
     {
       "name": "Hospitality skills",
-      "description": "Basic skills for daily tasks and guest service"
+      "description": "Basic skills for daily tasks and guests services"
     },
     {
       "name": "BED competencies",
@@ -22,7 +22,7 @@
       "id": 1,
       "statement": "You answer very quickly to guest messages",
       "subtext": "You often check and reply right away",
-      "group": "hospitality skills"
+      "group": "Hospitality skills"
     },
     {
       "id": 2,
@@ -52,7 +52,7 @@
       "id": 6,
       "statement": "You can check-in a guest in 60 seconds",
       "subtext": "You timed three standard check-ins",
-      "group": "hospitality skills"
+      "group": "Hospitality skills"
     },
     {
       "id": 7,
@@ -112,19 +112,19 @@
       "id": 16,
       "statement": "Music is an essential part of the vibe",
       "subtext": "You listen to make sure we play the right music",
-      "group": "hospitality skills"
+      "group": "Hospitality skills"
     },
     {
       "id": 17,
       "statement": "Your guests know they can go to other BED",
       "subtext": "You offer downtown coffee, pool or breakfast",
-      "group": "collaboration"
+      "group": "Collaboration"
     },
     {
       "id": 18,
       "statement": "It's annoying when a room key doesn't work",
       "subtext": "You go up to make sure the new key works",
-      "group": "hospitality skills"
+      "group": "Hospitality skills"
     },
     {
       "id": 19,
@@ -136,25 +136,25 @@
       "id": 20,
       "statement": "You often give your friends honest feedback",
       "subtext": "You're happy to help them to grow",
-      "group": "collaboration"
+      "group": "Collaboration"
     },
     {
       "id": 21,
       "statement": "You like it when your friends give you honest feedback",
       "subtext": "You're happy they help you to grow",
-      "group": "collaboration"
+      "group": "Collaboration"
     },
     {
       "id": 22,
       "statement": "You can answer most questions about BED",
       "subtext": "You have visited the rooms in all our hotels",
-      "group": "hospitality skills"
+      "group": "Hospitality skills"
     },
     {
       "id": 23,
       "statement": "You understand the meaning of showtime",
       "subtext": "The magic happens from 07:00–10:00",
-      "group": "hospitality skills"
+      "group": "Hospitality skills"
     },
     {
       "id": 24,
@@ -166,7 +166,7 @@
       "id": 25,
       "statement": "You use ChatGPT or Gemini",
       "subtext": "You ask for help with e.g., guest messages",
-      "group": "hospitality skills"
+      "group": "Hospitality skills"
     },
     {
       "id": 26,
@@ -178,55 +178,55 @@
       "id": 27,
       "statement": "You use ChatGPT or Gemini",
       "subtext": "You ask help to analyze and solve problems",
-      "group": "taking ownership"
+      "group": "Taking ownership"
     },
     {
       "id": 28,
       "statement": "You never gossip. You signed I Promise",
       "subtext": "You don't talk badly when someone's not here",
-      "group": "collaboration"
+      "group": "Collaboration"
     },
     {
       "id": 29,
       "statement": "You really understand that rules can be flexible",
       "subtext": "Without reasons many rules just disappear",
-      "group": "taking ownership"
+      "group": "Taking ownership"
     },
     {
       "id": 30,
       "statement": "You are confident about your own judgment",
       "subtext": "You make decisions without asking permission",
-      "group": "taking ownership"
+      "group": "Taking ownership"
     },
     {
       "id": 31,
       "statement": "You look after the whole hotel, not only front",
       "subtext": "You check rooms, maintenance and back areas",
-      "group": "taking ownership"
+      "group": "Taking ownership"
     },
     {
       "id": 32,
       "statement": "You look around when you arrive at the hotel",
       "subtext": "You share responsibility for the whole hotel",
-      "group": "taking ownership"
+      "group": "Taking ownership"
     },
     {
       "id": 33,
       "statement": "You fix issues yourself",
       "subtext": "You follow up later to make sure it's fixed",
-      "group": "taking ownership"
+      "group": "Taking ownership"
     },
     {
       "id": 34,
       "statement": "You are not afraid of the CEO or your coach",
       "subtext": "You know you are allowed to make mistakes",
-      "group": "taking ownership"
+      "group": "Taking ownership"
     },
     {
       "id": 35,
       "statement": "You use passion and common sense",
       "subtext": "You always try to do the right thing",
-      "group": "taking ownership"
+      "group": "Taking ownership"
     }
   ]
 }
