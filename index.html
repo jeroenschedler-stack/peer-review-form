@@ -1778,5 +1778,66 @@
   }, true);
 })();
 </script>
+        <script>
+// Peer-only hotfix: make Q2 completion dynamic and bypass old hard-guards
+(function () {
+  var btn = document.getElementById('submitAll');
+  if (!btn) return;
+
+  // Keep a reference to the original handler your app set earlier.
+  var originalOnClick = btn.onclick;
+
+  function countAnswered(containerId) {
+    var box = document.getElementById(containerId);
+    if (!box) return 0;
+    var items = box.querySelectorAll('.q-item');
+    var n = 0;
+    items.forEach(function (it) { if (it.querySelector('.pill.selected')) n++; });
+    return n;
+  }
+  function required(containerId) {
+    var box = document.getElementById(containerId);
+    return box ? box.querySelectorAll('.q-item').length : 0;
+  }
+  function q2DoneDynamic() {
+    var need = required('list-q2');
+    if (!need) return false;           // nothing rendered yet
+    return countAnswered('list-q2') >= need;
+  }
+  function syncDisabled() {
+    // Only touch in Q2 view to avoid flicker on other pages
+    var q2Visible = document.getElementById('q2') && document.getElementById('q2').style.display !== 'none';
+    if (q2Visible) btn.disabled = !q2DoneDynamic();
+  }
+
+  // 1) Re-sync the disabled state whenever a rating pill is clicked
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.classList && e.target.classList.contains('pill')) {
+      setTimeout(syncDisabled, 0); // wait for .selected to toggle
+    }
+  }, true);
+
+  // 2) Re-sync whenever your router changes sections
+  if (typeof window.show === 'function') {
+    var _show = window.show;
+    window.show = function (id) { _show(id); setTimeout(syncDisabled, 0); };
+  }
+  setTimeout(syncDisabled, 0);
+
+  // 3) Bypass the old hard-guard that cancels the click when it thinks Q2 isn't done.
+  // We run in the capture phase, stop all other handlers if COMPLETE, then call your original onclick.
+  btn.addEventListener('click', function (e) {
+    if (q2DoneDynamic()) {
+      e.preventDefault();
+      e.stopImmediatePropagation(); // cancel the legacy guards
+      if (typeof originalOnClick === 'function') {
+        // Call your existing handler so totals/finish render as before
+        originalOnClick.call(btn, e);
+      }
+    }
+    // If not complete, let the old guards do their job.
+  }, true);
+})();
+</script>
     </body>
 </html>
