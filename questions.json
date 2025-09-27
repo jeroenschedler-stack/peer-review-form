@@ -140,7 +140,7 @@
     },
     {
       "id": 21,
-      "statement": "You like it when your friends give you honest feedback",
+      "statement": "You like it when friends give you honest feedback",
       "subtext": "You're happy they help you to grow",
       "group": "Collaboration"
     },
@@ -182,14 +182,14 @@
     },
     {
       "id": 28,
-      "statement": "You never gossip. You signed I Promise",
+      "statement": "You never gossip. You promised that",
       "subtext": "You don't talk badly when someone's not here",
       "group": "Collaboration"
     },
     {
       "id": 29,
       "statement": "You really understand that rules can be flexible",
-      "subtext": "Without reasons many rules just disappear",
+      "subtext": "You only apply rules when it's needed",
       "group": "Taking ownership"
     },
     {
@@ -207,7 +207,7 @@
     {
       "id": 32,
       "statement": "You look around when you arrive at the hotel",
-      "subtext": "You share responsibility for the whole hotel",
+      "subtext": "You take responsibility for our house",
       "group": "Taking ownership"
     },
     {
@@ -218,14 +218,14 @@
     },
     {
       "id": 34,
-      "statement": "You are not afraid of the CEO or your coach",
-      "subtext": "You know you are allowed to make mistakes",
+      "statement": "You know you are allowed to make mistakes",
+      "subtext": "You are not afarid to get punished",
       "group": "Taking ownership"
     },
     {
       "id": 35,
       "statement": "You use passion and common sense",
-      "subtext": "You always try to do the right thing",
+      "subtext": "You understand there are no manualsgttt",
       "group": "Taking ownership"
     }
   ]
