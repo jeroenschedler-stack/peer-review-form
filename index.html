@@ -902,7 +902,7 @@
 
                 async function loadQuestions() {
                     try {
-                        const res = await fetch("questions.json", { cache: "no-store" });
+                        const res = await fetch("../data/questions_team.json", { cache: "no-store" });
                         if (!res.ok) throw new Error("fetch failed");
                         const data = await res.json();
                         S.questions = data.questions || [];
