@@ -434,6 +434,45 @@
             }
         </style>
         <script id="embeddedQuestions" type="application/json">
+
+// === Robust questions loader ===
+async function loadQuestionsRobust() {
+  const candidates = [
+    "../data/questions.json",
+    "../data/questions_peer.json",
+    "../data/questions_team.json"
+  ];
+  // 1) Try external JSON files in order
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && (Array.isArray(data.questions) || Array.isArray(data))) {
+          // Accept either {questions:[...]} or plain array [...]
+          return Array.isArray(data) ? { questions: data } : data;
+        }
+      }
+    } catch (e) {
+      // continue to next candidate
+    }
+  }
+  // 2) Fallback to embeddedQuestions <script> if present
+  try {
+    const embeddedEl = document.getElementById("embeddedQuestions");
+    if (embeddedEl) {
+      const txt = embeddedEl.textContent.trim();
+      if (txt) {
+        const data = JSON.parse(txt);
+        if (Array.isArray(data.questions) || Array.isArray(data)) {
+          return Array.isArray(data) ? { questions: data } : data;
+        }
+      }
+    }
+  } catch(e){}
+  throw new Error("No questions found in ../data/questions.json (or fallbacks) and no valid embeddedQuestions.");
+}
+
             []
         </script>
         <style>
@@ -919,7 +958,7 @@
 
                 async function loadQuestions() {
                     try {
-                        const res = await fetch("../data/questions_team.json", { cache: "no-store" });
+                        const res = await /* replaced by loadQuestionsRobust() */ loadQuestionsRobust();
                         if (!res.ok) throw new Error("fetch failed");
                         const data = await res.json();
                         S.questions = data.questions || [];
