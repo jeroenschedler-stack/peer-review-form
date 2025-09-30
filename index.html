@@ -437,7 +437,6 @@
         <style>
             /* === FINAL fixes v68: Statements duplicate header removal + header alignment (print only) === */
             @media print {
-
                 /* Align blue header bar labels with table columns */
                 #pdfReport .statements-bar {
                     display: grid !important;
@@ -553,42 +552,53 @@
                 margin: 2px 0;
             }
 
-       /* Utility for hidden headings (used in pdfReport section) */
-   .visually-hidden {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-/* end of this style block */
-</style>
+            /* Utility for hidden headings (used in pdfReport section) */
+            .visually-hidden {
+                position: absolute !important;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            /* end of this style block */
+        </style>
 
-  <!-- your other CSS and scripts -->
+        <!-- your other CSS and scripts -->
 
-  <style>
-  /* === FINAL canonical widths for Statements: 10 / 55 / 20 / 15 === */
+        <style>
+            /* === FINAL canonical widths for Statements: 10 / 55 / 20 / 15 === */
 
-  #pdfReport .statements-bar {
-    display: grid !important;
-    grid-template-columns: 10% 55% 20% 15% !important;
-    align-items: center !important;
-    padding: 6px 10px !important;
-  }
+            #pdfReport .statements-bar {
+                display: grid !important;
+                grid-template-columns: 10% 55% 20% 15% !important;
+                align-items: center !important;
+                padding: 6px 10px !important;
+            }
 
-  @media print {
-    #pdfReport .statements-table { table-layout: fixed; width:100%; }
-    #pdfReport .statements-table col:nth-child(1){ width:10% !important; }
-    #pdfReport .statements-table col:nth-child(2){ width:55% !important; }
-    #pdfReport .statements-table col:nth-child(3){ width:20% !important; }
-    #pdfReport .statements-table col:nth-child(4){ width:15% !important; }
-  }
-  </style>
-</head>
+            @media print {
+                #pdfReport .statements-table {
+                    table-layout: fixed;
+                    width: 100%;
+                }
+                #pdfReport .statements-table col:nth-child(1) {
+                    width: 10% !important;
+                }
+                #pdfReport .statements-table col:nth-child(2) {
+                    width: 55% !important;
+                }
+                #pdfReport .statements-table col:nth-child(3) {
+                    width: 20% !important;
+                }
+                #pdfReport .statements-table col:nth-child(4) {
+                    width: 15% !important;
+                }
+            }
+        </style>
+    </head>
     <body>
         <main class="container">
             <h1>BED HOSPITALITY 2.0</h1>
@@ -818,23 +828,28 @@
             </div>
             <div class="card" style="padding: 0;">
                 <table id="pdfStatements">
-  <colgroup>
-    <col />  <!-- NO -->
-    <col />  <!-- STATEMENT -->
-    <col />  <!-- GROUP -->
-    <col />  <!-- SCORE -->
-  </colgroup>
-  <thead>
-    <tr>
-      <th>NO</th>
-      <th>STATEMENT</th>
-      <th>GROUP</th>
-      <th>SCORE</th>
-    </tr>
-  </thead>
-  <tbody id="pdfStatementRows"><!-- rows injected --></tbody>
-</table>
-
+                    <colgroup>
+                        <col />
+                        <!-- NO -->
+                        <col />
+                        <!-- STATEMENT -->
+                        <col />
+                        <!-- GROUP -->
+                        <col />
+                        <!-- SCORE -->
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>STATEMENT</th>
+                            <th>GROUP</th>
+                            <th>SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdfStatementRows">
+                        <!-- rows injected -->
+                    </tbody>
+                </table>
             </div>
         </section>
         <script>
