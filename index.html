@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta charset="utf-8" >
+        <meta content="width=device-width, initial-scale=1" name="viewport" >
         <title>BED HOSPITALITY — Self-Assessment</title>
         <style>
             /* === FINAL consolidated fixes === */
@@ -214,7 +214,8 @@
                 .st-group{width:18%}
                 .st-rating{width:12%}
                 .st-title{font-weight:800}
-              }
+              
+
 
               .rec-text{font-size:11pt; font-weight:500; color:#444; margin-top:24px; line-height:1.5;}
 
@@ -377,7 +378,8 @@
               #pdfReport .statements-table td:nth-child(2) { text-align: left; }   /* STATEMENT text */
               #pdfReport .statements-table td:nth-child(3) { text-align: left; }   /* GROUP values */
               #pdfReport .statements-table td:nth-child(4) { text-align: center; } /* SCORE values */
-            }
+            
+
 
             /* PDF: Fine-tune Statements section header alignment and hide duplicate header rows */
             @media print {
@@ -437,7 +439,6 @@
         <style>
             /* === FINAL fixes v68: Statements duplicate header removal + header alignment (print only) === */
             @media print {
-
                 /* Align blue header bar labels with table columns */
                 #pdfReport .statements-bar {
                     display: grid !important;
@@ -553,42 +554,53 @@
                 margin: 2px 0;
             }
 
-       /* Utility for hidden headings (used in pdfReport section) */
-   .visually-hidden {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-/* end of this style block */
-</style>
+            /* Utility for hidden headings (used in pdfReport section) */
+            .visually-hidden {
+                position: absolute !important;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+            /* end of this style block */
+        </style>
 
-  <!-- your other CSS and scripts -->
+        <!-- your other CSS and scripts -->
 
-  <style>
-  /* === FINAL canonical widths for Statements: 10 / 55 / 20 / 15 === */
+        <style>
+            /* === FINAL canonical widths for Statements: 10 / 55 / 20 / 15 === */
 
-  #pdfReport .statements-bar {
-    display: grid !important;
-    grid-template-columns: 10% 55% 20% 15% !important;
-    align-items: center !important;
-    padding: 6px 10px !important;
-  }
+            #pdfReport .statements-bar {
+                display: grid !important;
+                grid-template-columns: 10% 55% 20% 15% !important;
+                align-items: center !important;
+                padding: 6px 10px !important;
+            }
 
-  @media print {
-    #pdfReport .statements-table { table-layout: fixed; width:100%; }
-    #pdfReport .statements-table col:nth-child(1){ width:10% !important; }
-    #pdfReport .statements-table col:nth-child(2){ width:55% !important; }
-    #pdfReport .statements-table col:nth-child(3){ width:20% !important; }
-    #pdfReport .statements-table col:nth-child(4){ width:15% !important; }
-  }
-  </style>
-</head>
+            @media print {
+                #pdfReport .statements-table {
+                    table-layout: fixed;
+                    width: 100%;
+                }
+                #pdfReport .statements-table col:nth-child(1) {
+                    width: 10% !important;
+                }
+                #pdfReport .statements-table col:nth-child(2) {
+                    width: 55% !important;
+                }
+                #pdfReport .statements-table col:nth-child(3) {
+                    width: 20% !important;
+                }
+                #pdfReport .statements-table col:nth-child(4) {
+                    width: 15% !important;
+                }
+            }
+        </style>
+    </head>
     <body>
         <main class="container">
             <h1>BED HOSPITALITY 2.0</h1>
@@ -597,8 +609,8 @@
             <!-- PAGE 1 -->
             <section id="welcome">
                 <h2 class="section-title">peer reviewer information</h2>
-                <div class="row"><label for="nick">your name</label><input id="nick" /></div>
-                <div class="row"><label for="email">your email</label><input id="email" type="email" /></div>
+                <div class="row"><label for="nick">your name</label><input id="nick" ></div>
+                <div class="row"><label for="email">your email</label><input id="email" type="email" ></div>
                 <div class="row">
                     <label for="hotel">your location</label>
                     <select id="hotel" required="">
@@ -613,8 +625,8 @@
                 </div>
                 <h2 class="section-title">team member information</h2>
                 <p class="intro">enter the details of the team member you will review. you must know this team member well and have worked in BED for at least 12 months</p>
-                <div class="row"><label for="peerName">peer reviewer</label><input id="peerName" /></div>
-                <div class="row"><label for="peerEmail">email peer</label><input id="peerEmail" type="email" /></div>
+                <div class="row"><label for="peerName">peer reviewer</label><input id="peerName" ></div>
+                <div class="row"><label for="peerEmail">email peer</label><input id="peerEmail" type="email" ></div>
                 <div class="row">
                     <label for="peerHotel">peer location</label>
                     <select id="peerHotel" required="">
@@ -661,8 +673,8 @@
                         <span>You are very good at this</span>
                     </li>
                 </ul>
-                <br />
-                <br />
+                <br >
+                <br >
                 <div class="actions">
                     <button class="btn-secondary" id="backToWelcome">Back</button>
                     <button id="toQ1">Start</button>
@@ -696,11 +708,11 @@
                     <div class="rec-kicker"></div>
                     <div class="rec-text" id="recText">—</div>
                 </div>
-                <br />
+                <br >
                 <div id="groupResultsContainer" style="margin-top: 18px;">
                     <div class="group-summary">
                         <div class="group-results-header group-title" style="font-weight: 900; margin-bottom: 8px;">SCORE BY GROUP</div>
-                        <br />
+                        <br >
                         <div id="groupResults"></div>
                     </div>
                 </div>
@@ -711,24 +723,24 @@
             </section>
             <!-- Congrats -->
             <section id="congrats" style="display: none;">
-                <br />
-                <br />
-                <br />
+                <br >
+                <br >
+                <br >
 
                 <div class="big-check"></div>
                 <div class="center">
                     <h3 style="font-size: 32px; margin: 8px 0 6px 0; color: #444;">
-                        peer assessment<br />
+                        peer assessment<br >
                         completed
                     </h3>
                     <p style="font-size: 17px; font-weight: 500; color: #444; line-height: 1.4;">
-                        click PDF to download the report<br />
+                        click PDF to download the report<br >
                         please send a copy to your team member
                     </p>
                 </div>
-                <br />
-                <br />
-                <br />
+                <br >
+                <br >
+                <br >
                 <div class="page-actions" style="display: flex; gap: 14px; justify-content: center; margin-top: 10px;">
                     <button class="btn-secondary btn-wide" id="congratsBack">Back</button>
                     <button class="btn-wide" id="congratsPdf">PDF</button>
@@ -818,23 +830,28 @@
             </div>
             <div class="card" style="padding: 0;">
                 <table id="pdfStatements">
-  <colgroup>
-    <col />  <!-- NO -->
-    <col />  <!-- STATEMENT -->
-    <col />  <!-- GROUP -->
-    <col />  <!-- SCORE -->
-  </colgroup>
-  <thead>
-    <tr>
-      <th>NO</th>
-      <th>STATEMENT</th>
-      <th>GROUP</th>
-      <th>SCORE</th>
-    </tr>
-  </thead>
-  <tbody id="pdfStatementRows"><!-- rows injected --></tbody>
-</table>
-
+                    <colgroup>
+                        <col />
+                        <!-- NO -->
+                        <col />
+                        <!-- STATEMENT -->
+                        <col />
+                        <!-- GROUP -->
+                        <col />
+                        <!-- SCORE -->
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>STATEMENT</th>
+                            <th>GROUP</th>
+                            <th>SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pdfStatementRows">
+                        <!-- rows injected -->
+                    </tbody>
+                </table>
             </div>
         </section>
         <script>
