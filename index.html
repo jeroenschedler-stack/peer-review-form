@@ -965,7 +965,7 @@
                     if (!holder) return;
                     const gp = computeGroupPercents();
                     const desc = groupDescMap();
-                    const order = ["Hospitality Skills", "Hospitality Competencies", "Taking Ownership", "Collaboration"];
+                    const order = ["Hospitality skills", "Hospitality competencies", "Taking ownership", "collaboration"];
                     let rows = "";
                     order.forEach((name) => {
                         const p = gp[name] ?? 0;
@@ -1124,7 +1124,7 @@
                     // Group rows
                     const gp = computeGroupPercents();
                     const descMap = groupDescMap();
-                    const order = ["Hospitality Skills", "Hospitality Competencies", "Taking Ownership", "Collaboration"];
+                    const order = ["Hospitality skills", "Hospitality competencies", "Taking ownership", "collaboration"];
                     const body = document.getElementById("pdfGroupRows");
                     body.innerHTML = "";
                     order.forEach((name) => {
@@ -1456,7 +1456,7 @@
         <script>
             (function () {
                 const MAP = {
-                    "Hospitality Skills": "Hospitality skills",
+                    "Hospitality skills": "Hospitality skills",
                     "Hospitality Competencies": "BED competencies",
                     "Taking Ownership": "Taking ownership",
                     Collaboration: "Collaboration",
@@ -1477,11 +1477,11 @@
                 function replaceOldLabelsIn(container) {
                     if (!container) return;
                     const TEXT_MAP = {
-                        "Hospitality Skills": "Hospitality skills",
+                        "Hospitality skills": "Hospitality skills",
                         "Hospitality Competencies": "BED competencies",
                         "Taking Ownership": "Taking ownership",
                         Collaboration: "Collaboration",
-                        "Score Hospitality Skills": "Score hospitality skills",
+                        "Score Hospitality skills": "Score hospitality skills",
                         "Score Hospitality Competencies": "Score BED competencies",
                         "Score Taking Ownership": "Score taking ownership",
                         "Score Collaboration": "Score Collaboration",
@@ -1526,7 +1526,7 @@
             (function () {
                 // Map old->new
                 const MAP = {
-                    "Hospitality Skills": "Hospitality skills",
+                    "Hospitality skills": "Hospitality skills",
                     "Hospitality Competencies": "BED competencies",
                     "Taking Ownership": "Taking ownership",
                     Collaboration: "Collaboration",
@@ -1613,7 +1613,7 @@
             // === Final normalization & rendering vFinal ===
             (function () {
                 const MAP = {
-                    "Hospitality Skills": "Hospitality skills",
+                    "Hospitality skills": "Hospitality skills",
                     "Hospitality Competencies": "BED competencies",
                     "Taking Ownership": "Taking ownership",
                     Collaboration: "Collaboration",
@@ -1701,7 +1701,7 @@
             // === Strong patch v2: force-normalize + recompute group % independent of S.groups ===
             (function () {
                 const MAP = {
-                    "Hospitality Skills": "Hospitality skills",
+                    "Hospitality skills": "Hospitality skills",
                     "Hospitality Competencies": "BED competencies",
                     "Taking Ownership": "Taking ownership",
                     Collaboration: "Collaboration",
@@ -1841,7 +1841,7 @@
             // === Final hot-fix v3 (must be the last script) ===
             (function () {
                 const MAP = {
-                    "Hospitality Skills": "Hospitality skills",
+                    "Hospitality skills": "Hospitality skills",
                     "Hospitality Competencies": "BED competencies",
                     "Taking Ownership": "Taking ownership",
                     Collaboration: "Collaboration",
